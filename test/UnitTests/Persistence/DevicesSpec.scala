@@ -29,12 +29,12 @@ class DevicesSpec  extends CustomSpec{
     r3.onFailure{case t => fail("Could not insert "+d1.Identifier +" on the DevicesByAccount table")}
     r4.onFailure{case t => fail("Could not insert "+d2.Identifier + " on the DevicesByAccount table")}
   }
-  it should "be able to retrieve an entire table of devices" in {
+  /*it should "be able to retrieve an entire table of devices" in {
     Devices.getEntireTable onComplete{
       case Success(table) => assertResult(2)(table.size)
       case Failure(t) => fail("Couldn't retrieve the devices from the DB: "+ t.getMessage)
     }
-  }
+  }*/
   it should "be able to retrieve all devices belonging to an account" in{
     val res = DevicesByAccount.getDevicesByAccountId("user1")
     res onComplete{
