@@ -1,0 +1,103 @@
+@(userForm: Form[Account])
+
+@import play.api.i18n
+@import views.html.helper._
+
+@Layouts.main("Register | Thera") {
+<div id="signin">
+    @if(userForm.hasErrors){
+        <div class="alert alert-dismissable alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <p>@Messages("signinGlobalError")</p>
+        </div>
+    }
+    <form class="form-horizontal" action="/user/register" method="POST">
+        <fieldset>
+            <legend>@Messages("register.legend")</legend>
+            <!--Username-->
+            <div class="form-group">
+                <div class="col-lg-10">
+                    @inputText(userForm("Username"),
+                    '_label -> Messages("Username"),
+                    '_class -> "input-block",
+                    '_help -> "Please choose a valid username.",
+                    '_error -> userForm.globalError,
+                    '_showConstraints -> false)
+                </div>
+            </div>
+
+            <!--Password-->
+            <div class="form-group">
+                <div class="col-lg-10">
+                @inputPassword(userForm("Password.main"),
+                    '_label -> Messages("Password"),
+                    '_class -> "input-block",
+                    '_help -> Messages("register.passwordHelp"),
+                    '_showConstraints -> false)
+                </div>
+            </div>
+
+            <!--Repeat Password-->
+            <div class="form-group">
+                <div class="col-lg-10">
+                @inputPassword(userForm("Password.confirm"),
+                    '_label -> Messages("register.repeatPassword"),
+                    '_class -> "input-block",
+                    '_showConstraints -> false)
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <div class="col-lg-10">
+                @inputText(userForm("Email"),
+                    '_label -> Messages("Email"),
+                    '_class -> "input-block",
+                    '_help -> "Please introduce a valid email.",
+                    '_error -> userForm.globalError,
+                    '_showConstraints -> false)
+
+                </div>
+            </div>
+
+            <!--Real Name-->
+            <div class="form-group">
+                <div class="col-lg-10">
+                @inputText(userForm("RealName"),
+                    '_label -> Messages("register.realName"),
+                    '_class -> "input-block",
+                    '_showConstraints -> false)
+                </div>
+            </div>
+
+            <!--Country-->
+            <div class="form-group">
+                <div class="col-lg-10">
+                @inputText(userForm("Country"),
+                    '_label -> Messages("register.country"),
+                    '_class -> "input-block",
+                    '_showConstraints -> false)
+                </div>
+            </div>
+
+            <!--Country-->
+            <div class="form-group">
+                <div class="col-lg-10">
+                @inputText(userForm("PhoneNumber"),
+                    '_label -> Messages("register.phoneNumber"),
+                    '_class -> "input-block",
+                    '_showConstraints -> false)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-10 col-lg-offset-2">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+
+</div>
+
+}

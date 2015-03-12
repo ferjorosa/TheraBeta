@@ -1,0 +1,38 @@
+@import controllers.routes
+
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <!-- CSS -->
+        <link rel="stylesheet" href="@routes.Assets.at("../../../public/stylesheets/application.css")">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css">
+        <!-- Icon-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="@routes.Assets.at("../../../public/images/icons/Ticon_x48.ico")" type="image/x-icon">
+        <link rel="apple-touch-icon" href="@routes.Assets.at("../../../public/images/icons/Ticon_x57.png")">
+        <link rel="apple-touch-icon" sizes="114x114" href="@routes.Assets.at("../../../public/images/icons/Ticon_x114.png")">
+        <!--Javascript-->
+        <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+        <script src="@routes.Assets.at("../../../public/javascripts/hello.js")" type="text/javascript"></script>
+
+    </head>
+    <body>
+
+        <div id="content">
+            @content
+        </div>
+
+        <div class="col-xs-12 col-lg-12">
+            <div class="footer" role="contentinfo">
+
+                <i class="fa fa-copyright"></i> 2015 Fernando Rodríguez Sánchez - Universidad de Oviedo
+                <p>All Rights Reserved.</p>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+This is your new Play application
+=================================
+
+This file will be packaged with your application, when using `activator dist`.
+
+Plugins necesarios para trabajar con el proyecto:
+
+-Scala
+-Play 2.0
+
+Para poder trabajar con el proyecto es necesario:
+
+ - Tener abierto Intellij
+ - Tener ejecutando la plaicación en modo development, ejecutar los siguientes comandos:
+ 	* `activator`
+	* $ `run`

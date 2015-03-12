@@ -1,0 +1,38 @@
+@(userForm: Form[UserLogin])
+
+@import play.api.i18n
+@import views.html.helper._
+
+@Layouts.main("Sign in | Thera") {
+        <div id="signin">
+            @if(userForm.hasErrors){
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <p>@Messages("signinGlobalError")</p>
+                </div>
+            }
+                <form id="authentication" action="/user/signin" method="POST">
+                    <fieldset>
+                        <div class="authheader">
+                            <h1 id="headertitle">Sign in</h1>
+                        </div>
+
+                        <!--Username-->
+                            @inputText(userForm("Identifier"),
+                            '_label -> Messages("Username"),
+                            '_class -> "input-block",
+                            '_showConstraints -> false)
+
+                        <!--Password-->
+                            @inputText(userForm("Password"),
+                                '_label -> Messages("Password"),
+                                '_class -> "input-block",
+                                '_showConstraints -> false)
+
+                        <button type="submit" class="basicFormButton btn btn-primary">Sign in</button>
+                    </fieldset>
+                </form>
+
+        </div>
+
+}
