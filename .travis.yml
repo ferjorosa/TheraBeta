@@ -3,13 +3,11 @@ scala:
   - 2.11.1
 script:
   - "cd $TRAVIS_BUILD_DIR/app"
-  - travis_retry sbt --warn ++$TRAVIS_SCALA_VERSION compile
-  - sbt ++$TRAVIS_SCALA_VERSION test
-  - sbt --warn ++$TRAVIS_SCALA_VERSION publish-local
+  - "sbt ++$TRAVIS_SCALA_VERSION test"
+  - "sbt ++$TRAVIS_SCALA_VERSION publish-local"
   - "cd $TRAVIS_BUILD_DIR/test"
-  - travis_retry sbt --warn ++$TRAVIS_SCALA_VERSION compile
-  - sbt ++$TRAVIS_SCALA_VERSION test
-  - sbt --warn ++$TRAVIS_SCALA_VERSION publish-local
+  - "sbt ++$TRAVIS_SCALA_VERSION test"
+  - "sbt ++$TRAVIS_SCALA_VERSION publish-local"
 services:
   - cassandra
 notifications:
