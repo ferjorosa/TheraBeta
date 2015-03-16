@@ -42,7 +42,7 @@ class DevicesSpec  extends CustomSpec{
         //Number of devices retrieved should be 1
         assertResult(1)(table.size)
         //All retrieved devices should have OwnerID = "user1"
-        for(row <- table) assertResult("user1")(row.OwnerID)
+        for(row <- table) assertResult("user1")(row.AccountID)
       }
       case Failure(t) => fail("Couldn't retrieve the devices from the DB: "+ t.getMessage)
     }
@@ -53,7 +53,7 @@ class DevicesSpec  extends CustomSpec{
     res onComplete{
       case Success(device) => device match {
         case Some(d) => {
-          assertResult("user1")(d.OwnerID)
+          assertResult("user1")(d.AccountID)
           assertResult("device1")(d.Identifier)
         }
         case None => fail("Couldn't retrieve the devices from the DB")
@@ -65,7 +65,7 @@ class DevicesSpec  extends CustomSpec{
   it should "be able to activate a specific device" in{
     //TODO getDevice from DB
     val d1 = Device(UUID.randomUUID(),"user1","device1",false,Set.empty[UUID])
-    val d2 = Device(d1.DeviceID,d1.OwnerID,d1.Identifier,true,Set.empty[UUID])
+    val d2 = Device(d1.DeviceID,d1.AccountID,d1.Identifier,true,Set.empty[UUID])
 
     val update = DevicesByAccount.updateDevice(d1,d2)
     update onFailure{
@@ -74,7 +74,7 @@ class DevicesSpec  extends CustomSpec{
 
     Await.ready(update,5 seconds)
 
-    DevicesByAccount.getDeviceByID(d1.OwnerID,d1.Identifier).onComplete{
+    DevicesByAccount.getDeviceByID(d1.AccountID,d1.Identifier).onComplete{
       case Success(device) => device match{
         case Some(d)=> assertResult(true)(d.Activated)
         case None => fail("Device not retrieved properly")
@@ -86,7 +86,7 @@ class DevicesSpec  extends CustomSpec{
   it should "be able to deactivate a specific device" in{
     //TODO getDevice from DB
     val d1 = Device(UUID.randomUUID(),"user1","device1",true,Set.empty[UUID])
-    val d2 = Device(d1.DeviceID,d1.OwnerID,d1.Identifier,false,Set.empty[UUID])
+    val d2 = Device(d1.DeviceID,d1.AccountID,d1.Identifier,false,Set.empty[UUID])
 
     val res = DevicesByAccount.updateDevice(d1,d2)
     res onFailure{
@@ -95,7 +95,7 @@ class DevicesSpec  extends CustomSpec{
 
     Await.ready(res,5 seconds)
 
-    DevicesByAccount.getDeviceByID(d1.OwnerID,d1.Identifier).onComplete{
+    DevicesByAccount.getDeviceByID(d1.AccountID,d1.Identifier).onComplete{
       case Success(device) => device match{
         case Some(d)=> assertResult(false)(d.Activated)//TODO: Doesn't fail the test if wrong...(only throw exception)
         case None => fail("Device not retrieved properly")
@@ -129,14 +129,14 @@ class DevicesSpec  extends CustomSpec{
     val insert = DevicesByAccount.insertNewDevice(dev)
     Await.ready(insert, 5 seconds)
 
-    val get = DevicesByAccount.getDeviceByID(dev.OwnerID,dev.Identifier)
+    val get = DevicesByAccount.getDeviceByID(dev.AccountID,dev.Identifier)
     get onFailure{
       case failure => fail("Could not get device3")
     }
 
     Await.ready(get,5 seconds)
 
-    val delete = DevicesByAccount.deleteDevice(dev.OwnerID,dev.Identifier)
+    val delete = DevicesByAccount.deleteDevice(dev.AccountID,dev.Identifier)
     delete onFailure{
       case failure => fail("Could not delete device3")
     }
@@ -153,11 +153,11 @@ class DevicesSpec  extends CustomSpec{
 
     Await.ready(insert,5 seconds)
 
-    val subscription = DevicesByAccount.subscribeDevice(subscriber.OwnerID,subscriber.Identifier,generator.DeviceID)
+    val subscription = DevicesByAccount.subscribeDevice(subscriber.AccountID,subscriber.Identifier,generator.DeviceID)
 
     Await.ready(subscription,5 seconds)
 
-    DevicesByAccount.getDeviceByID(subscriber.OwnerID,subscriber.Identifier) onComplete{
+    DevicesByAccount.getDeviceByID(subscriber.AccountID,subscriber.Identifier) onComplete{
       case Success(device) => device match{
         case Some(d) => assert(d.Subscriptions.contains(generator.DeviceID))
         case None => fail("Device not retrieved properly")

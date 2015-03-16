@@ -45,7 +45,7 @@ object DeviceController extends Controller {
   }
   //TODO flatMap or map?
   def listAll = Action.async{
-    val f = Device.list
+    val f = Device.getAllDevices
     f.map(devices => Ok(views.html.Device.listDevices(devices.toList)))
     //Teoricamente estoy pasando todo su contenido, no iterando
     //Ej: f onSuccess { case posts => for (post <- posts) println(post) }

@@ -37,7 +37,7 @@ object Devices  extends Devices with PhantomCassandraConnector{
   //Insert new Device
   def insertNewDevice(device:Device): ScalaFuture[ResultSet] = {
     insert.value(_.DeviceID,device.DeviceID)
-      .value(_.OwnerID, device.OwnerID)
+      .value(_.OwnerID, device.AccountID)
       .value(_.Identifier,device.Identifier)
       .value(_.Activated,device.Activated)
       .value(_.Subscriptions,device.Subscriptions)
@@ -56,6 +56,14 @@ object Devices  extends Devices with PhantomCassandraConnector{
     delete
     .where(_.DeviceID eqs id)
     .future()
+  }
+  //Update Device(Activate/Deactivate)
+  //You can only update rows that are not part of the Primary Key
+  def updateDevice(deviceId:UUID,newDevice:Device):ScalaFuture[ResultSet] ={
+    update
+      .where(_.DeviceID eqs deviceId)
+      .modify(_.Activated setTo newDevice.Activated)
+      .future()
   }
   //Subscribe
   def subscribeDevice(subscriber:UUID, subscription:UUID):ScalaFuture[ResultSet] = {
@@ -93,7 +101,7 @@ object DevicesByAccount extends DevicesByAccount with PhantomCassandraConnector{
   //Insert new Device
   def insertNewDevice(device:Device): ScalaFuture[ResultSet] = {
     insert.value(_.DeviceID,device.DeviceID)
-      .value(_.AccountID, device.OwnerID)
+      .value(_.AccountID, device.AccountID)
       .value(_.Identifier,device.Identifier)
       .value(_.Activated,device.Activated)
       .value(_.Subscriptions,device.Subscriptions)
@@ -108,11 +116,11 @@ object DevicesByAccount extends DevicesByAccount with PhantomCassandraConnector{
     select.where(_.AccountID eqs Account).and(_.Identifier eqs id).one()
   }
 
-  //Update Device(Activated)
+  //Update Device(Activate/Deactivate)
   //You can only update rows that are not part of the Primary Key
   def updateDevice(oldDevice:Device, newDevice:Device):ScalaFuture[ResultSet] = {
     update
-      .where(_.AccountID eqs oldDevice.OwnerID)
+      .where(_.AccountID eqs oldDevice.AccountID)
       .and(_.Identifier eqs oldDevice.Identifier)
       .modify(_.Activated setTo newDevice.Activated)
       .future()
