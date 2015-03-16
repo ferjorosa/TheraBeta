@@ -4,7 +4,8 @@ import com.websudos.phantom.Implicits.ResultSet
 import com.websudos.phantom.testing.PhantomCassandraConnector
 import org.scalatest.time.SpanSugar._
 import play.api.libs.concurrent.Execution.Implicits._
-import services.{DevicesByAccount, Devices, Messages}
+import services.{Accounts, Devices, DevicesByAccount, Messages}
+
 import scala.concurrent.{Await, Future}
 
 /**
@@ -16,7 +17,8 @@ object DatabaseService extends PhantomCassandraConnector{
     val create = Future.sequence(List(
       Devices.create.future(),
       DevicesByAccount.create.future(),
-      Messages.create.future()
+      Messages.create.future(),
+      Accounts.create.future()
     ))
 
     Await.ready(create, 5 seconds)
@@ -26,7 +28,8 @@ object DatabaseService extends PhantomCassandraConnector{
     val truncate = Future.sequence(List(
       Devices.truncate.future(),
       DevicesByAccount.truncate.future(),
-      Messages.truncate.future()
+      Messages.truncate.future(),
+      Accounts.truncate.future()
     ))
     Await.ready(truncate, 5 seconds)
   }

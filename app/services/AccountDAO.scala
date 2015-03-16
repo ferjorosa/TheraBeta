@@ -34,10 +34,36 @@ sealed class Accounts extends CassandraTable[Accounts,Account]{
 
 object Accounts extends Accounts with ExampleConnector{
 
+  //Register a new account
+  def insertNewAccount(account:Account): ScalaFuture[ResultSet] ={
+    insert.value(_.Username,account.Username)
+      .value(_.Email, account.Email)
+      .value(_.Password,account.Password)
+      .value(_.RealName,account.RealName)
+      .value(_.Country,account.Country)
+      .value(_.PhoneNumber,account.PhoneNumber)
+      .value(_.Role,account.Role)
+      .future()
+  }
+
   //Find by Username(PK)
   def getAccountByUsername(username: String): ScalaFuture[Option[Account]] = {
     select.where(_.Username eqs username).one()
   }
+
+  //Update Account's data
+  def updateAccount(oldAccount:String,newAccount:Account): ScalaFuture[ResultSet] = {
+    update
+      .where(_.Username eqs oldAccount)
+      .modify(_.Email setTo newAccount.Email)
+      .and(_.Password setTo newAccount.Password)
+      .and(_.RealName setTo newAccount.RealName)
+      .and(_.Country setTo newAccount.Country)
+      .and(_.PhoneNumber setTo newAccount.PhoneNumber)
+      .and(_.Role setTo newAccount.Role)
+      .future()
+  }
+
   //FindAll
   def getEntireTable: ScalaFuture[Seq[Account]] = {
     select.fetchEnumerator() run Iteratee.collect()
