@@ -3,32 +3,38 @@
 # ~~~~
 
 # Home page
-GET         /                       controllers.Application.index
+GET         /                        controllers.Application.index
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file            controllers.Assets.at(path="/public", file)
+
+# Test
+GET         /prueba/texto            controllers.PruebaController.main
 
 # IdentificationController
-GET         /user/signin            controllers.IdentificationController.signin
-POST        /user/signin            controllers.IdentificationController.authenticate
-GET         /user/register          controllers.IdentificationController.register
-POST        /user/register          controllers.IdentificationController.create
-GET         /user/logout            controllers.IdentificationController.logout
+GET         /user/signin             controllers.IdentificationController.signin
+POST        /user/signin             controllers.IdentificationController.authenticate
+GET         /user/register           controllers.IdentificationController.register
+POST        /user/register           controllers.IdentificationController.create
+GET         /user/logout             controllers.IdentificationController.logout
 
 # DeviceController
-GET         /device/register        controllers.DeviceController.register
-POST        /device/register        controllers.DeviceController.addDevice
-GET         /devices                controllers.DeviceController.manageDevices
+GET         /devices/register        controllers.DeviceController.register
+POST        /devices/register        controllers.DeviceController.addDevice
+GET         /devices                 controllers.DeviceController.manageDevices
 
 # NetworkController
-GET         /network                controllers.NetworkController.currentNetwork
+GET         /network                 controllers.NetworkController.currentNetwork
 
 # UserController
 
-GET         /dashboard              controllers.Application.dashboard
+GET         /dashboard               controllers.Application.dashboard
 
-GET         /devices                controllers.DeviceController.listAll
+GET         /devices                 controllers.DeviceController.listAll
 
-# Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file           controllers.Assets.at(path="/public", file)
+###############################################################################
+##################################  API  ######################################
 
-# Test
-GET         /prueba/texto           controllers.PruebaController.main
+#DeviceAPI
+GET         /devices/api                     controllers.api.DeviceControllerAPI.getAllDevices
 
