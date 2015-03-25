@@ -1,6 +1,6 @@
 import play.PlayScala
 
-name := """Thera"""
+name := """Thera Zeta"""
 
 version := "1.0-SNAPSHOT"
 
@@ -26,7 +26,11 @@ libraryDependencies ++= Seq( ws, jdbc, anorm, cache,
   "com.websudos" % "phantom-zookeeper_2.11" % "1.5.0",
   "com.websudos"  %% "phantom-testing" % "1.5.0",
   "jp.t2v" %% "play2-auth" % "0.13.0",
-  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test")
+  "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
+  "org.cassandraunit" %  "cassandra-unit" % "2.0.2.5"
+    excludeAll(
+      ExclusionRule("org.slf4j", "slf4j-log4j12"),
+      ExclusionRule("org.slf4j", "slf4j-jdk14")))
 
 fork in Test:= false //We use this to debug Unit Tests on Intellij
 
