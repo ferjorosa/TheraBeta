@@ -1,10 +1,9 @@
 package models
 
-import com.websudos.phantom.Implicits.ResultSet
+import com.websudos.phantom.Implicits._
 import services.Accounts
 
 import scala.concurrent.Future
-import play.api.libs.concurrent.Execution.Implicits._
 
 case class Account(
                  Username:String,
@@ -18,12 +17,13 @@ case class Account(
 
 object Account{
 
-  def findUserByUsername(username:String): Future[Option[Account]] = Accounts.getAccountByUsername(username)
-  //TODO check return type
-  def updateUser(username:String,newAccount:Account):Future[ResultSet] =  Accounts.updateAccount(username,newAccount)
+  //TODO check return type (Success / Failure) or do it on the presentation layer
+  def registerNewAccount(account:Account):Future[ResultSet] = Accounts.insertNewAccount(account)
+
+  def findAccountByUsername(username:String): Future[Option[Account]] = Accounts.getAccountByUsername(username)
 
   def authenticate(user:UserLogin): Future[Boolean] ={
-    val userRetrieved = Account.findUserByUsername(user.Identifier)
+    val userRetrieved = Account.findAccountByUsername(user.Identifier)
 
     userRetrieved.map{
       case u => u match{
@@ -33,6 +33,9 @@ object Account{
     }
 
   }
+
+  //TODO check return type (Success / Failure) or do it on the presentation layer
+  def updateUser(username:String,newAccount:Account):Future[ResultSet] =  Accounts.updateAccount(username,newAccount)
 
 }
 

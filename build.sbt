@@ -9,8 +9,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 scalaVersion := "2.11.1"
 
 resolvers ++= Seq(
-  "Typesafe repository snapshots" at "http://repo.typesafe.com/typesafe/snapshots/",
-  "Typesafe repository releases" at "http://repo.typesafe.com/typesafe/releases/",
+  "Typesafe repository snapshots"    at "http://repo.typesafe.com/typesafe/snapshots/",
+  "Typesafe repository releases"     at "http://repo.typesafe.com/typesafe/releases/",
   "Sonatype repo"                    at "https://oss.sonatype.org/content/groups/scala-tools/",
   "Sonatype releases"                at "https://oss.sonatype.org/content/repositories/releases",
   "Sonatype snapshots"               at "https://oss.sonatype.org/content/repositories/snapshots",
@@ -27,7 +27,7 @@ libraryDependencies ++= Seq( ws, jdbc, anorm, cache,
   "com.websudos"  %% "phantom-testing" % "1.5.0",
   "jp.t2v" %% "play2-auth" % "0.13.0",
   "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test",
-  "org.cassandraunit" %  "cassandra-unit" % "2.0.2.5"
+  "org.cassandraunit" %  "cassandra-unit" % "2.0.2.5" //Overwriting Phantom's broken dependency
     excludeAll(
       ExclusionRule("org.slf4j", "slf4j-log4j12"),
       ExclusionRule("org.slf4j", "slf4j-jdk14")))

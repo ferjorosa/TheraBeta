@@ -26,7 +26,7 @@ class AccountSpec extends CustomSpec{
   }
 
   "The Account Model" should "be able to retrieve a specific account by its identifier" in{
-    Account.findUserByUsername("user")onComplete{
+    Account.findAccountByUsername("user")onComplete{
       case Success(acc) => acc match {
         case Some(a) => assertResult(a.toString)(account.toString)
         case None => fail("No account was retrieved")

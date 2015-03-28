@@ -57,6 +57,7 @@ object Devices  extends Devices with PhantomCassandraConnector{
     .where(_.DeviceID eqs id)
     .future()
   }
+  //TODO we'll see if we need to pass the UUID or just the Object
   //Update Device(Activate/Deactivate)
   //You can only update rows that are not part of the Primary Key
   def updateDevice(deviceId:UUID,newDevice:Device):ScalaFuture[ResultSet] ={

@@ -49,7 +49,7 @@ trait AuthConfigImpl extends AuthConfig with Controller{
    * You can alter the procedure to suit your application.
    */
   def resolveUser(id: Id)(implicit ctx: ExecutionContext): Future[Option[User]] =
-    Account.findUserByUsername(id)
+    Account.findAccountByUsername(id)
 
   /**
    * Where to redirect the user after a successful login.

@@ -32,15 +32,27 @@ object Device{
   }
 
   def getAllDevices: ScalaFuture[Seq[Device]] = Devices.getEntireTable
-
+  //TODO we'll see if its necessary to discriminate on Model Level between Devices/DevicesByAccount
   def subscribeDevice(subscriber:Device,subscription:Device):ScalaFuture[ResultSet] = {
     Devices.subscribeDevice(subscriber.DeviceID,subscription.DeviceID)
     DevicesByAccount.subscribeDevice(subscriber.AccountID,subscriber.Identifier,subscription.DeviceID)
   }
-  //TODO updateDevice
-  /*def activateDevice(device:Device):ScalaFuture[ResultSet] = {
-    val dev = Device(device.DeviceID,device.OwnerID,device.Identifier,true,device.Subscriptions)
-    Devices.updateDevice(device.DeviceID)
-  }*/
+  //TODO updateDevice, all in one execution (two different methods for that)
+  def activateDevice(device:Device):ScalaFuture[ResultSet] = {
+    val activatedDevice = Device(device.DeviceID,device.AccountID,device.Identifier,true,device.Subscriptions)
+    Devices.updateDevice(device.DeviceID, activatedDevice)
+    DevicesByAccount.updateDevice(device,activatedDevice)
+  }
+
+  def deactivateDevice(device:Device):ScalaFuture[ResultSet] = {
+    val activatedDevice = Device(device.DeviceID,device.AccountID,device.Identifier,false,device.Subscriptions)
+    Devices.updateDevice(device.DeviceID, activatedDevice)
+    DevicesByAccount.updateDevice(device,activatedDevice)
+  }
+
+  def deleteDevice(device:Device):ScalaFuture[ResultSet] = {
+    Devices.deleteDevice(device.DeviceID)
+    DevicesByAccount.deleteDevice(device.AccountID,device.Identifier)
+  }
 
 }

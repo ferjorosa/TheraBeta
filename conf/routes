@@ -36,5 +36,8 @@ GET         /devices                 controllers.DeviceController.listAll
 ##################################  API  ######################################
 
 #DeviceAPI
-GET         /devices/api                     controllers.api.DeviceControllerAPI.getAllDevices
+GET         /api/devices             controllers.api.DeviceControllerAPI.getAllDevices
+
+#MessageAPI
+GET         /api/messages/:id       controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
 
