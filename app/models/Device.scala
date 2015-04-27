@@ -15,6 +15,7 @@ case class Device(
 object Device{
   //TODO implement service layer / similar if there is more logic
   def save(device:Device): ScalaFuture[ResultSet] ={
+
     Devices.insertNewDevice(device)
     DevicesByAccount.insertNewDevice(device)
   }
@@ -54,5 +55,6 @@ object Device{
     Devices.deleteDevice(device.DeviceID)
     DevicesByAccount.deleteDevice(device.AccountID,device.Identifier)
   }
+
 
 }

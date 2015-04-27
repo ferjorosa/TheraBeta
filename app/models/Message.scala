@@ -40,4 +40,8 @@ object Message{
   def getMessages(deviceID:UUID):ScalaFuture[Seq[Message]] ={
     Messages.getMessagesByDevice(deviceID)
   }
+
+  def getMessagesByRequest(request:MessagesRequest):ScalaFuture[Seq[Message]] ={
+    Messages.getMessagesByRequest(request)
+  }
 }

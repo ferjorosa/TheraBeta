@@ -38,5 +38,5 @@ class MessagesSpec extends CustomSpec{
       case Failure(t) => fail("There was an error retrieving/inserting Messages")
     }
   }
-
+  //TODO: Pruebas con MessageRequest, para ello modificar las DateTimes introducidas para que no sean Now()
 }

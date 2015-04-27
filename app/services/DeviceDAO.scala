@@ -91,6 +91,7 @@ sealed class DevicesByAccount extends CassandraTable[DevicesByAccount,Device]{
       Identifier(row),
       Activated(row),
       Subscriptions(row)
+
     )
   }
 

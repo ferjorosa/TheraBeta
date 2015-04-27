@@ -6,7 +6,7 @@ import com.datastax.driver.core.Row
 import com.websudos.phantom.CassandraTable
 import com.websudos.phantom.Implicits._
 import com.websudos.phantom.testing.PhantomCassandraConnector
-import models.Message
+import models.{MessagesRequest, Message}
 import scala.concurrent.{Future => ScalaFuture}
 import org.joda.time.DateTime
 
@@ -41,5 +41,9 @@ object Messages extends Messages with PhantomCassandraConnector{
   //Get All Messages by DeviceID
   def getMessagesByDevice(deviceID:UUID):ScalaFuture[Seq[Message]] = {
     select.where(_.DeviceID eqs deviceID).fetch()
+  }
+  //Get All Messages inserted after a requested date for a specific deviceID
+  def getMessagesByRequest(request:MessagesRequest):ScalaFuture[Seq[Message]] = {
+    select.where(_.DeviceID eqs request.DeviceID).and(_.EventTime gt request.EventTime).fetch()
   }
 }
