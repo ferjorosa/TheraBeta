@@ -4,6 +4,7 @@ import com.datastax.driver.core.Row
 import com.websudos.phantom.CassandraTable
 import com.websudos.phantom.Implicits.{StringColumn, _}
 import com.websudos.phantom.iteratee.Iteratee
+import com.websudos.phantom.testing.PhantomCassandraConnector
 import models.Account
 
 import scala.concurrent.{Future => ScalaFuture}
@@ -32,7 +33,9 @@ sealed class Accounts extends CassandraTable[Accounts,Account]{
   }
 }
 
-object Accounts extends Accounts with ExampleConnector{
+object Accounts extends Accounts with PhantomCassandraConnector{
+
+  override def tableName="accounts"
 
   //Register a new account
   def insertNewAccount(account:Account): ScalaFuture[ResultSet] ={

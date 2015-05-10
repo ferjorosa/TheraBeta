@@ -4,7 +4,7 @@ package services
  * Created by Fer on 24/02/2015.
  */
 
-import com.websudos.phantom.zookeeper.{DefaultZookeeperConnector, SimpleCassandraConnector}
+import com.websudos.phantom.zookeeper.{CassandraConnector, DefaultZookeeperConnector, SimpleCassandraConnector}
 
 /**
  * This is an example of how to connect to Cassandra in the easiest possible way.
@@ -29,4 +29,8 @@ trait ExampleConnector extends SimpleCassandraConnector {
  */
 trait ZooKeeperConnector extends DefaultZookeeperConnector {
   val keySpace = "phantom_zookeeper_example"
+}
+
+trait privateSingleHostConnector extends CassandraConnector{
+
 }

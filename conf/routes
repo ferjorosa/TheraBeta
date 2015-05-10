@@ -30,7 +30,7 @@ GET         /network                  controllers.NetworkController.currentNetwo
 
 GET         /dashboard                controllers.Application.dashboard
 
-GET         /devices                  controllers.DeviceController.listAll
+GET         /devices/all              controllers.DeviceController.listAll #Just for test-purposes
 
 ###############################################################################
 ##################################  API  ######################################

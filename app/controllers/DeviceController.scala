@@ -32,7 +32,7 @@ object DeviceController extends Controller {
 
         device =>{
               Device.save(device)
-              Redirect("/device/register")
+              Redirect("/devices/register")
         })
 
 
