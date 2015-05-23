@@ -33,9 +33,9 @@ object Messages extends Messages with PhantomCassandraConnector{
 
   //Insert a new Message
   def insertNewMessage(message:Message): ScalaFuture[ResultSet] = {
-    insert.value(_.DeviceID,message.DeviceID)
-      .value(_.EventTime,message.EventTime)
-      .value(_.Content,message.Content)
+    insert.value(_.DeviceID,message.deviceID)
+      .value(_.EventTime,message.eventTime)
+      .value(_.Content,message.content)
       .future()
   }
   //Get All Messages by DeviceID

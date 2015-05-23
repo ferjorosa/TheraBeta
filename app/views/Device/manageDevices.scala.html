@@ -1,5 +1,6 @@
+@(devices: List[Device])
 
-@Layouts.main("Register | Thera") {
+@Layouts.main(Messages("manageDevicesTitle")) {
 <div class="actions-container">
 
     <div class="panel panel-default">
@@ -22,65 +23,39 @@
         </div>
 
     </div>
+    @if(devices.isEmpty) {
 
+        <p>No devices :(</p>
+
+    }else{
     <div>
         <table class="table table-striped table-hover ">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>Column heading</th>
-                    <th>Column heading</th>
-                    <th>Column heading</th>
+                    <th>Name</th>
+                    <th>Unique ID</th>
+                    <th>Activated</th>
+                    <th>Subscriptions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-                <tr >
-                    <td>3</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-                <tr >
-                    <td>4</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-                <tr >
-                    <td>5</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-                <tr >
-                    <td>6</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
-                <tr >
-                    <td>7</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                </tr>
+                @for(device <- devices){
+                    <tr>
+                        <td><a href="/devices/@device.Identifier">@device.Identifier</a></td>
+                        <td>@device.DeviceID</td>
+                        <td>@device.Activated</td>
+                        @if(device.Subscriptions.isEmpty){
+                            <td>@Messages("noSubscriptions")</td>
+                        }else{
+                            <td><a href="#">@Messages("viewSubscriptions")</a></td>
+                        }
+                    </tr>
+                }
             </tbody>
         </table>
 
-
     </div>
+}
 </div>
 
 }

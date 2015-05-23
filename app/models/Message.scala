@@ -14,23 +14,23 @@ import scala.concurrent.{Future => ScalaFuture}
  * Created by Fer on 11/03/2015.
  */
 case class Message(
-                    DeviceID: UUID,
-                    EventTime:DateTime,
-                    Content: Map[String, String])
+                    deviceID: UUID,
+                    eventTime:DateTime,
+                    content: Map[String, String])
 
 object Message{
   //JSON API Output Converter
   implicit val messageWrites: Writes[Message] = (
-    (JsPath \ "DeviceID").write[UUID] and
-    (JsPath \ "EventTime").write[DateTime] and
-    (JsPath \ "Content").write[Map[String,String]]
+    (JsPath \ "deviceID").write[UUID] and
+    (JsPath \ "eventTime").write[DateTime] and
+    (JsPath \ "content").write[Map[String,String]]
   )(unlift(Message.unapply))
 
   //JSON API Input Converter
   implicit  val messageReads: Reads[Message] = (
-    (JsPath \ "DeviceID").read[UUID] and
-    (JsPath \ "EventTime").read[DateTime] and
-    (JsPath \ "Content").read[Map[String,String]]
+    (JsPath \ "deviceID").read[UUID] and
+    (JsPath \ "eventTime").read[DateTime] and
+    (JsPath \ "content").read[Map[String,String]]
   )(Message.apply _)
 
   def save(message:Message): ScalaFuture[ResultSet] ={

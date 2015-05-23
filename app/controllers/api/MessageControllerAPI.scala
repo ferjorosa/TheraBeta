@@ -44,7 +44,7 @@ object MessageControllerAPI extends Controller{
       },
       message => {
         Message.save(message)
-        Ok(Json.obj("status" ->"OK", "message date" -> message.EventTime ))
+        Ok(Json.obj("status" ->"OK", "message date" -> message.eventTime ))
       }
     )
   }

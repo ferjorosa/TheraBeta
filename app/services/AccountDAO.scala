@@ -39,12 +39,12 @@ object Accounts extends Accounts with PhantomCassandraConnector{
 
   //Register a new account
   def insertNewAccount(account:Account): ScalaFuture[ResultSet] ={
-    insert.value(_.Username,account.Username)
-      .value(_.Email, account.Email)
-      .value(_.Password,account.Password)
-      .value(_.RealName,account.RealName)
-      .value(_.Country,account.Country)
-      .value(_.PhoneNumber,account.PhoneNumber)
+    insert.value(_.Username,account.username)
+      .value(_.Email, account.email)
+      .value(_.Password,account.password)
+      .value(_.RealName,account.realName)
+      .value(_.Country,account.country)
+      .value(_.PhoneNumber,account.phoneNumber)
       .value(_.Role,account.Role)
       .future()
   }
@@ -58,11 +58,11 @@ object Accounts extends Accounts with PhantomCassandraConnector{
   def updateAccount(oldAccount:String,newAccount:Account): ScalaFuture[ResultSet] = {
     update
       .where(_.Username eqs oldAccount)
-      .modify(_.Email setTo newAccount.Email)
-      .and(_.Password setTo newAccount.Password)
-      .and(_.RealName setTo newAccount.RealName)
-      .and(_.Country setTo newAccount.Country)
-      .and(_.PhoneNumber setTo newAccount.PhoneNumber)
+      .modify(_.Email setTo newAccount.email)
+      .and(_.Password setTo newAccount.password)
+      .and(_.RealName setTo newAccount.realName)
+      .and(_.Country setTo newAccount.country)
+      .and(_.PhoneNumber setTo newAccount.phoneNumber)
       .and(_.Role setTo newAccount.Role)
       .future()
   }

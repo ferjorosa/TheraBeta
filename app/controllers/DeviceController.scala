@@ -2,7 +2,8 @@ package controllers
 
 import java.util.UUID
 
-import models.Device
+import controllers.PruebaController._
+import models.{NormalUser, Device}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.concurrent.Execution.Implicits._
@@ -23,26 +24,34 @@ object DeviceController extends Controller {
     Ok(views.html.Device.register(deviceRegisterForm))
   }
 
-  def addDevice = Action{
-
-    implicit request =>
-      deviceRegisterForm.bindFromRequest.fold(
-
+  def addDevice = Action{ implicit request =>
+    deviceRegisterForm.bindFromRequest.fold(
         formWithErrors =>  BadRequest(views.html.Device.register(formWithErrors)),
 
         device =>{
               Device.save(device)
               Redirect("/devices/register")
         })
-
-
-
   }
-  //TODO async
-  /*Here we will check if the user has >0 devices and load them*/
-  def manageDevices = Action{
-    Ok(views.html.Device.manageDevices())
+
+  def manageDevices = AsyncStack(AuthorityKey -> NormalUser){implicit request =>
+    val user = loggedIn
+    val title = "my devices"
+    val f = Device.getDevicesByAccountId(user.username)
+    f.map(devices => Ok(views.html.Device.manageDevices(devices.toList)))
   }
+
+  def detailDevice(identifer :String) = AsyncStack(AuthorityKey -> NormalUser){implicit request =>
+    val user = loggedIn
+    val title = "device detail"
+    val f = Device.getDeviceByIdentifier(user.username,identifer)
+    f.map(deviceRetrieved => deviceRetrieved match{
+      case Some(device) => Ok(views.html.Device.deviceDetail(device))
+      case None => Ok("Error 404")
+    })
+  }
+
+
   //TODO flatMap or map?
   def listAll = Action.async{
     val f = Device.getAllDevices

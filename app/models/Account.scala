@@ -6,12 +6,12 @@ import services.Accounts
 import scala.concurrent.Future
 
 case class Account(
-                 Username:String,
-                 Email:String,
-                 Password:String,
-                 RealName:String,
-                 Country:String,
-                 PhoneNumber:String,
+                 username:String,
+                 email:String,
+                 password:String,
+                 realName:String,
+                 country:String,
+                 phoneNumber:String,
                  Role:String) {
 }
 
@@ -27,7 +27,7 @@ object Account{
 
     userRetrieved.map{
       case u => u match{
-        case Some(userRetrievedFromDB) => userRetrievedFromDB.Password.equals(user.Password)
+        case Some(userRetrievedFromDB) => userRetrievedFromDB.password.equals(user.Password)
         case None => false
       }
     }

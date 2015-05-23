@@ -18,7 +18,7 @@ class AccountSpec extends CustomSpec{
     "Juan", "Spain", "+34984567890", NormalUser.value)
   val updatedAccount = Account("user", "newmail@mail.com", "NEWPASSWORD",
     "Juan Hernandez Garcia", "France", "+65789990345", TestUser.value)
-  val userLogin = UserLogin(updatedAccount.Username,updatedAccount.Password)
+  val userLogin = UserLogin(updatedAccount.username,updatedAccount.password)
 
   override def beforeAll(){
     super.beforeAll()//CustomSpec's "beforeAll"

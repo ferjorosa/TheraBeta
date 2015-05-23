@@ -41,7 +41,7 @@ class AccountsSpec extends CustomSpec {
 
   it should "be able to update the data of a specific account" in {
 
-    Await.ready(Accounts.updateAccount(registeredAccount.Username,updatedAccount),5 seconds) onFailure{
+    Await.ready(Accounts.updateAccount(registeredAccount.username,updatedAccount),5 seconds) onFailure{
       case f=> fail("Couldn't update the account")
     }
 
