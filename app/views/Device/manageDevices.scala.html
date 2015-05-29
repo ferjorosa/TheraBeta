@@ -1,61 +1,57 @@
 @(devices: List[Device])
 
-@Layouts.main(Messages("manageDevicesTitle")) {
-<div class="actions-container">
+@Layouts.mainPrivate(Messages("manageDevices.title")) {
+<div class="basicContainer">
+    <div class="general-container">
 
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h2>Soy un titulo bien grande</h2>
-            <span>Aqui puedes ver tus dispositivos, asi como añadir nuevos</span>
-        </div>
-    </div>
-
-    <div class="col-md-12 margin-bottom-sm">
-        <div class="col-md-8">
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input class="classic-input" type="text" placeholder=@Messages("device.search")>
-            </div>
+        <div class="breadcrumb-container">
+            <ul class="breadcrumb">
+                <li class="big"><a href="/dashboard">Home</a></li>
+                <li class="active big">Devices</li>
+            </ul>
         </div>
 
-        <div class="col-md-2 sm-margin-top">
-            <a href="/device/register" class="btn btn-primary btn-lg">Large button</a>
+
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input class="classic-input" type="text" placeholder=@Messages("manageDevices.searchText")>
         </div>
 
-    </div>
-    @if(devices.isEmpty) {
 
-        <p>No devices :(</p>
 
-    }else{
-    <div>
-        <table class="table table-striped table-hover ">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Unique ID</th>
-                    <th>Activated</th>
-                    <th>Subscriptions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(device <- devices){
+        @if(devices.isEmpty) {
+
+            <p>No devices :(</p>
+
+        }else{
+        <div>
+            <table class="table table-striped table-hover ">
+                <thead>
                     <tr>
-                        <td><a href="/devices/@device.Identifier">@device.Identifier</a></td>
-                        <td>@device.DeviceID</td>
-                        <td>@device.Activated</td>
-                        @if(device.Subscriptions.isEmpty){
-                            <td>@Messages("noSubscriptions")</td>
-                        }else{
-                            <td><a href="#">@Messages("viewSubscriptions")</a></td>
-                        }
+                        <th>Name</th>
+                        <th>Unique ID</th>
+                        <th>Activated</th>
+                        <th>Subscriptions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for(device <- devices){
+                        <tr>
+                            <td><a href="/devices/@device.Identifier">@device.Identifier</a></td>
+                            <td>@device.DeviceID</td>
+                            <td>@device.Activated</td>
+                            @if(device.Subscriptions.isEmpty){
+                                <td>@Messages("noSubscriptions")</td>
+                            }else{
+                                <td><a href="#">@Messages("viewSubscriptions")</a></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
+        </div>
+    }
     </div>
-}
 </div>
-
 }

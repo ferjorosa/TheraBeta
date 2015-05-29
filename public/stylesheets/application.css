@@ -139,7 +139,7 @@ input[type=number]:focus,
     /*padding: 10px 20px 10px 20px;*/
     text-decoration: none;
     border: solid #4CAF9A 2px;
-    color:#4CAF9A;
+    color:white;
     padding-top: 10px;
     padding-bottom: 10px;
     margin-right: 10px;
@@ -159,8 +159,8 @@ input[type=number]:focus,
     font-size: 14px;
     /*padding: 10px 20px 10px 20px;*/
     text-decoration: none;
-    border: solid #4CAF9A 2px;
-    color:#4CAF9A;
+    border: solid #3380C0 2px;
+    color:white;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -168,8 +168,8 @@ input[type=number]:focus,
 #registerLink:hover {
     text-decoration: none;
     color: #ffffff;
-    border: solid #4CAF9A 2px;
-    background-color: #4CAF9A;
+    border: solid #3380C0 2px;
+    background-color: #3380C0;
 }
 
 .basicFormButton{
@@ -195,6 +195,24 @@ input[type="text"],input[type="password"]{
 .input-block > dd > input:focus{
     box-shadow: 0.2px 0.2px 3px #0C7CD5;
     border-color: #0C7CD5;
+}
+
+.panel-subnavbar{
+    overflow: hidden;
+    background-color: #F5F8FA;
+    border-bottom: 1px solid;
+    border-bottom-color: #dddddd;
+}
+
+/*breadcrumb modification */
+.breadcrumb{
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #ffffff;
+}
+
+.breadcrumb > li.big{
+    font-size:20px;
 }
 
 /**********************************************************************************************************************/
@@ -299,3 +317,41 @@ input.classic-input:focus{
     background-color: #ededed;
 }
 
+/**********************************************************************************************************************/
+/********************************************************** GENERAL ***************************************************/
+/**********************************************************************************************************************/
+
+.general-container{
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+    padding-bottom: 3%;
+    padding-top: 3%;
+}
+
+/*Temporal?*/
+@media (min-height: 560px){
+    .general-container{
+        min-height: 368px;
+    }
+}
+
+.main-container{
+    position: relative;
+    float:left;
+}
+
+.side-container{
+    position: relative;
+    float:right;
+}
+
+.simple-table{
+    display: table;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+.simple-cell{
+    border: 2px solid #ccc;
+    padding: 5px;
+}
