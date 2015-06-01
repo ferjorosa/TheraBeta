@@ -14,6 +14,7 @@ case class Device(
                    Subscriptions:Set[UUID])
 object Device{
   //TODO implement service layer / similar if there is more logic
+  //TODO: which one should return? (or BOTH)
   def save(device:Device): ScalaFuture[ResultSet] ={
 
     Devices.insertNewDevice(device)

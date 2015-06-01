@@ -1,8 +1,10 @@
 package UnitTests.Model
 
+import Utility.CustomSpec
+
 /**
  * Created by Fer on 15/03/2015.
  */
-class MessageSpec {
+class MessageSpec extends CustomSpec{
 
 }
