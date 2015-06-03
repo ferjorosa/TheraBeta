@@ -1,0 +1,41 @@
+@(networks: List[Network])
+
+@Layouts.mainPrivate(Messages("network.title")) {
+    <div class="basicContainer">
+        <div class="general-container">
+
+            <div class="breadcrumb-container">
+                <ul class="breadcrumb">
+                    <li class="big"><a href="/dashboard">Home</a></li>
+                    <li class="active big">Networks</li>
+                </ul>
+            </div>
+
+            <legend>Your Networks</legend>
+
+            @if(networks.isEmpty) {
+
+                <p>0/1 available networks</p>
+                <p>No networks :(</p>
+
+            }else{
+                <ul class="list-group">
+                    @for(network <- networks) {
+                        <li class="list-group-item">
+                            <span class="badge">Empty</span>
+                            <a class="big" href="/networks">@network.name</a>
+                            <p class="no-margin-bot">Private Network</p>
+                        </li>
+                    }
+                </ul>
+            }
+
+            <div class="center">
+                <a href="/networks/register" class="btn btn-primary btn-lg">New Network</a>
+            </div>
+
+        </div>
+    </div>
+
+
+}

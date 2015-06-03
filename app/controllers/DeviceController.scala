@@ -21,12 +21,12 @@ object DeviceController extends Controller {
   )(Device.apply)(Device.unapply))
 
   def register = Action{
-    Ok(views.html.Device.register(deviceRegisterForm))
+    Ok(views.html.Device.registerDevice(deviceRegisterForm))
   }
 
   def addDevice = Action{ implicit request =>
     deviceRegisterForm.bindFromRequest.fold(
-        formWithErrors =>  BadRequest(views.html.Device.register(formWithErrors)),
+        formWithErrors =>  BadRequest(views.html.Device.registerDevice(formWithErrors)),
 
         device =>{
               Device.save(device)
@@ -47,12 +47,12 @@ object DeviceController extends Controller {
     val f = Device.getDeviceByIdentifier(user.username,identifer)
     f.map(deviceRetrieved => deviceRetrieved match{
       case Some(device) => Ok(views.html.Device.deviceDetail(device))
-      case None => Ok("Error 404")
+      case None => Ok("Error 404") //TODO: Proper 404 Error
     })
   }
 
-
   //TODO flatMap or map?
+  //TODO Delete
   def listAll = Action.async{
     val f = Device.getAllDevices
     f.map(devices => Ok(views.html.Device.listDevices(devices.toList)))

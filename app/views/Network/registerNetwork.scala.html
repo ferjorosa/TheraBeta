@@ -1,0 +1,45 @@
+@(deviceRegisterForm: Form[Network])
+
+@Layouts.mainPrivate("New Device | Thera") {
+<div class="basicContainer">
+    <div class="general-container">
+        @if(deviceRegisterForm.hasErrors){
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@Messages("signinGlobalError")</p>
+            </div>
+        }
+
+        <div class="breadcrumb-container">
+            <ul class="breadcrumb">
+                <li class="big"><a href="/dashboard">Home</a></li>
+                <li class="big"><a href="/networks">Networks</a></li>
+                <li class="active big">New</li>
+            </ul>
+        </div>
+
+        <div id="addDeviceInput">
+            <form class="form-horizontal" action="/network/register" method="POST">
+                <fieldset>
+                    <legend>Name your new network</legend>
+                    <!--Identifier-->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fa fa-sitemap fa-2x fa-fw"></i>
+                                <i class="fa fa-plus"></i>
+                            </span>
+                            <input class="classic-input" id="Name" name="Name" type="text" placeholder="Name">
+                        </div>
+                    </div>
+
+                    <div class="form-group center">
+                        <button type="submit" class="btn btn-primary">@Messages("registerNetwork.addNetworkButton")</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+}

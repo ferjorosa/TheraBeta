@@ -79,10 +79,15 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     * Submits a new registration into the Application
     * @return 'views.html.User.RegistrationSuccesful' | 'views.html.User.Register' with errors
     */
-  def create = Action { implicit request =>
+  def create = Action.async { implicit request =>
       userRegisterForm.bindFromRequest.fold(
-        formWithErrors =>  BadRequest(views.html.User.register(formWithErrors)),
-        user =>  Redirect("/user/register").flashing("success" -> "Te has registrado correctamente"))
+        formWithErrors =>  Future.successful(BadRequest(views.html.User.register(formWithErrors))),
+        user =>{
+          Account.registerNewAccount(user) onSuccess  {
+            case d => Future.successful(Redirect("/user/signin").flashing("success" -> "Te has registrado correctamente"))
+          }
+          Future.successful(Ok("Error 500"))
+        })
   }
 
   def logout = Action.async { implicit request =>

@@ -49,6 +49,13 @@ object Following extends Following with PhantomCassandraConnector{
       .and(_.DeviceA eqs deviceID)
       .fetch()
   }
+  //Get all the 'followings' of a specific network
+  def getFollowings(accountID: String,networkID: String): ScalaFuture[Seq[Follower]] = {
+    select
+      .where(_.AccountID eqs accountID)
+      .and(_.NetworkID eqs networkID)
+      .fetch()
+  }
   //Delete
   def deleteFollowing(follower: Follower): ScalaFuture[ResultSet] ={
     delete

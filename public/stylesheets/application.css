@@ -355,3 +355,11 @@ input.classic-input:focus{
     border: 2px solid #ccc;
     padding: 5px;
 }
+
+.big{
+    font-size: 16px;
+}
+
+.no-margin-bot{
+    margin-bottom: 0px;
+}

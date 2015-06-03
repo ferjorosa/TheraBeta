@@ -25,8 +25,12 @@ object Follower{
      Followed.insertNewFollowed(follower)
    }
 
-  def getAllFollowers(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+  def getAllFollowings(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
     Followed.getFollowersOfDevice(accountID,networkID,deviceID)
+  }
+
+  def getAllFollowers(accountID: String,networkID: String): ScalaFuture[Seq[Follower]] = {
+    Following.getFollowings(accountID,networkID)
   }
 
   def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {

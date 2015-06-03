@@ -1,3 +1,5 @@
+package UnitTests.Persistence
+
 import Utility.CustomSpec
 import models.Network
 import org.scalatest.time.SpanSugar._

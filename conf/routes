@@ -17,7 +17,7 @@ GET         /user/signin                 controllers.IdentificationController.si
 POST        /user/signin                 controllers.IdentificationController.authenticate
 GET         /user/register               controllers.IdentificationController.register
 POST        /user/register               controllers.IdentificationController.create
-GET         /user/signout                 controllers.IdentificationController.logout
+GET         /user/signout                controllers.IdentificationController.logout
 
 # DeviceController
 GET         /devices/register            controllers.DeviceController.register
@@ -26,7 +26,9 @@ GET         /devices                     controllers.DeviceController.manageDevi
 GET         /devices/:identifier         controllers.DeviceController.detailDevice(identifier: String)
 
 # NetworkController
-GET         /network                     controllers.NetworkController.currentNetwork
+GET         /networks                    controllers.NetworkController.manageNetworks
+GET         /networks/register           controllers.NetworkController.register
+GET         /networks/:name              controllers.NetworkController.detailNetwork(name: String)
 
 # UserController
 

@@ -84,4 +84,6 @@ class FollowersSpec extends CustomSpec{
     //TODO: onSuccess compare the number of Followers with 'assert'
   }
 
+  it should "be able to get all the 'Follower' objects belonging to a network from the DB" is pending
+
 }
