@@ -19,6 +19,7 @@ object DatabaseService extends PhantomCassandraConnector{
       DevicesByAccount.create.future(),
       Messages.create.future(),
       Accounts.create.future(),
+      Networks.create.future(),
       Followed.create.future(),
       Following.create.future()
     ))
@@ -32,6 +33,7 @@ object DatabaseService extends PhantomCassandraConnector{
       DevicesByAccount.truncate.future(),
       Messages.truncate.future(),
       Accounts.truncate.future(),
+      Networks.create.future(),
       Followed.truncate.future(),
       Following.truncate.future()
     ))

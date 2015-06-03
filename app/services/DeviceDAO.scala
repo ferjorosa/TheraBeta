@@ -45,7 +45,9 @@ object Devices  extends Devices with PhantomCassandraConnector{
   }
   //Find by DeviceID
   def getDeviceById(id: UUID): ScalaFuture[Option[Device]] = {
-    select.where(_.DeviceID eqs id).one()
+    select
+      .where(_.DeviceID eqs id)
+      .one()
   }
   //FindAll
   def getEntireTable: ScalaFuture[Seq[Device]] = {

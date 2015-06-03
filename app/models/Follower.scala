@@ -9,8 +9,10 @@ import scala.concurrent.{Future => ScalaFuture}
 /**
  * Created by Fer on 31/05/2015.
  */
-// A -(follows)-> B
+// X -(follows)-> Y
 case class Follower(
+                    accountID: String,
+                    networkID: String,
                     deviceX: UUID,
                     deviceY: UUID) {
 
@@ -23,12 +25,12 @@ object Follower{
      Followed.insertNewFollowed(follower)
    }
 
-  def getAllFollowers(deviceId:UUID): ScalaFuture[Seq[UUID]] = {
-    Followed.getFollowersOfDevice(deviceId)
+  def getAllFollowers(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+    Followed.getFollowersOfDevice(accountID,networkID,deviceID)
   }
 
-  def getAllDevicesBeingFollowedBy(deviceId:UUID): ScalaFuture[Seq[UUID]] = {
-    Following.getFollowingsOfDevice(deviceId)
+  def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+    Following.getFollowingsOfDevice(accountID,networkID,deviceID)
   }
   //TODO Which ResultSet should return (or both)
   def deleteFollower(follower:Follower): ScalaFuture[ResultSet] = {
