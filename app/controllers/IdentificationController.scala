@@ -10,6 +10,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.mvc._
 
 import scala.concurrent.Future
+import scala.util.{Success, Failure}
 
 object IdentificationController extends AuthConfigImpl with LoginLogout {
 
@@ -71,7 +72,6 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
             case _ => Future.successful(Redirect("/user/signin").flashing("error" -> "Fallo"))
           }
         }
-
       })
   }
 
@@ -79,12 +79,14 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     * Submits a new registration into the Application
     * @return 'views.html.User.RegistrationSuccesful' | 'views.html.User.Register' with errors
     */
+  //TODO: Its not working properly, doesn't redirect correctly onComplete
   def create = Action.async { implicit request =>
       userRegisterForm.bindFromRequest.fold(
         formWithErrors =>  Future.successful(BadRequest(views.html.User.register(formWithErrors))),
         user =>{
-          Account.registerNewAccount(user) onSuccess  {
-            case d => Future.successful(Redirect("/user/signin").flashing("success" -> "Te has registrado correctamente"))
+          Account.registerNewAccount(user) onComplete   {
+            case Success(d) => Future.successful(Redirect("/user/signin").flashing("success" -> "Te has registrado correctamente"))
+            case Failure(t) => Future.successful(Ok("Error 500"))
           }
           Future.successful(Ok("Error 500"))
         })

@@ -1,15 +1,14 @@
 package controllers
 
-import controllers.PruebaController._
+import jp.t2v.lab.play2.auth.AuthElement
 import models.{Follower, Network, NormalUser}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.concurrent.Execution.Implicits._
-import play.api.mvc._
 
 import scala.concurrent.Future
 
-object NetworkController extends Controller {
+object NetworkController extends AuthConfigImpl with AuthElement {
 
   val networkRegisterForm:Form[Network]= Form(mapping(
     "accountID"-> ignored("default"),
@@ -36,7 +35,8 @@ object NetworkController extends Controller {
     networkRegisterForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.Network.registerNetwork(formWithErrors))),
       network =>{
-        Network.insertNewNetwork(network)
+        val newNetwork = Network(user.username,network.name)
+        Network.insertNewNetwork(newNetwork)
         Future.successful(Redirect("/networks"))
       }
     )

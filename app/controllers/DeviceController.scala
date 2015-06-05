@@ -2,14 +2,16 @@ package controllers
 
 import java.util.UUID
 
-import controllers.PruebaController._
-import models.{NormalUser, Device}
+import jp.t2v.lab.play2.auth.AuthElement
+import models.{Device, NormalUser}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.mvc._
 
-object DeviceController extends Controller {
+import scala.concurrent.Future
+
+object DeviceController extends AuthConfigImpl with AuthElement {
 
   //Form-mapping used in the registration of a new user's device
   val deviceRegisterForm: Form[Device] = Form(mapping(
@@ -23,14 +25,18 @@ object DeviceController extends Controller {
   def register = Action{
     Ok(views.html.Device.registerDevice(deviceRegisterForm))
   }
+  //TODO onComplete...
+  def addDevice = AsyncStack(AuthorityKey -> NormalUser){implicit request =>
+    val user = loggedIn
+    val title = "add device"
 
-  def addDevice = Action{ implicit request =>
     deviceRegisterForm.bindFromRequest.fold(
-        formWithErrors =>  BadRequest(views.html.Device.registerDevice(formWithErrors)),
+        formWithErrors =>  Future.successful(BadRequest(views.html.Device.registerDevice(formWithErrors))),
 
         device =>{
-              Device.save(device)
-              Redirect("/devices/register")
+              val newDevice = Device(device.DeviceID,user.username,device.Identifier,device.Activated,device.Subscriptions)
+              Device.save(newDevice)
+          Future.successful(Redirect("/devices"))
         })
   }
 

@@ -1,7 +1,5 @@
 package UnitTests.Persistence
 
-import java.util.UUID
-
 import Utility.CustomSpec
 import models.Follower
 import org.scalatest.time.SpanSugar._
@@ -23,9 +21,9 @@ class FollowersSpec extends CustomSpec{
   val accountA = "accountA"
   val networkA = "networkA"
   val networkB = "networkB"
-  val deviceA = UUID.randomUUID()
-  val deviceB = UUID.randomUUID()
-  val deviceC = UUID.randomUUID()
+  val deviceA = "deviceA"
+  val deviceB = "deviceB"
+  val deviceC = "deviceC"
 
   "The Follower Persistence Layer" should "be able to insert new followers" in{
     //We create some mock followers (no real devices)

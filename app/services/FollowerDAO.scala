@@ -1,7 +1,5 @@
 package services
 
-import java.util.UUID
-
 import com.datastax.driver.core.Row
 import com.websudos.phantom.Implicits._
 import com.websudos.phantom.testing.PhantomCassandraConnector
@@ -16,8 +14,8 @@ sealed class Following extends CassandraTable[Following,Follower]{
 
   object AccountID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
   object NetworkID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object DeviceA extends  UUIDColumn(this) with PrimaryKey[UUID]
-  object DeviceB extends  UUIDColumn(this) with PrimaryKey[UUID]
+  object DeviceA extends  StringColumn(this) with PrimaryKey[String]
+  object DeviceB extends  StringColumn(this) with PrimaryKey[String]
 
   def fromRow(row: Row): Follower = {
     Follower(
@@ -42,7 +40,7 @@ object Following extends Following with PhantomCassandraConnector{
       .future()
   }
   //Get all the devices the device is following (A -> B ; A -> C)
-  def getFollowingsOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+  def getFollowingsOfDevice(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
     select(_.DeviceB)
       .where(_.AccountID eqs accountID)
       .and(_.NetworkID eqs networkID)
@@ -72,8 +70,8 @@ sealed class Followed extends CassandraTable[Followed,Follower]{
 
   object AccountID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
   object NetworkID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object DeviceA extends  UUIDColumn(this) with PrimaryKey[UUID]
-  object DeviceB extends  UUIDColumn(this) with PrimaryKey[UUID]
+  object DeviceA extends  StringColumn(this) with PrimaryKey[String]
+  object DeviceB extends  StringColumn(this) with PrimaryKey[String]
 
   def fromRow(row: Row): Follower = {
     Follower(
@@ -98,7 +96,7 @@ object Followed extends Followed with PhantomCassandraConnector{
       .future()
   }
   //Get all the followers of a device (B <- A ; B <- C)
-  def getFollowersOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+  def getFollowersOfDevice(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
     select(_.DeviceB)
       .where(_.AccountID eqs accountID)
       .and(_.NetworkID eqs networkID)

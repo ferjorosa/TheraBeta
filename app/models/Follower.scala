@@ -1,9 +1,8 @@
 package models
 
-import java.util.UUID
-
 import com.datastax.driver.core.ResultSet
 import services.{Followed, Following}
+
 import scala.concurrent.{Future => ScalaFuture}
 
 /**
@@ -13,8 +12,8 @@ import scala.concurrent.{Future => ScalaFuture}
 case class Follower(
                     accountID: String,
                     networkID: String,
-                    deviceX: UUID,
-                    deviceY: UUID) {
+                    deviceX: String,
+                    deviceY: String) {
 
 }
 
@@ -25,7 +24,7 @@ object Follower{
      Followed.insertNewFollowed(follower)
    }
 
-  def getAllFollowings(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+  def getAllFollowings(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
     Followed.getFollowersOfDevice(accountID,networkID,deviceID)
   }
 
@@ -33,7 +32,7 @@ object Follower{
     Following.getFollowings(accountID,networkID)
   }
 
-  def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+  def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
     Following.getFollowingsOfDevice(accountID,networkID,deviceID)
   }
   //TODO Which ResultSet should return (or both)

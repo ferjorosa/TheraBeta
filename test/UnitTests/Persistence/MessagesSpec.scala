@@ -34,7 +34,7 @@ class MessagesSpec extends CustomSpec{
   }
   it should "be able to retrieve all Messages by DeviceID" in {
     Messages.getMessagesByDevice(testUUID) onComplete{
-      case Success(devices) => assertResult(5)(devices.size)
+      case Success(messages) => assertResult(5)(messages.size)
       case Failure(t) => fail("There was an error retrieving/inserting Messages")
     }
   }

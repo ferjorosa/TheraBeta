@@ -3,47 +3,50 @@
 # ~~~~
 
 # Home page
-GET         /                            controllers.Application.index
+GET         /                                      controllers.Application.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                controllers.Assets.at(path="/public", file)
-
-# Test
-GET         /prueba/main                 controllers.PruebaController.main
-GET         /prueba/devices              controllers.PruebaController.devicesTest
+GET         /assets/*file                          controllers.Assets.at(path="/public", file)
 
 # IdentificationController
-GET         /user/signin                 controllers.IdentificationController.signin
-POST        /user/signin                 controllers.IdentificationController.authenticate
-GET         /user/register               controllers.IdentificationController.register
-POST        /user/register               controllers.IdentificationController.create
-GET         /user/signout                controllers.IdentificationController.logout
+GET         /user/signin                           controllers.IdentificationController.signin
+POST        /user/signin                           controllers.IdentificationController.authenticate
+GET         /user/register                         controllers.IdentificationController.register
+POST        /user/register                         controllers.IdentificationController.create
+GET         /user/signout                          controllers.IdentificationController.logout
 
 # DeviceController
-GET         /devices/register            controllers.DeviceController.register
-POST        /devices/register            controllers.DeviceController.addDevice
-GET         /devices                     controllers.DeviceController.manageDevices
-GET         /devices/:identifier         controllers.DeviceController.detailDevice(identifier: String)
+GET         /devices/register                      controllers.DeviceController.register
+POST        /devices/register                      controllers.DeviceController.addDevice
+GET         /devices                               controllers.DeviceController.manageDevices
+GET         /devices/:identifier                   controllers.DeviceController.detailDevice(identifier: String)
 
 # NetworkController
-GET         /networks                    controllers.NetworkController.manageNetworks
-GET         /networks/register           controllers.NetworkController.register
-GET         /networks/:name              controllers.NetworkController.detailNetwork(name: String)
+GET         /networks                              controllers.NetworkController.manageNetworks
+GET         /networks/register                     controllers.NetworkController.register
+POST        /networks/register                     controllers.NetworkController.addNetwork
+GET         /networks/:name                        controllers.NetworkController.detailNetwork(name: String)
+
+# FollowerController
+GET         /networks/:networkName/register        controllers.FollowerController.register(networkName: String)
+POST        /networks/:networkName/register        controllers.FollowerController.addFollower(networkName: String)
 
 # UserController
+GET         /dashboard                             controllers.Application.dashboard
 
-GET         /dashboard                   controllers.Application.dashboard
 #Just for test-purposes
-GET         /devices/all                 controllers.DeviceController.listAll
+GET         /devices/all                           controllers.DeviceController.listAll
+GET         /prueba/main                           controllers.PruebaController.main
+GET         /prueba/devices                        controllers.PruebaController.devicesTest
 
 ###############################################################################
 ##################################  API  ######################################
 
 #DeviceAPI
-GET         /api/devices                 controllers.api.DeviceControllerAPI.getAllDevices
+GET         /api/devices                           controllers.api.DeviceControllerAPI.getAllDevices
 
 #MessageAPI
-GET         /api/messages/:id            controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
-POST        /api/messages/save           controllers.api.MessageControllerAPI.saveMessage
-GET         /api/messages/request        controllers.api.MessageControllerAPI.getMessagesByRequest
+GET         /api/messages/:id                      controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
+POST        /api/messages/save                     controllers.api.MessageControllerAPI.saveMessage
+GET         /api/messages/request                  controllers.api.MessageControllerAPI.getMessagesByRequest
 
