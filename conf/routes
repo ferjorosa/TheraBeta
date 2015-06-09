@@ -21,6 +21,9 @@ POST        /devices/register                      controllers.DeviceController.
 GET         /devices                               controllers.DeviceController.manageDevices
 GET         /devices/:identifier                   controllers.DeviceController.detailDevice(identifier: String)
 
+# MessageController
+GET         /messages/:deviceName                  controllers.MessageController.listAllMessages(deviceName: String)
+
 # NetworkController
 GET         /networks                              controllers.NetworkController.manageNetworks
 GET         /networks/register                     controllers.NetworkController.register
@@ -36,6 +39,7 @@ GET         /dashboard                             controllers.Application.dashb
 
 #Just for test-purposes
 GET         /devices/all                           controllers.DeviceController.listAll
+GET         /messages/insertMock/:deviceID         controllers.MessageController.insertMockMessage(deviceID: String)
 GET         /prueba/main                           controllers.PruebaController.main
 GET         /prueba/devices                        controllers.PruebaController.devicesTest
 

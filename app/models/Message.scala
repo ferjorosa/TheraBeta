@@ -4,8 +4,9 @@ import java.util.UUID
 
 import com.websudos.phantom.Implicits.ResultSet
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import play.api.libs.functional.syntax._
-import play.api.libs.json.{Reads, JsPath, Writes}
+import play.api.libs.json.{JsPath, Reads, Writes}
 import services.Messages
 
 import scala.concurrent.{Future => ScalaFuture}
@@ -16,7 +17,13 @@ import scala.concurrent.{Future => ScalaFuture}
 case class Message(
                     deviceID: UUID,
                     eventTime:DateTime,
-                    content: Map[String, String])
+                    content: Map[String, String]){
+
+  def formattedEventTime:String ={
+    val dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
+    dtf.print(eventTime)
+  }
+}
 
 object Message{
   //JSON API Output Converter
@@ -44,4 +51,6 @@ object Message{
   def getMessagesByRequest(request:MessagesRequest):ScalaFuture[Seq[Message]] ={
     Messages.getMessagesByRequest(request)
   }
+
+
 }

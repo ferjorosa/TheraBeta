@@ -1,0 +1,69 @@
+@(deviceName:String,messages: List[Message])
+
+@Layouts.mainPrivate(Messages("showMessages.title")) {
+
+<div class="basicContainer">
+    <div class="general-container">
+
+        <div class="breadcrumb-container">
+            <ul class="breadcrumb">
+                <li class="big"><a href="/dashboard">Home</a></li>
+                <li class="big"><a href="/devices">Devices</a></li>
+                <li class="big"><a href="/devices/@deviceName">@deviceName</a></li>
+                <li class="active big">Messages</li>
+            </ul>
+        </div>
+
+        @if(messages.isEmpty) {
+
+            <p>No messages :(</p>
+
+        }else{
+                <table class="table table-hover ">
+                    <thead>
+                        <tr>
+                            <th>Content</th>
+                            <th>Event Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(message <- messages) {
+                            <tr>
+                                <td class="asButton">Show</td>
+                                <td>@message.formattedEventTime</td>
+                            </tr>
+                            @if(!message.content.isEmpty) {
+                                <tr class="expandable">
+                                    <td>
+                                        <div>
+                                            <table>
+                                                <tbody>
+                                                    @for((key,value) <- message.content) {
+                                                        <tr>
+                                                            <td>@key:</td>
+                                                            <td>@value</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+
+    <script type="text/javascript">
+        $(".expandable" ).hide()
+
+        $(".asButton").click(function() {
+        $(this).closest('tr').next('tr.expandable').fadeToggle();
+        })
+    </script>
+
+    </div>
+</div>
+}
+

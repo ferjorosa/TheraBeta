@@ -1,0 +1,7 @@
+@(messages: List[Message])
+
+@for(message <- messages){
+    <p>@message.deviceID</p>
+    <p>@message.eventTime</p>
+    <p>@message.content</p>
+}
