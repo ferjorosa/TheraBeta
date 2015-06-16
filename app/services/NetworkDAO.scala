@@ -16,11 +16,13 @@ sealed class Networks extends CassandraTable[Networks,Network]{
 
   object AccountID extends StringColumn(this) with PartitionKey[String]
   object Name extends StringColumn(this) with PrimaryKey[String]
+  object Activated extends BooleanColumn(this)
 
   def fromRow(row: Row): Network ={
     Network(
       AccountID(row),
-      Name(row)
+      Name(row),
+      Activated(row)
     )
   }
 }
@@ -33,6 +35,7 @@ object Networks extends Networks with PhantomCassandraConnector{
     insert
       .value(_.AccountID, network.accountID)
       .value(_.Name,network.name)
+      .value(_.Activated, network.activated)
       .future()
   }
   // Get all the networks belonging to an account

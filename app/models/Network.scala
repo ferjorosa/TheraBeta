@@ -10,7 +10,8 @@ import scala.concurrent.{Future => ScalaFuture}
 //In the future it may have more data, for example if it is public or private
 case class Network(
                     accountID: String,
-                    name: String) {
+                    name: String,
+                    activated: Boolean) {
 }
 
 object Network{
@@ -18,8 +19,8 @@ object Network{
   def insertNewNetwork(network: Network): ScalaFuture[ResultSet] ={
     Networks.insertNewNetwork(network)
   }
-
-  def getAllNetworks(accountID: String): ScalaFuture[Seq[Network]] ={
+  //Small adjustment, instead of having multiple networks per Account, there is only 1 (to make things easier)
+  def getNetworks(accountID: String): ScalaFuture[Seq[Network]] ={
     Networks.getAllNetworks(accountID)
   }
 

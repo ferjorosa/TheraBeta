@@ -18,11 +18,13 @@ import scala.util.{Failure, Success}
 class NetworksSpec extends CustomSpec{
 
   val accountA = "accountA"
+  val accountB = "accountB"
 
   "The Network Persistence Layer" should "be able to insert new networks" in{
     val insertionSequence = Future.sequence(List(
-      Networks.insertNewNetwork(Network(accountA,"Network_A")),
-      Networks.insertNewNetwork(Network(accountA,"Network_B"))
+      Networks.insertNewNetwork(Network(accountA,"Network_A",true)),
+      Networks.insertNewNetwork(Network(accountA,"Network_B",true)),
+      Networks.insertNewNetwork(Network(accountB,"Network_C",true))
     ))
 
     //Synchronous (only for unit testing))
@@ -55,7 +57,7 @@ class NetworksSpec extends CustomSpec{
   }
 
   it should "be able to delete existing networks" in {
-    Networks.deleteNetwork(accountA,"Network_A") onFailure{
+    Networks.deleteNetwork(accountB,"Network_C") onFailure{
       case failure => fail("Could not delete the row")
     }
   }

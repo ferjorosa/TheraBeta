@@ -22,7 +22,7 @@ object MessageController extends AuthConfigImpl with AuthElement{
       device <- Device.getDeviceByIdentifier(user.username,deviceName)
       if(device isDefined)
       messages <- Message.getMessages(device.get.DeviceID)//TODO: Why the need of get?
-    } yield messages.toList
+    } yield messages
 
     //TODO: the for throws NoSuchElementException when the device doesnt Exist (isDefined?)
     result.map(messages => Ok(views.html.Message.showMessages(deviceName,messages.toList)))
@@ -33,7 +33,7 @@ object MessageController extends AuthConfigImpl with AuthElement{
     val user = loggedIn
     val title = "insert mock message"
 
-    val message = Message(UUID.fromString(deviceID), DateTime.now(),Map("test" -> "true", "Wow" -> "GG WP"))
+    val message = Message(UUID.fromString(deviceID), DateTime.now(),Map("test" -> "reality", "GG" -> "Well played, indeed"))
     Message.save(message)
     Future.successful(Ok("mock messageinserted"))
     }

@@ -1,5 +1,7 @@
 package models
 
+import java.util.UUID
+
 import com.datastax.driver.core.ResultSet
 import services.{Followed, Following}
 
@@ -12,8 +14,10 @@ import scala.concurrent.{Future => ScalaFuture}
 case class Follower(
                     accountID: String,
                     networkID: String,
-                    deviceX: String,
-                    deviceY: String) {
+                    deviceX: UUID,
+                    deviceY: UUID,
+                    deviceX_Name: String,
+                    deviceY_Name: String) {
 
 }
 
@@ -24,15 +28,19 @@ object Follower{
      Followed.insertNewFollowed(follower)
    }
 
-  def getAllFollowings(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
-    Followed.getFollowersOfDevice(accountID,networkID,deviceID)
-  }
-
   def getAllFollowers(accountID: String,networkID: String): ScalaFuture[Seq[Follower]] = {
     Following.getFollowings(accountID,networkID)
   }
-
-  def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
+  //'Followed' Table
+  def getAllFollowersOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
+    Followed.getFollowersOfDevice(accountID,networkID,deviceID)
+  }
+  //'Followed' Table
+  def getAllFollowersIDs(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
+    Followed.getFollowersIDs(accountID,networkID,deviceID)
+  }
+  //'Following' Table
+  def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
     Following.getFollowingsOfDevice(accountID,networkID,deviceID)
   }
   //TODO Which ResultSet should return (or both)

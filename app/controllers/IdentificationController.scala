@@ -89,6 +89,12 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
             case Failure(t) => Future.successful(Ok("Error 500"))
           }
           Future.successful(Ok("Error 500"))
+
+          /*Account.registerNewAccount(user) map{
+            result =>{
+              Ok("Error 500")
+            }
+          }*/
         })
   }
 

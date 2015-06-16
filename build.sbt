@@ -8,6 +8,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.1"
 
+scalacOptions ++= Seq("-feature")
+
 resolvers ++= Seq(
   "Typesafe repository snapshots"    at "http://repo.typesafe.com/typesafe/snapshots/",
   "Typesafe repository releases"     at "http://repo.typesafe.com/typesafe/releases/",

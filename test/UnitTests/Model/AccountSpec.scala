@@ -1,10 +1,10 @@
 package UnitTests.Model
 
 import Utility.CustomSpec
-import models.{UserLogin, TestUser, NormalUser, Account}
+import models.{NormalUser, Account, TestUser, UserLogin}
+import org.scalatest.time.SpanSugar._
 import services.Accounts
 
-import org.scalatest.time.SpanSugar._
 import scala.concurrent.Await
 import scala.util.{Failure, Success}
 
@@ -15,9 +15,9 @@ import scala.util.{Failure, Success}
 class AccountSpec extends CustomSpec{
 
   val account = Account("user", "user@mail.com", "password",
-    "Juan", "Spain", "+34984567890", NormalUser.value)
+    "Juan", "Spain", "+34984567890", TestUser.value)
   val updatedAccount = Account("user", "newmail@mail.com", "NEWPASSWORD",
-    "Juan Hernandez Garcia", "France", "+65789990345", TestUser.value)
+    "Juan Hernandez Garcia", "France", "+65789990345", NormalUser.value)
   val userLogin = UserLogin(updatedAccount.username,updatedAccount.password)
 
   override def beforeAll(){

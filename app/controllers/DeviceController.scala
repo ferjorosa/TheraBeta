@@ -15,7 +15,7 @@ object DeviceController extends AuthConfigImpl with AuthElement {
 
   //Form-mapping used in the registration of a new user's device
   val deviceRegisterForm: Form[Device] = Form(mapping(
-    "DeviceID"-> ignored(UUID.randomUUID()),
+    "DeviceID"-> ignored(UUID.randomUUID()),  //static UUID, its defined at the creation of the class
     "OwnerID" -> ignored("default"),
     "Identifier"-> text(minLength = 2, maxLength = 32),
     "Activated"-> ignored(false),
@@ -34,7 +34,7 @@ object DeviceController extends AuthConfigImpl with AuthElement {
         formWithErrors =>  Future.successful(BadRequest(views.html.Device.registerDevice(formWithErrors))),
 
         device =>{
-              val newDevice = Device(device.DeviceID,user.username,device.Identifier,device.Activated,device.Subscriptions)
+              val newDevice = Device(UUID.randomUUID(),user.username,device.Identifier,device.Activated,device.Subscriptions)
               Device.save(newDevice)
           Future.successful(Redirect("/devices"))
         })

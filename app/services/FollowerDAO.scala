@@ -13,16 +13,20 @@ import scala.concurrent.{Future => ScalaFuture}
 sealed class Following extends CassandraTable[Following,Follower]{
 
   object AccountID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object NetworkID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object DeviceA extends  StringColumn(this) with PrimaryKey[String]
-  object DeviceB extends  StringColumn(this) with PrimaryKey[String]
+  object NetworkID extends StringColumn(this) with PrimaryKey[String] //Composite Partition Key
+  object DeviceA extends  UUIDColumn(this) with PrimaryKey[UUID]
+  object DeviceB extends  UUIDColumn(this) with PrimaryKey[UUID]
+  object DeviceA_Name extends StringColumn(this)
+  object DeviceB_Name extends StringColumn(this)
 
   def fromRow(row: Row): Follower = {
     Follower(
       AccountID(row),
       NetworkID(row),
       DeviceA(row),
-      DeviceB(row)
+      DeviceB(row),
+      DeviceA_Name(row),
+      DeviceB_Name(row)
     )
   }
 }
@@ -37,11 +41,13 @@ object Following extends Following with PhantomCassandraConnector{
       .value(_.NetworkID, follower.networkID)
       .value(_.DeviceA,follower.deviceX)
       .value(_.DeviceB,follower.deviceY)
+      .value(_.DeviceA_Name,follower.deviceX_Name)
+      .value(_.DeviceB_Name,follower.deviceY_Name)
       .future()
   }
   //Get all the devices the device is following (A -> B ; A -> C)
-  def getFollowingsOfDevice(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
-    select(_.DeviceB)
+  def getFollowingsOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
+    select(_.DeviceB_Name)
       .where(_.AccountID eqs accountID)
       .and(_.NetworkID eqs networkID)
       .and(_.DeviceA eqs deviceID)
@@ -54,6 +60,7 @@ object Following extends Following with PhantomCassandraConnector{
       .and(_.NetworkID eqs networkID)
       .fetch()
   }
+
   //Delete
   def deleteFollowing(follower: Follower): ScalaFuture[ResultSet] ={
     delete
@@ -69,16 +76,20 @@ object Following extends Following with PhantomCassandraConnector{
 sealed class Followed extends CassandraTable[Followed,Follower]{
 
   object AccountID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object NetworkID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object DeviceA extends  StringColumn(this) with PrimaryKey[String]
-  object DeviceB extends  StringColumn(this) with PrimaryKey[String]
+  object NetworkID extends StringColumn(this) with PrimaryKey[String] //Composite Partition Key
+  object DeviceA extends  UUIDColumn(this) with PrimaryKey[UUID]
+  object DeviceB extends  UUIDColumn(this) with PrimaryKey[UUID]
+  object DeviceA_Name extends StringColumn(this)
+  object DeviceB_Name extends StringColumn(this)
 
   def fromRow(row: Row): Follower = {
     Follower(
       AccountID(row),
       NetworkID(row),
       DeviceA(row),
-      DeviceB(row)
+      DeviceB(row),
+      DeviceA_Name(row),
+      DeviceB_Name(row)
     )
   }
 }
@@ -93,10 +104,21 @@ object Followed extends Followed with PhantomCassandraConnector{
       .value(_.NetworkID, follower.networkID)
       .value(_.DeviceA,follower.deviceY)
       .value(_.DeviceB,follower.deviceX)
+      .value(_.DeviceA_Name,follower.deviceY_Name)
+      .value(_.DeviceB_Name,follower.deviceX_Name)
       .future()
   }
   //Get all the followers of a device (B <- A ; B <- C)
-  def getFollowersOfDevice(accountID: String,networkID: String,deviceID: String): ScalaFuture[Seq[String]] = {
+  def getFollowersOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
+    select(_.DeviceB_Name)
+      .where(_.AccountID eqs accountID)
+      .and(_.NetworkID eqs networkID)
+      .and(_.DeviceA eqs deviceID)
+      .fetch()
+  }
+
+  //Get all the followers IDs of a device (B <- A ; B <- C)
+  def getFollowersIDs(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
     select(_.DeviceB)
       .where(_.AccountID eqs accountID)
       .and(_.NetworkID eqs networkID)

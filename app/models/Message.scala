@@ -2,9 +2,9 @@ package models
 
 import java.util.UUID
 
-import com.websudos.phantom.Implicits.ResultSet
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsPath, Reads, Writes}
 import services.Messages
@@ -40,8 +40,21 @@ object Message{
     (JsPath \ "content").read[Map[String,String]]
   )(Message.apply _)
 
-  def save(message:Message): ScalaFuture[ResultSet] ={
+  def save(message: Message): ScalaFuture[Boolean] ={
     Messages.insertNewMessage(message)
+
+    for {
+      device <- Device.getDeviceById(message.deviceID)
+      if(device isDefined)
+      networks <- Network.getNetworks(device.get.AccountID)
+      network <- networks
+      if network.activated
+      followerIDs <- Follower.getAllFollowersIDs(device.get.AccountID, network.name,message.deviceID)
+      followerID <- followerIDs
+    } Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+    //TODO: map the result insertions, if all good => true; else => false
+    ScalaFuture.successful(true)
+
   }
 
   def getMessages(deviceID:UUID):ScalaFuture[Seq[Message]] ={
