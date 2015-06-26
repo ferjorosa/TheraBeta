@@ -51,7 +51,9 @@ object Message{
       if network.activated
       followerIDs <- Follower.getAllFollowersIDs(device.get.AccountID, network.name,message.deviceID)
       followerID <- followerIDs
-    } Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+    } yield {
+      Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+    }
     //TODO: map the result insertions, if all good => true; else => false
     ScalaFuture.successful(true)
 

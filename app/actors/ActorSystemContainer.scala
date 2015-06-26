@@ -1,4 +1,4 @@
-package common
+package actors
 
 /**
  * Singleton class that will store the Actor System
