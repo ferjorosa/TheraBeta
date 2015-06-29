@@ -14,6 +14,8 @@ POST        /user/signin                                 controllers.Identificat
 GET         /user/register                               controllers.IdentificationController.register
 POST        /user/register                               controllers.IdentificationController.create
 GET         /user/signout                                controllers.IdentificationController.logout
+GET         /user/profile                                controllers.IdentificationController.myProfile
+POST        /user/profile                                controllers.IdentificationController.updateProfile
 
 # DeviceController
 GET         /devices/register                            controllers.DeviceController.register

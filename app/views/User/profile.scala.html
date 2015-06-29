@@ -1,37 +1,108 @@
-@(message: String)
+@(userForm: Form[Account], account: Account)
 
-@Layouts.main("Home | Thera") {
+@import views.html.helper._
 
-    <div class="col-xs-12 col-lg-12 genBody">
-        <div class="jumbocontainer">
-            <div class="jumbotron">
-                <h1>The Internet Of Things</h1>
-                <p>A NOT SO FAR AWAY FUTURE</p>
-                <p><a class="btn btn-primary btn-lg">Learn why</a></p>
+@Layouts.mainPrivate(Messages("profile.title")) {
+    <div id="signin">
+        @if(userForm.hasErrors){
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@Messages("signinGlobalError")</p>
             </div>
-        </div>
-        <div class="basicContainer">
-            <div class="col-xs-6 col-lg-4">
-                <h2>Heading</h2>
-                <p>@message</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-            <div class="col-xs-6 col-lg-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
-            <div class="col-xs-6 col-lg-4">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div>
+        }
+        <form class="form-horizontal" action="/user/profile" method="POST">
+            <fieldset>
+                <legend>@Messages("profile.legend")</legend>
+                    <!--Username-->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputText(userForm("Username"),
+                        '_label -> Messages("register.username"),
+                        'placeholder -> account.username,
+                        /*'class -> "input-block",*/
+                        '_help -> "You cannot modify your username",
+                        '_error -> userForm.globalError,
+                        'readonly ->"readonly",
+                        '_showConstraints -> false)
+                    </div>
+                </div>
 
-            <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
-            </blockquote>
-        </div>
+                    <!--Password-->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputPassword(userForm("Password.main"),
+                        '_label -> Messages("profile.password"),
+                        /*'class -> "input-block",*/
+                        '_help -> Messages("register.passwordHelp"),
+                        '_showConstraints -> false)
+                    </div>
+                </div>
+
+                    <!--Repeat Password-->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputPassword(userForm("Password.confirm"),
+                        '_label -> Messages("profile.confirmPassword"),
+                        /*'class -> "input-block",*/
+                        '_showConstraints -> false)
+                    </div>
+                </div>
+
+                    <!-- Email -->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputText(userForm("Email"),
+                        '_label -> Messages("register.email"),
+                        'placeholder -> account.email,
+                        /*'class -> "input-block",*/
+                        '_help -> "Please introduce a valid email.",
+                        '_error -> userForm.globalError,
+                        '_showConstraints -> false)
+
+                    </div>
+                </div>
+
+                    <!--Real Name-->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputText(userForm("RealName"),
+                        '_label -> Messages("register.realName"),
+                        'placeholder -> account.realName,
+                        /*'class -> "input-block",*/
+                        '_showConstraints -> false)
+                    </div>
+                </div>
+
+                    <!--Country-->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputText(userForm("Country"),
+                        '_label -> Messages("register.country"),
+                        'placeholder -> account.country,
+                        /*'class -> "input-block",*/
+                        '_showConstraints -> false)
+                    </div>
+                </div>
+
+                    <!--Country-->
+                <div class="form-group">
+                    <div class="col-lg-10">
+                    @inputText(userForm("PhoneNumber"),
+                        '_label -> Messages("register.phoneNumber"),
+                        'placeholder -> account.phoneNumber,
+                        /*'class -> "input-block",*/
+                        '_showConstraints -> false)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
     </div>
 
 }

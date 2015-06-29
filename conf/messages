@@ -80,8 +80,12 @@ registerFollower.newFolower = Register Follower
 dashboard.title = Dashboard
 dashboard.devices = Devices
 dashboard.networks = Networks
+dashboard.profile = Profile
 
 profile.title = My Profile
+profile.legend = My Profile
+profile.password = New Password
+profile.confirmPassword = Confirm Password
 
 signin.title = Sign In
 signin.username = Username
@@ -96,3 +100,5 @@ register.email = Email
 register.realName = Real Name
 register.phoneNumber = Phone Number
 register.country = Country
+register.phoneError = The introduced Phone Number is invalid
+register.passwordHelp =  Password must have between 6-20 characters

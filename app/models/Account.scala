@@ -35,7 +35,7 @@ object Account{
   }
 
   //TODO check return type (Success / Failure) or do it on the presentation layer
-  def updateUser(username:String,newAccount:Account):Future[ResultSet] =  Accounts.updateAccount(username,newAccount)
+  def updateAccount(username:String,newAccount:Account):Future[ResultSet] =  Accounts.updateAccount(username,newAccount)
 
 }
 
