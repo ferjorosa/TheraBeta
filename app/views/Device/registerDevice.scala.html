@@ -3,7 +3,7 @@
 @import play.api.i18n
 @import views.html.helper._
 
-@Layouts.mainPrivate("New Device | Thera") {
+@Layouts.mainPrivate(Messages("registerDevice.title")) {
 <div class="basicContainer">
     <div class="general-container">
         @if(deviceRegisterForm.hasErrors){
@@ -15,16 +15,16 @@
 
         <div class="breadcrumb-container">
             <ul class="breadcrumb">
-                <li class="big"><a href="/dashboard">Home</a></li>
-                <li class="big"><a href="/devices">Devices</a></li>
-                <li class="active big">New</li>
+                <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
+                <li class="big"><a href="/devices">@Messages("breadcrumb.devices")</a></li>
+                <li class="active big">@Messages("breadcrumb.new")</li>
             </ul>
         </div>
 
         <div id="addDeviceInput">
             <form class="form-horizontal" action="/devices/register" method="POST">
                 <fieldset>
-                    <legend>Name your new device</legend>
+                    <legend>@Messages("registerDevice.legend")</legend>
                     <!--Identifier-->
                     <div class="form-group">
                         <div class="input-group">
@@ -32,12 +32,12 @@
                                 <i class="fa fa-mobile fa-2x fa-fw"></i>
                                 <i class="fa fa-plus"></i>
                             </span>
-                            <input class="classic-input" id="Identifier" name="Identifier" type="text" placeholder="Identifier">
+                            <input class="classic-input" id="Identifier" name="Identifier" type="text" placeholder=@Messages("registerDevice.identifierInput")>
                         </div>
                     </div>
 
                     <div class="form-group center">
-                        <button type="submit" class="btn btn-primary">@Messages("device.addDeviceButton")</button>
+                        <button type="submit" class="btn btn-primary">@Messages("registerDevice.newDevice")</button>
                     </div>
                 </fieldset>
             </form>

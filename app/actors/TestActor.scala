@@ -41,8 +41,6 @@ class TestActor extends Actor{
   private def removeDeviceChannel(deviceID: Int) = webSockets -= deviceID
 }
 
-case class DeviceChannel(deviceID: Int,enumerator: Enumerator[String], channel: Channel[String])
-
 sealed trait SocketMessage
 //needs an id to identify him
 case class StartSocket(deviceID: Int) extends SocketMessage

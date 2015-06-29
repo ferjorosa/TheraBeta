@@ -1,3 +1,98 @@
 ##	all entries must start with lowercase
+# If you modify this file from Intellij or other IDE, check its default encoding for properties files
 
-manageDevicesTitle = Thera | My Devices
+#General
+empty = Empty
+
+#Layout - Private
+breadcrumb.home = Home
+breadcrumb.devices = Devices
+breadcrumb.new = New
+breadcrumb.messages = Messages
+breadcrumb.networks = Networks
+
+#Layout - Public
+
+########### Index ###########
+index.title = Thera
+index.jumbotron.h1 = The Internet Of Things
+index.jumbotron.p = A NOT SO FAR AWAY FUTURE
+index.jumbotron.button = Learn Why
+index.container.button = Know more
+
+########### Devices ###########
+deviceDetail.title = Device Details
+deviceDetail.actions = Actions
+deviceDetail.delete = Delete
+deviceDetail.messages = Messages
+deviceDetail.identifier= Identifier
+deviceDetail.accountID = Account ID
+deviceDetail.activated = Activated
+deviceDetail.deviceID = Device ID
+
+manageDevices.title = My Devices
+manageDevices.searchText = Enter your device name
+manageDevices.noDevices = No Devices :(
+manageDevices.identifer = Identifier
+manageDevices.deviceID = Unique ID
+manageDevices.activated = Activated
+manageDevices.newDevice = New Device
+
+registerDevice.title = New Device
+registerDevice.legend = Name your new device
+registerDevice.identifierInput = Identifier
+registerDevice.newDevice = Register Device
+
+########### Messages ###########
+showMessages.title = Messages
+showMessages.noMessages = No Messages :(
+showMessages.content = Content
+showMessages.eventTime = Event Time
+showMessages.show = Show
+
+########## Networks ###########
+manageNetworks.title = My Networks
+manageNetworks.legend = My Networks
+manageNetworks.noNetworks = No Networks :(
+manageNetworks.availableNetworks = 0/1 available networks
+manageNetworks.privateNetwork = Private Network
+manageNetworks.newNetwork = New Network
+
+registerNetwork.title = New Network
+registerNetwork.legend = Name your new network
+registerNetwork.nameInput = Name
+registerNetwork.newNetwork = Register network
+
+networkDetail.title = Network Details
+networkDetail.noFollowers = Empty Network :(
+networkDetail.newFollower = New Follower
+networkDetail.from = From
+networkDetail.to = To
+networkDetail.follows = Follows
+
+registerFollower.title = New Follower
+registerFollower.deviceA = Device A
+registerFollower.follows = Follows
+registerFollower.deviceB = Device B
+registerFollower.newFolower = Register Follower
+
+########## Accounts ###########
+dashboard.title = Dashboard
+dashboard.devices = Devices
+dashboard.networks = Networks
+
+profile.title = My Profile
+
+signin.title = Sign In
+signin.username = Username
+signin.password = Password
+signin.button = Sign in
+
+register.title = Register
+register.username = Username
+register.password = Password
+register.repeatPassword = Repeat Password
+register.email = Email
+register.realName = Real Name
+register.phoneNumber = Phone Number
+register.country = Country

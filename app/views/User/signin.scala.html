@@ -3,7 +3,7 @@
 @import play.api.i18n
 @import views.html.helper._
 
-@Layouts.main("Sign in | Thera") {
+@Layouts.main(Messages("signin.title")) {
         <div id="signin">
             @if(userForm.hasErrors){
                 <div class="alert alert-dismissable alert-danger">
@@ -14,18 +14,18 @@
                 <form id="authentication" action="/user/signin" method="POST">
                     <fieldset>
                         <div class="authheader">
-                            <h1 id="headertitle">Sign in</h1>
+                            <h1 id="headertitle">@Messages("signin.title")</h1>
                         </div>
 
                         <!--Username-->
                             @inputText(userForm("Identifier"),
-                            '_label -> Messages("Username"),
+                            '_label -> Messages("signin.username"),
                             '_class -> "input-block",
                             '_showConstraints -> false)
 
                         <!--Password-->
                             @inputText(userForm("Password"),
-                                '_label -> Messages("Password"),
+                                '_label -> Messages("signin.password"),
                                 '_class -> "input-block",
                                 '_showConstraints -> false)
 

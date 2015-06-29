@@ -1,30 +1,31 @@
-@(message: String)
-
-@Layouts.main("Home | Thera") {
+@(message: String)(implicit lang: Lang)
+<!-- Metas -->
+<meta charset="utf-8">
+@Layouts.main(Messages("index.title")) {
 
     <div class="col-xs-12 col-lg-12 genBody">
         <div class="jumbocontainer">
             <div class="jumbotron">
-                <h1>The Internet Of Things</h1>
-                <p>A NOT SO FAR AWAY FUTURE</p>
-                <p><a class="btn btn-primary btn-lg">Learn why</a></p>
+                <h1>@Messages("index.jumbotron.h1")</h1>
+                <p>@Messages("index.jumbotron.p")</p>
+                <p><a class="btn btn-primary btn-lg">@Messages("index.jumbotron.button")</a></p>
             </div>
         </div>
         <div class="basicContainer">
             <div class="col-xs-6 col-lg-4">
-                <h2>Heading</h2>
+                <h2>Heading Fúaaaááá</h2>
                 <p>@message</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                <p><a class="btn btn-default" href="#" role="button">@Messages("index.container.button") &raquo;</a></p>
             </div>
             <div class="col-xs-6 col-lg-4">
                 <h2>Heading</h2>
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                <p><a class="btn btn-default" href="#" role="button">@Messages("index.container.button") &raquo;</a></p>
             </div>
             <div class="col-xs-6 col-lg-4">
                 <h2>Heading</h2>
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                <p><a class="btn btn-default" href="#" role="button">@Messages("index.container.button") &raquo;</a></p>
             </div>
 
             <blockquote>

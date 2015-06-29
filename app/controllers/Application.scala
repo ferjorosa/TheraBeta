@@ -4,7 +4,7 @@ import play.api.mvc._
 
 object Application extends Controller {
 
-  def index = Action {
+  def index = Action { implicit request =>
     Ok(views.html.index("Thera ya esta lista. Por fin. Madre mia, de dios."))
   }
 
@@ -12,4 +12,7 @@ object Application extends Controller {
     Ok(views.html.dashboard())
   }
 
+  def prueba(lang:String) = Action{implicit request =>
+    Ok(views.html.Prueba.texto())
+  }
 }

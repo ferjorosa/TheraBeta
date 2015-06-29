@@ -1,9 +1,8 @@
 @(userForm: Form[Account])
 
-@import play.api.i18n
 @import views.html.helper._
 
-@Layouts.main("Register | Thera") {
+@Layouts.main(Messages("register.title")) {
 <div id="signin">
     @if(userForm.hasErrors){
         <div class="alert alert-dismissable alert-danger">
@@ -18,7 +17,7 @@
             <div class="form-group">
                 <div class="col-lg-10">
                     @inputText(userForm("Username"),
-                    '_label -> Messages("Username"),
+                    '_label -> Messages("register.username"),
                     '_class -> "input-block",
                     '_help -> "Please choose a valid username.",
                     '_error -> userForm.globalError,
@@ -30,7 +29,7 @@
             <div class="form-group">
                 <div class="col-lg-10">
                 @inputPassword(userForm("Password.main"),
-                    '_label -> Messages("Password"),
+                    '_label -> Messages("register.password"),
                     '_class -> "input-block",
                     '_help -> Messages("register.passwordHelp"),
                     '_showConstraints -> false)
@@ -51,7 +50,7 @@
             <div class="form-group">
                 <div class="col-lg-10">
                 @inputText(userForm("Email"),
-                    '_label -> Messages("Email"),
+                    '_label -> Messages("register.email"),
                     '_class -> "input-block",
                     '_help -> "Please introduce a valid email.",
                     '_error -> userForm.globalError,

@@ -7,29 +7,29 @@
 
         <div class="breadcrumb-container">
             <ul class="breadcrumb">
-                <li class="big"><a href="/dashboard">Home</a></li>
-                <li class="big"><a href="/devices">Devices</a></li>
+                <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
+                <li class="big"><a href="/devices">@Messages("breadcrumb.devices")</a></li>
                 <li class="big"><a href="/devices/@deviceName">@deviceName</a></li>
-                <li class="active big">Messages</li>
+                <li class="active big">@Messages("breadcrumb.messages")</li>
             </ul>
         </div>
 
         @if(messages.isEmpty) {
 
-            <p>No messages :(</p>
+            <p>@Messages("showMessages.noMessages")</p>
 
         }else{
                 <table class="table table-hover ">
                     <thead>
                         <tr>
-                            <th>Content</th>
-                            <th>Event Time</th>
+                            <th> @Messages("showMessages.content")</th>
+                            <th>@Messages("showMessages.eventTime")</th>
                         </tr>
                     </thead>
                     <tbody>
                         @for(message <- messages) {
                             <tr>
-                                <td class="asButton">Show</td>
+                                <td class="asButton">@Messages("showMessages.show")</td>
                                 <td>@message.formattedEventTime</td>
                             </tr>
                             @if(!message.content.isEmpty) {

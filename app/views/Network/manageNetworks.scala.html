@@ -1,37 +1,37 @@
 @(networks: List[Network])
 
-@Layouts.mainPrivate(Messages("network.title")) {
+@Layouts.mainPrivate(Messages("manageNetworks.title")) {
     <div class="basicContainer">
         <div class="general-container">
 
             <div class="breadcrumb-container">
                 <ul class="breadcrumb">
-                    <li class="big"><a href="/dashboard">Home</a></li>
-                    <li class="active big">Networks</li>
+                    <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
+                    <li class="active big">@Messages("breadcrumb.networks")</li>
                 </ul>
             </div>
 
-            <legend>Your Networks</legend>
+            <legend>@Messages("manageNetworks.legend")</legend>
 
             @if(networks.isEmpty) {
 
-                <p>0/1 available networks</p>
-                <p>No networks :(</p>
+                <p>@Messages("manageNetworks.noNetworks")</p>
+                <p>@Messages("manageNetworks.availableNetworks")</p>
 
             }else{
                 <ul class="list-group">
                     @for(network <- networks) {
                         <li class="list-group-item">
-                            <span class="badge">Empty</span>
+                            <span class="badge">@Messages("empty")</span>
                             <a class="big" href="/networks/@network.name">@network.name</a>
-                            <p class="no-margin-bot">Private Network</p>
+                            <p class="no-margin-bot">@Messages("manageNetworks.privateNetwork")</p>
                         </li>
                     }
                 </ul>
             }
 
             <div class="center">
-                <a href="/networks/register" class="btn btn-primary btn-lg">New Network</a>
+                <a href="/networks/register" class="btn btn-primary btn-lg">@Messages("manageNetworks.newNetwork")</a>
             </div>
 
         </div>

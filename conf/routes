@@ -49,15 +49,15 @@ GET         /prueba/devices                              controllers.PruebaContr
 #DeviceAPI
 GET         /api/devices                                 controllers.api.DeviceControllerAPI.getAllDevices
 
-#MessageAPI
+#REST - MessageAPI
 GET         /api/messages/:id                            controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
 POST        /api/messages/save                           controllers.api.MessageControllerAPI.saveMessage
 GET         /api/messages/request                        controllers.api.MessageControllerAPI.getMessagesByRequest
 
-#WebSocketAPI
-GET         /api/socket                                  controllers.api.WebSocketAPI$.socket
-GET         /api/wsTime                                  controllers.api.WebSocketAPI$.wsTime
+#WebSocket - MessageAPI
+GET         /api/socket                                  controllers.api.WebSocketAPI.socket
+GET         /api/wsTime                                  controllers.api.WebSocketAPI.wsTime
 
-GET         /api/socketMessage/:deviceID/:message        controllers.api.WebSocketAPI$.test_in(deviceID: Int, message:String)
-GET         /api/test_socket/:deviceID                   controllers.api.WebSocketAPI$.test_out(deviceID: Int)
+GET         /api/socketMessage/:deviceID/:message        controllers.api.WebSocketAPI.test_in(deviceID: Int, message:String)
+GET         /api/test_socket/:deviceID                   controllers.api.WebSocketAPI.test_out(deviceID: Int)
 

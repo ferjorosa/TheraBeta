@@ -1,6 +1,6 @@
 @(deviceRegisterForm: Form[Follower], networkName: String, devices: List[Device])
 
-@Layouts.mainPrivate("New Device | Thera") {
+@Layouts.mainPrivate(Messages("registerFollower.title")) {
 <div class="basicContainer">
     <div class="general-container">
         @if(deviceRegisterForm.hasErrors){
@@ -12,10 +12,10 @@
 
         <div class="breadcrumb-container">
             <ul class="breadcrumb">
-                <li class="big"><a href="/dashboard">Home</a></li>
-                <li class="big"><a href="/networks">Networks</a></li>
+                <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
+                <li class="big"><a href="/networks">@Messages("breadcrumb.networks")</a></li>
                 <li class="big"><a href="/networks/@networkName">@networkName</a></li>
-                <li class="active big">New Follower</li>
+                <li class="active big">@Messages("breadcrumb.new")</li>
             </ul>
         </div>
 
@@ -26,9 +26,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="center">Device A</th>
-                                <th class="center">Listens to</th>
-                                <th class="center">Device B</th>
+                                <th class="center">@Messages("registerFollower.deviceA")</th>
+                                <th class="center">@Messages("registerFollower.follows")</th>
+                                <th class="center">@Messages("registerFollower.deviceB")</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,7 +59,7 @@
                     </table>
 
                     <div class="form-group center">
-                        <button type="submit" class="btn btn-primary">@Messages("registerNetwork.addNetworkButton")</button>
+                        <button type="submit" class="btn btn-primary">@Messages("registerFollower.newFolower")</button>
                     </div>
                 </fieldset>
             </form>

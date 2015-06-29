@@ -6,8 +6,8 @@
 
         <div class="breadcrumb-container">
             <ul class="breadcrumb">
-                <li class="big"><a href="/dashboard">Home</a></li>
-                <li class="active big">Devices</li>
+                <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
+                <li class="active big">@Messages("breadcrumb.devices")</li>
             </ul>
         </div>
 
@@ -21,16 +21,16 @@
 
         @if(devices.isEmpty) {
 
-            <p>No devices :(</p>
+            <p>@Messages("manageDevices.noDevices")</p>
 
         }else{
         <div>
             <table class="table table-hover ">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Unique ID</th>
-                        <th>Activated</th>
+                        <th>@Messages("manageDevices.identifier")</th>
+                        <th>@Messages("manageDevices.deviceID")</th>
+                        <th>@Messages("manageDevices.activated")</th>
                         <th>Subscriptions</th>
                     </tr>
                 </thead>
@@ -54,7 +54,7 @@
     }
 
         <div class="center">
-            <a href="/devices/register" class="btn btn-primary btn-lg">New Device</a>
+            <a href="/devices/register" class="btn btn-primary btn-lg">@Messages("manageDevices.newDevice")</a>
         </div>
     </div>
 </div>
