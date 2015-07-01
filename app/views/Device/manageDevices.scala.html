@@ -14,7 +14,7 @@
 
         <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            <input class="classic-input" type="text" placeholder=@Messages("manageDevices.searchText")>
+            <input class="classic-input" type="text" placeholder="@Messages("manageDevices.searchText")">
         </div>
 
 
@@ -31,7 +31,6 @@
                         <th>@Messages("manageDevices.identifier")</th>
                         <th>@Messages("manageDevices.deviceID")</th>
                         <th>@Messages("manageDevices.activated")</th>
-                        <th>Subscriptions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,11 +39,6 @@
                             <td><a href="/devices/@device.Identifier">@device.Identifier</a></td>
                             <td>@device.DeviceID</td>
                             <td>@device.Activated</td>
-                            @if(device.Subscriptions.isEmpty){
-                                <td>@Messages("noSubscriptions")</td>
-                            }else{
-                                <td><a href="#">@Messages("viewSubscriptions")</a></td>
-                            }
                         </tr>
                     }
                 </tbody>

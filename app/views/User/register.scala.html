@@ -19,7 +19,6 @@
                     @inputText(userForm("Username"),
                     '_label -> Messages("register.username"),
                     '_class -> "input-block",
-                    '_help -> "Please choose a valid username.",
                     '_error -> userForm.globalError,
                     '_showConstraints -> false)
                 </div>
@@ -52,7 +51,6 @@
                 @inputText(userForm("Email"),
                     '_label -> Messages("register.email"),
                     '_class -> "input-block",
-                    '_help -> "Please introduce a valid email.",
                     '_error -> userForm.globalError,
                     '_showConstraints -> false)
 
@@ -91,7 +89,7 @@
 
             <div class="form-group">
                 <div class="col-lg-10 col-lg-offset-2">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">@Messages("register.join")</button>
                 </div>
             </div>
         </fieldset>

@@ -1,0 +1,8 @@
+@(code: Int)
+
+@Layouts.main(Messages("error.title")+code+"") {
+
+    <h1 class="center">Error @code</h1>
+    <p class="center">@Messages("error.description")</p>
+
+}

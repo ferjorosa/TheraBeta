@@ -3,6 +3,11 @@
 
 #General
 empty = Empty
+active = Active
+
+#Errors
+error.title = Error
+error.description = An error has occurred.
 
 #Layout - Private
 breadcrumb.home = Home
@@ -12,6 +17,8 @@ breadcrumb.messages = Messages
 breadcrumb.networks = Networks
 
 #Layout - Public
+footer.copyright = All Rights Reserved.
+footer.university = University of Oviedo
 
 ########### Index ###########
 index.title = Thera
@@ -19,21 +26,30 @@ index.jumbotron.h1 = The Internet Of Things
 index.jumbotron.p = A NOT SO FAR AWAY FUTURE
 index.jumbotron.button = Learn Why
 index.container.button = Know more
+index.heading1.title = Open Source
+index.heading2.title = Fast & Easy
+index.heading3.title = Scalable
+index.heading1.text = Thera is an open source platform for building, managing and integrating connected devices in the space of Internet of Things.Thera is licensed under Apache 2.0 license, the world’s most business-friendly open source license.
+index.heading2.text = Connect your devices fast and easy. Thera uses different technologies to make your messages flow constantly. With its easy interface you can create a network of devices in a few minutes.
+index.heading3.text = Thera uses Cassandra as its Database. It also has a scalable architecture based on message-driven technologies like Akka and Play Framework.
 
 ########### Devices ###########
 deviceDetail.title = Device Details
 deviceDetail.actions = Actions
 deviceDetail.delete = Delete
 deviceDetail.messages = Messages
+deviceDetail.activate = Activate
+deviceDetail.deactivate = Deactivate
 deviceDetail.identifier= Identifier
 deviceDetail.accountID = Account ID
 deviceDetail.activated = Activated
 deviceDetail.deviceID = Device ID
 
+
 manageDevices.title = My Devices
 manageDevices.searchText = Enter your device name
 manageDevices.noDevices = No Devices :(
-manageDevices.identifer = Identifier
+manageDevices.identifier = Identifier
 manageDevices.deviceID = Unique ID
 manageDevices.activated = Activated
 manageDevices.newDevice = New Device
@@ -69,6 +85,8 @@ networkDetail.newFollower = New Follower
 networkDetail.from = From
 networkDetail.to = To
 networkDetail.follows = Follows
+networkDetail.delete = Delete
+networkDetail.deleteNetwork = Delete Network
 
 registerFollower.title = New Follower
 registerFollower.deviceA = Device A
@@ -86,6 +104,7 @@ profile.title = My Profile
 profile.legend = My Profile
 profile.password = New Password
 profile.confirmPassword = Confirm Password
+profile.applyChanges = Apply changes
 
 signin.title = Sign In
 signin.username = Username
@@ -93,6 +112,7 @@ signin.password = Password
 signin.button = Sign in
 
 register.title = Register
+register.legend = Join Thera
 register.username = Username
 register.password = Password
 register.repeatPassword = Repeat Password
@@ -102,3 +122,4 @@ register.phoneNumber = Phone Number
 register.country = Country
 register.phoneError = The introduced Phone Number is invalid
 register.passwordHelp =  Password must have between 6-20 characters
+register.join = Join
