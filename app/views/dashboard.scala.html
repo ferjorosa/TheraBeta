@@ -1,46 +1,47 @@
 @Layouts.mainPrivate(Messages("dashboard.title")) {
 
 <div class="actions-container">
+    <div class="basicContainer">
 
-    <div class="col-md-4 single-action-container">
-        <div class="action">
-            <a href="/devices" class="action_link">
-                <div class="action-img">
-                    <img src="/assets/images/dashboard/gears_white.png" width="215px">
-                </div>
-                <div class="center">
-                    <span >@Messages("dashboard.devices")</span>
-                </div>
-            </a>
+        <div class="col-md-4 single-action-container">
+            <div class="action">
+                <a href="/devices" class="action_link">
+                    <div class="action-img">
+                        <img src="/assets/images/dashboard/gears_white.png" width="215px">
+                    </div>
+                    <div class="center">
+                        <span >@Messages("dashboard.devices")</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 single-action-container">
+            <div class="action">
+                <a href="/networks" class="action_link">
+                    <div class="action-img">
+                        <img src="/assets/images/dashboard/network.png" width="215px">
+                    </div>
+                    <div class="center">
+                        <span >@Messages("dashboard.networks")</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-4 single-action-container">
+            <div class="action">
+                <a href="/user/profile" class="action_link">
+                    <div class="action-img">
+                        <img src="/assets/images/dashboard/profile.png" width="215px">
+                    </div>
+                    <div class="center">
+                        <span >@Messages("dashboard.profile")</span>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
-
-    <div class="col-md-4 single-action-container">
-        <div class="action">
-            <a href="/networks" class="action_link">
-                <div class="action-img">
-                    <img src="/assets/images/dashboard/network.png" width="215px">
-                </div>
-                <div class="center">
-                    <span >@Messages("dashboard.networks")</span>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="col-md-4 single-action-container">
-        <div class="action">
-            <a href="/user/profile" class="action_link">
-                <div class="action-img">
-                    <img src="/assets/images/dashboard/gears_white.png" width="215px">
-                </div>
-                <div class="center">
-                    <span >@Messages("dashboard.profile")</span>
-                </div>
-            </a>
-        </div>
-    </div>
-
 </div>
 
 }

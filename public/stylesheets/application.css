@@ -56,7 +56,7 @@ input[type=number]:focus,
 }
 .basicContainer{
     display: block;
-    max-width: 1340px;
+    max-width: 980px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -170,6 +170,27 @@ input[type=number]:focus,
     color: #ffffff;
     border: solid #3380C0 2px;
     background-color: #3380C0;
+}
+
+#signoutLink {
+    -webkit-border-radius: 8;
+    -moz-border-radius: 8;
+    border-radius: 8px;
+    font-size: 14px;
+    /*padding: 10px 20px 10px 20px;*/
+    text-decoration: none;
+    border: solid #7740B3 2px;
+    color:white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-right: 10px;
+}
+
+#signoutLink:hover {
+    text-decoration: none;
+    color: #ffffff;
+    border: solid #7740B3 2px;
+    background-color: #7740B3;
 }
 
 .basicFormButton{
@@ -318,8 +339,23 @@ input.classic-input:focus{
 }
 
 /**********************************************************************************************************************/
+/****************************************************** NETWORK DETAIL ************************************************/
+/**********************************************************************************************************************/
+
+.followers-container{
+    float: left;
+    width:420px;
+}
+
+/**********************************************************************************************************************/
 /********************************************************** GENERAL ***************************************************/
 /**********************************************************************************************************************/
+
+.primary-container{
+    width:980px ;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .general-container{
     padding-left: 10% !important;
@@ -338,12 +374,59 @@ input.classic-input:focus{
 .main-container{
     position: relative;
     float:left;
+    width:650px;
 }
 
+/*************************************************** Side Container ***************************************************/
 .side-container{
     position: relative;
     float:right;
+    border: 1px solid #CCC;
+    border-radius: 3.01px;
+    /*box-shadow: 0.5px 0.5px 5px #888888;*/
+    min-width: 200px;
+    max-height: 142px;
 }
+
+.side-container-header{
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+    background-color: #5185B1;
+    border: 1px solid #5185B1;
+    border-radius: 3px 3px 0px 0px;
+    position: relative;
+    margin: 0px;
+    padding: 5px 10px;
+}
+
+.side-container > ul{
+    list-style-type: none;
+    padding-left:0;
+}
+
+.side-container > ul > li{
+
+}
+.side-container > ul > li > a{
+    text-decoration: none;
+}
+
+.side-container > ul > li:hover{
+    background-color: #f5f5f5;
+    text-decoration: none;
+}
+
+#side-container-title{
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    color:#ffffff;
+}
+
+.side-container-item{
+    padding: 5px 10px;
+}
+
+/*********************************************************************************************************************/
 
 .simple-table{
     display: table;
@@ -354,6 +437,11 @@ input.classic-input:focus{
 .simple-cell{
     border: 2px solid #ccc;
     padding: 5px;
+}
+
+.label-cell{
+    background-color: #88BEED;
+    color: white;
 }
 
 .big{
