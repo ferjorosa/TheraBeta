@@ -58,7 +58,6 @@ object DeviceController extends AuthConfigImpl with AuthElement {
   }
 
   //TODO flatMap or map?
-  //TODO Delete
   def listAll = Action.async{
     val f = Device.getAllDevices
     f.map(devices => Ok(views.html.Device.listDevices(devices.toList)))
@@ -66,4 +65,39 @@ object DeviceController extends AuthConfigImpl with AuthElement {
     //Ej: f onSuccess { case posts => for (post <- posts) println(post) }
   }
 
+  def deleteDevice(identifier: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "delete device"
+
+    Device.deleteDevice(user.username,identifier) map{res =>
+      if (res == true)
+        Redirect("/devices").flashing("Success" -> "Device removed correctly")
+      else
+        Redirect("/error/404")
+    }
+  }
+
+  def activateDevice(identifier: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "activate device"
+
+    Device.activateDevice(user.username,identifier)map { res =>
+      if (res == true)
+        Redirect("/devices/"+identifier).flashing("Success" -> "Device activated correctly")
+      else
+        Redirect("/error/404")
+    }
+  }
+
+  def deactivateDevice(identifier: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "deactivate device"
+
+    Device.deactivateDevice(user.username,identifier)map { res =>
+      if (res == true)
+        Redirect("/devices/"+identifier).flashing("Success" -> "Device deactivated correctly")
+      else
+        Redirect("/error/404")
+    }
+  }
 }

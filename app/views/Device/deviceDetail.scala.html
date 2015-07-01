@@ -11,36 +11,60 @@
             </ul>
         </div>
 
-        <div class="side-container">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active">@Messages("deviceDetail.actions")</li>
-                <li><a href="/messages/@device.Identifier">@Messages("deviceDetail.messages")</a></li>
-                <li><a href="#">@Messages("deviceDetail.delete")</a></li>
-            </ul>
-        </div>
-
         <div class="main-container">
+
+            <div class="side-container">
+                <div class="side-container-header">
+                    <h1 id="side-container-title">@Messages("deviceDetail.actions")</h1>
+                </div>
+                <ul class="">
+                    <li><a href="/messages/@device.Identifier">
+                        <div class="side-container-item">
+                        @Messages("deviceDetail.messages")
+                        </div>
+                    </a></li>
+                    @if(device.Activated){
+                        <li><a href="/devices/@device.Identifier/deactivate">
+                            <div class="side-container-item">
+                            @Messages("deviceDetail.deactivate")
+                            </div>
+                        </a></li>
+                    }else{
+                        <li><a href="/devices/@device.Identifier/activate">
+                            <div class="side-container-item">
+                            @Messages("deviceDetail.activate")
+                            </div>
+                        </a></li>
+                    }
+                    <li><a href="/devices/@device.Identifier/delete">
+                        <div class="side-container-item">
+                        @Messages("deviceDetail.delete")
+                        </div>
+                    </a></li>
+                </ul>
+            </div>
+
             <table class="simple-table">
                 <tbody>
                     <tr>
-                        <td class="simple-cell">@Messages("deviceDetail.identifier")</td>
+                        <td class="simple-cell label-cell">@Messages("deviceDetail.identifier")</td>
                         <td class="simple-cell">@device.Identifier</td>
                     </tr>
                     <tr>
-                        <td class="simple-cell">@Messages("deviceDetail.accountID")</td>
+                        <td class="simple-cell label-cell">@Messages("deviceDetail.accountID")</td>
                         <td class="simple-cell">@device.AccountID</td>
                     </tr>
                     <tr>
-                        <td class="simple-cell">@Messages("deviceDetail.activated")</td>
+                        <td class="simple-cell label-cell">@Messages("deviceDetail.activated")</td>
                         <td class="simple-cell">@device.Activated</td>
                     </tr>
                     <tr>
-                        <td class="simple-cell">@Messages("deviceDetail.deviceID")</td>
+                        <td class="simple-cell label-cell">@Messages("deviceDetail.deviceID")</td>
                         <td class="simple-cell">@device.DeviceID</td>
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
+        </div> @*main-container*@
+    </div>@*general-container*@
+</div>@*basic-container*@
 }

@@ -59,15 +59,21 @@ object Devices  extends Devices with PhantomCassandraConnector{
     .where(_.DeviceID eqs id)
     .future()
   }
-  //TODO we'll see if we need to pass the UUID or just the Object
-  //Update Device(Activate/Deactivate)
   //You can only update rows that are not part of the Primary Key
-  def updateDevice(deviceId:UUID,newDevice:Device):ScalaFuture[ResultSet] ={
+  def activateDevice(deviceId:UUID):ScalaFuture[ResultSet] ={
     update
       .where(_.DeviceID eqs deviceId)
-      .modify(_.Activated setTo newDevice.Activated)
+      .modify(_.Activated setTo true)
       .future()
   }
+
+  def deactivateDevice(deviceId:UUID):ScalaFuture[ResultSet] ={
+    update
+      .where(_.DeviceID eqs deviceId)
+      .modify(_.Activated setTo false)
+      .future()
+  }
+
   //Subscribe
   def subscribeDevice(subscriber:UUID, subscription:UUID):ScalaFuture[ResultSet] = {
     update
@@ -120,15 +126,23 @@ object DevicesByAccount extends DevicesByAccount with PhantomCassandraConnector{
     select.where(_.AccountID eqs Account).and(_.Identifier eqs id).one()
   }
 
-  //Update Device(Activate/Deactivate)
   //You can only update rows that are not part of the Primary Key
-  def updateDevice(oldDevice:Device, newDevice:Device):ScalaFuture[ResultSet] = {
+  def activateDevice(account: String,device: String):ScalaFuture[ResultSet] = {
     update
-      .where(_.AccountID eqs oldDevice.AccountID)
-      .and(_.Identifier eqs oldDevice.Identifier)
-      .modify(_.Activated setTo newDevice.Activated)
+      .where(_.AccountID eqs account)
+      .and(_.Identifier eqs device)
+      .modify(_.Activated setTo true)
       .future()
   }
+
+  def deactivateDevice(account: String,device: String):ScalaFuture[ResultSet] = {
+    update
+      .where(_.AccountID eqs account)
+      .and(_.Identifier eqs device)
+      .modify(_.Activated setTo false)
+      .future()
+  }
+
   //Delete Device
   def deleteDevice(account:String, identifier:String):ScalaFuture[ResultSet] = {
     delete

@@ -46,4 +46,8 @@ object Messages extends Messages with PhantomCassandraConnector{
   def getMessagesByRequest(request:MessagesRequest):ScalaFuture[Seq[Message]] = {
     select.where(_.DeviceID eqs request.DeviceID).and(_.EventTime gt request.EventTime).fetch()
   }
+  //Delete All Messages by DeviceID
+  def deleteAllMessagesByDevice(deviceID: UUID):ScalaFuture[ResultSet]={
+    delete.where(_.DeviceID eqs deviceID).future()
+  }
 }

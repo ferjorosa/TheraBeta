@@ -66,5 +66,7 @@ object Message{
     Messages.getMessagesByRequest(request)
   }
 
-
+  def deleteMessages(deviceID:UUID):ScalaFuture[Boolean]={
+    Messages.deleteAllMessagesByDevice(deviceID).map(res=> res.wasApplied())
+  }
 }

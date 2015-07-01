@@ -64,7 +64,7 @@ object FollowerController extends AuthConfigImpl with AuthElement{
 
               Redirect("/networks/"+networkName)
             }else
-              BadRequest("Error 404")
+              BadRequest("/error/404")
           }
         }
 
@@ -72,4 +72,22 @@ object FollowerController extends AuthConfigImpl with AuthElement{
     )//end-form-binder
   }//end-add-follower
 
-}
+  /*TODO: This method should be looked once again
+    Check: if the network exists, if those devices exist...etc
+  */
+  def deleteFollower(networkName: String, deviceX: String, deviceY: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "delete follower"
+
+    val deviceX_UUID = UUID.fromString(deviceX)
+    val deviceY_UUID = UUID.fromString(deviceY)
+    val follower = Follower(user.username,networkName,deviceX_UUID,deviceY_UUID,"ignored","ignored")
+
+    Follower.deleteFollower(follower).map{ res =>
+        if (res.wasApplied())
+          Redirect("/networks/"+networkName).flashing("success" -> "Follower removed correctly")
+        else
+          Redirect("/error/500")
+    }
+  }
+  }

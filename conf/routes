@@ -2,64 +2,76 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET         /                                            controllers.Application.index
+# Note: All those "Get/.../../delete" should be PUT or POST, never GET,
+# but i have no time to implement REST routes correctly
+# The same applies for activate, deactivate...etc
+
+##### Home page
+GET         /                                                      controllers.Application.index
+
+##### Errors
+GET         /error/:code                                           controllers.Application.error(code: Int)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                                controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                          controllers.Assets.at(path="/public", file)
 
-# IdentificationController
-GET         /user/signin                                 controllers.IdentificationController.signin
-POST        /user/signin                                 controllers.IdentificationController.authenticate
-GET         /user/register                               controllers.IdentificationController.register
-POST        /user/register                               controllers.IdentificationController.create
-GET         /user/signout                                controllers.IdentificationController.logout
-GET         /user/profile                                controllers.IdentificationController.myProfile
-POST        /user/profile                                controllers.IdentificationController.updateProfile
+##### IdentificationController
+GET         /user/signin                                           controllers.IdentificationController.signin
+POST        /user/signin                                           controllers.IdentificationController.authenticate
+GET         /user/register                                         controllers.IdentificationController.register
+POST        /user/register                                         controllers.IdentificationController.create
+GET         /user/signout                                          controllers.IdentificationController.logout
+GET         /user/profile                                          controllers.IdentificationController.myProfile
+POST        /user/profile                                          controllers.IdentificationController.updateProfile
 
-# DeviceController
-GET         /devices/register                            controllers.DeviceController.register
-POST        /devices/register                            controllers.DeviceController.addDevice
-GET         /devices                                     controllers.DeviceController.manageDevices
-GET         /devices/:identifier                         controllers.DeviceController.detailDevice(identifier: String)
+##### DeviceController
+GET         /devices/register                                      controllers.DeviceController.register
+POST        /devices/register                                      controllers.DeviceController.addDevice
+GET         /devices                                               controllers.DeviceController.manageDevices
+GET         /devices/:identifier                                   controllers.DeviceController.detailDevice(identifier: String)
+GET         /devices/:identifier/delete                            controllers.DeviceController.deleteDevice(identifier: String)
+GET         /devices/:identifier/activate                          controllers.DeviceController.activateDevice(identifier: String)
+GET         /devices/:identifier/deactivate                        controllers.DeviceController.deactivateDevice(identifier: String)
 
-# MessageController
-GET         /messages/:deviceName                        controllers.MessageController.listAllMessages(deviceName: String)
+##### MessageController
+GET         /messages/:deviceName                                  controllers.MessageController.listAllMessages(deviceName: String)
 
-# NetworkController
-GET         /networks                                    controllers.NetworkController.manageNetworks
-GET         /networks/register                           controllers.NetworkController.register
-POST        /networks/register                           controllers.NetworkController.addNetwork
-GET         /networks/:name                              controllers.NetworkController.detailNetwork(name: String)
+##### NetworkController
+GET         /networks                                              controllers.NetworkController.manageNetworks
+GET         /networks/register                                     controllers.NetworkController.register
+POST        /networks/register                                     controllers.NetworkController.addNetwork
+GET         /networks/:name                                        controllers.NetworkController.detailNetwork(name: String)
 
-# FollowerController
-GET         /networks/:networkName/register              controllers.FollowerController.register(networkName: String)
-POST        /networks/:networkName/register              controllers.FollowerController.addFollower(networkName: String)
+##### FollowerController
+GET         /networks/:networkName/register                        controllers.FollowerController.register(networkName: String)
+POST        /networks/:networkName/register                        controllers.FollowerController.addFollower(networkName: String)
 
-# UserController
-GET         /dashboard                                   controllers.Application.dashboard
+GET         /networks/:networkName/:deviceX/:deviceY/delete        controllers.FollowerController.deleteFollower(networkName: String, deviceX: String, deviceY: String)
+
+##### UserController
+GET         /dashboard                                             controllers.Application.dashboard
 
 #Just for test-purposes
-GET         /devices/all                                 controllers.DeviceController.listAll
-GET         /messages/insertMock/:deviceID               controllers.MessageController.insertMockMessage(deviceID: String)
-GET         /prueba/main                                 controllers.PruebaController.main
-GET         /prueba/devices                              controllers.PruebaController.devicesTest
+GET         /devices/all                                           controllers.DeviceController.listAll
+GET         /messages/insertMock/:deviceID                         controllers.MessageController.insertMockMessage(deviceID: String)
+GET         /prueba/main                                           controllers.PruebaController.main
+GET         /prueba/devices                                        controllers.PruebaController.devicesTest
 
 ###############################################################################
 ##################################  API  ######################################
 
-#DeviceAPI
-GET         /api/devices                                 controllers.api.DeviceControllerAPI.getAllDevices
+##### DeviceAPI
+GET         /api/devices                                           controllers.api.DeviceControllerAPI.getAllDevices
 
-#REST - MessageAPI
-GET         /api/messages/:id                            controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
-POST        /api/messages/save                           controllers.api.MessageControllerAPI.saveMessage
-GET         /api/messages/request                        controllers.api.MessageControllerAPI.getMessagesByRequest
+##### REST - MessageAPI
+GET         /api/messages/:id                                      controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
+POST        /api/messages/save                                     controllers.api.MessageControllerAPI.saveMessage
+GET         /api/messages/request                                  controllers.api.MessageControllerAPI.getMessagesByRequest
 
-#WebSocket - MessageAPI
-GET         /api/socket                                  controllers.api.WebSocketAPI.socket
-GET         /api/wsTime                                  controllers.api.WebSocketAPI.wsTime
+##### WebSocket - MessageAPI
+GET         /api/socket                                            controllers.api.WebSocketAPI.socket
+GET         /api/wsTime                                            controllers.api.WebSocketAPI.wsTime
 
-GET         /api/socketMessage/:deviceID/:message        controllers.api.WebSocketAPI.test_in(deviceID: Int, message:String)
-GET         /api/test_socket/:deviceID                   controllers.api.WebSocketAPI.test_out(deviceID: Int)
+GET         /api/socketMessage/:deviceID/:message                  controllers.api.WebSocketAPI.test_in(deviceID: Int, message:String)
+GET         /api/test_socket/:deviceID                             controllers.api.WebSocketAPI.test_out(deviceID: Int)
 
