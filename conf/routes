@@ -67,9 +67,9 @@ GET         /prueba/devices                                        controllers.P
 GET         /api/devices                                           controllers.api.DeviceControllerAPI.getAllDevices
 
 ##### REST - MessageAPI
-GET         /api/messages/:id                                      controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
-POST        /api/messages/save                                     controllers.api.MessageControllerAPI.saveMessage
 GET         /api/messages/request                                  controllers.api.MessageControllerAPI.getMessagesByRequest
+POST        /api/messages/save                                     controllers.api.MessageControllerAPI.saveMessage
+GET         /api/messages/:id                                      controllers.api.MessageControllerAPI.getMessagesByDeviceID(id)
 
 ##### WebSocket - MessageAPI
 GET         /api/socket                                            controllers.api.WebSocketAPI.socket

@@ -47,7 +47,7 @@ object Network{
   //Only one network active at a time, so when a network is activated, the rest are deactivated
   def activateNetwork(accountID: String,name: String): ScalaFuture[Boolean] ={
     // Generate a Combined future: when the first list of futures is finished the second one will take place
-    // TODO: Does it correctly?, does it really waits till the deactivation takes place to activate the network???
+    // TODO: Does it correctly?, does it really waits until the deactivation takes place to activate the network???
     // Resp: I think it iterates through all the networks and then send a seq of futures, but it doesnt
     // start to activate until it has send the seq, so it will never deactivate a network that it is been activated
     val deactivation = Network.getNetworks(accountID) map{ networks =>

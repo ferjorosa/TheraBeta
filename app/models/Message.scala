@@ -19,7 +19,7 @@ case class Message(
                     eventTime:DateTime,
                     content: Map[String, String]){
 
-  def formattedEventTime:String ={
+  def formattedEventTime: String ={
     val dtf = DateTimeFormat.forPattern("dd/MM/yyyy HH:mm:ss")
     dtf.print(eventTime)
   }
@@ -40,6 +40,9 @@ object Message{
     (JsPath \ "content").read[Map[String,String]]
   )(Message.apply _)
 
+  //TODO: Too much computation??
+  //TODO: Should change Boolean for a self-made Result
+  //TODO: Look into this method, lots of things to change (the device is returned in the controller to check if its active, for example)
   def save(message: Message): ScalaFuture[Boolean] ={
     Messages.insertNewMessage(message)
 
@@ -53,9 +56,35 @@ object Message{
       followerID <- followerIDs
     } Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
 
+    /*Device.getDeviceById(message.deviceID) flatMap{
+      case Some(device:Device) =>
+
+        val messagePropagation = for{
+          networks <- Network.getNetworks(device.AccountID)
+          network <- networks
+          if network.activated
+          followerIDs <- Follower.getAllFollowersIDs(device.AccountID, network.name,message.deviceID)
+          followerID <- followerIDs
+        }yield Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+
+        messagePropagation.flatMap{insertionSeq =>
+          for(insert <- insertionSeq)
+            if(insert.wasApplied)
+              ScalaFuture.successful(true)
+            else
+              ScalaFuture.successful(false)
+        }
+
+      case None => ScalaFuture.successful(false)
+    }
+    */
     //TODO: map the result insertions, if all good => true; else => false
     ScalaFuture.successful(true)
 
+  }
+
+  def insertMessage(message: Message): ScalaFuture[Boolean] ={
+    Messages.insertNewMessage(message).map(res=> res.wasApplied())
   }
 
   def getMessages(deviceID:UUID):ScalaFuture[Seq[Message]] ={
