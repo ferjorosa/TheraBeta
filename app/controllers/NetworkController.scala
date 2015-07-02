@@ -13,7 +13,7 @@ object NetworkController extends AuthConfigImpl with AuthElement {
   val networkRegisterForm:Form[Network]= Form(mapping(
     "accountID"-> ignored("default"),
     "name" -> text(minLength = 2, maxLength = 32),
-    "activated" -> ignored(true)//TODO: It should be false adn then be activated by the user...etc, test purposes...
+    "activated" -> ignored(false)//When a new network is created is deactivated by default
   )(Network.apply)(Network.unapply))
 
   def manageNetworks = AsyncStack(AuthorityKey -> NormalUser){implicit request =>
@@ -46,9 +46,50 @@ object NetworkController extends AuthConfigImpl with AuthElement {
   def detailNetwork(networkName: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
     val user = loggedIn
     val title = "network detail"
-    val f = Follower.getAllFollowers(user.username,networkName)
 
-    f.map(followers => Ok(views.html.Network.networkDetail(followers.toList,networkName)))
+    Network.getNetwork(user.username,networkName) flatMap{
+      case Some(network)=>
+        Follower.getAllFollowers(user.username,network.name).map{
+          followers => Ok(views.html.Network.networkDetail(followers.toList,network))
+      }
+      case None => Future.successful(Redirect("/error/404"))
+    }
+  }
+
+  def deleteNetwork(networkName: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "delete network"
+
+    Network.deleteNetwork(user.username,networkName)map { res =>
+      if (res == true)
+        Redirect("/networks").flashing("Success" -> "Network removed correctly")
+      else
+        Redirect("/error/404")
+    }
+  }
+
+  def activateNetwork(networkName: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "activate network"
+
+    Network.activateNetwork(user.username,networkName)map { res =>
+      if (res == true)
+        Redirect("/networks/"+networkName).flashing("Success" -> "Network activated correctly")
+      else
+        Redirect("/error/404")
+    }
+  }
+
+  def deactivateNetwork(networkName: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
+    val user = loggedIn
+    val title = "deactivate network"
+
+    Network.deactivateNetwork(user.username,networkName)map { res =>
+      if (res == true)
+        Redirect("/networks/"+networkName).flashing("Success" -> "Network deactivated correctly")
+      else
+        Redirect("/error/404")
+    }
   }
 
 }

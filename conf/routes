@@ -41,6 +41,9 @@ GET         /networks                                              controllers.N
 GET         /networks/register                                     controllers.NetworkController.register
 POST        /networks/register                                     controllers.NetworkController.addNetwork
 GET         /networks/:name                                        controllers.NetworkController.detailNetwork(name: String)
+GET         /networks/:name/delete                                 controllers.NetworkController.deleteNetwork(name: String)
+GET         /networks/:name/activate                               controllers.NetworkController.activateNetwork(name: String)
+GET         /networks/:name/deactivate                             controllers.NetworkController.deactivateNetwork(name: String)
 
 ##### FollowerController
 GET         /networks/:networkName/register                        controllers.FollowerController.register(networkName: String)

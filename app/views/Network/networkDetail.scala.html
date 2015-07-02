@@ -1,4 +1,4 @@
-@(followers: List[Follower],name: String)
+@(followers: List[Follower],network: Network)
 @Layouts.mainPrivate(Messages("networkDetail.title")) {
 <div class="basicContainer">
     <div class="general-container">
@@ -7,7 +7,7 @@
             <ul class="breadcrumb">
                 <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
                 <li class="big"><a href="/networks">@Messages("breadcrumb.networks")</a></li>
-                <li class="active big">@name</li>
+                <li class="active big">@network.name</li>
             </ul>
         </div>
 
@@ -15,12 +15,25 @@
 
             <div class="side-container">
                 <div class="side-container-header">
-                    <h1 id="side-container-title">@Messages("deviceDetail.actions")</h1>
+                    <h1 id="side-container-title">@Messages("networkDetail.actions")</h1>
                 </div>
                 <ul class="">
-                    <li><a href="#">
+                    @if(network.activated){
+                        <li><a href="/networks/@network.name/deactivate">
+                            <div class="side-container-item">
+                            @Messages("networkDetail.deactivate")
+                            </div>
+                        </a></li>
+                    }else{
+                        <li><a href="/networks/@network.name/activate">
+                            <div class="side-container-item">
+                            @Messages("networkDetail.activate")
+                            </div>
+                        </a></li>
+                    }
+                    <li><a href="/networks/@network.name/delete">
                         <div class="side-container-item">
-                        @Messages("networkDetail.deleteNetwork")
+                        @Messages("networkDetail.delete")
                         </div>
                     </a></li>
                 </ul>
@@ -29,10 +42,6 @@
             @if(followers.isEmpty) {
                 <div class="followers-container">
                     <p>@Messages("networkDetail.noFollowers")</p>
-
-                    <div class="center">
-                        <a href="/networks/@name/register" class="btn btn-primary btn-lg">@Messages("networkDetail.newFollower")</a>
-                    </div>
                 </div>
 
             }else{
@@ -63,7 +72,7 @@
         </div>
 
         <div class="center">
-            <a href="/networks/@name/register" class="btn btn-primary btn-lg">@Messages("networkDetail.newFollower")</a>
+            <a href="/networks/@network.name/register" class="btn btn-primary btn-lg">@Messages("networkDetail.newFollower")</a>
         </div>
     </div>
 </div>

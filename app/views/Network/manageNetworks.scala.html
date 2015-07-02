@@ -22,7 +22,11 @@
                 <ul class="list-group">
                     @for(network <- networks) {
                         <li class="list-group-item">
-                            <span class="badge">@Messages("active")</span>
+                            @if(network.activated) {
+                                <span class="badge green-background">@Messages("active")</span>
+                            }else{
+                                <span class="badge red-background">@Messages("inactive")</span>
+                            }
                             <a class="big" href="/networks/@network.name">@network.name</a>
                             <p class="no-margin-bot">@Messages("manageNetworks.privateNetwork")</p>
                         </li>

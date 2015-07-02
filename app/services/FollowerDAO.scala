@@ -70,6 +70,14 @@ object Following extends Following with PhantomCassandraConnector{
       .and(_.DeviceB eqs follower.deviceY)
       .future()
   }
+
+  //Delete All
+  def deleteAllFollowings(accountID: String,networkID: String): ScalaFuture[ResultSet] ={
+    delete
+      .where(_.AccountID eqs accountID)
+      .and(_.NetworkID eqs networkID)
+      .future()
+  }
 }
 
 //Inverse to 'Following'
@@ -133,5 +141,13 @@ object Followed extends Followed with PhantomCassandraConnector{
     .and(_.DeviceA eqs follower.deviceY)
     .and(_.DeviceB eqs follower.deviceX)
     .future()
+  }
+
+  //Delete All
+  def deleteAllFolloweds(accountID: String,networkID: String): ScalaFuture[ResultSet] ={
+    delete
+      .where(_.AccountID eqs accountID)
+      .and(_.NetworkID eqs networkID)
+      .future()
   }
 }

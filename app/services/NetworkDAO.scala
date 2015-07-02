@@ -59,4 +59,20 @@ object Networks extends Networks with PhantomCassandraConnector{
       .and(_.Name eqs name)
       .future()
   }
+  //Activate a network
+  def activateNetwork(accountID: String,name: String): ScalaFuture[ResultSet] ={
+    update
+      .where(_.AccountID eqs accountID)
+      .and(_.Name eqs name)
+      .modify(_.Activated setTo true)
+      .future()
+  }
+  //Deactivate a network
+  def deactivateNetwork(accountID: String,name: String): ScalaFuture[ResultSet] ={
+    update
+      .where(_.AccountID eqs accountID)
+      .and(_.Name eqs name)
+      .modify(_.Activated setTo false)
+      .future()
+  }
 }

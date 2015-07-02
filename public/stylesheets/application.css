@@ -451,3 +451,11 @@ input.classic-input:focus{
 .no-margin-bot{
     margin-bottom: 0px;
 }
+
+.green-background{
+    background-color: #4FD800;
+}
+
+.red-background{
+    background-color: #D80000;
+}

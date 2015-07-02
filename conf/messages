@@ -4,6 +4,7 @@
 #General
 empty = Empty
 active = Active
+inactive = Inactive
 
 #Errors
 error.title = Error
@@ -20,7 +21,7 @@ breadcrumb.networks = Networks
 footer.copyright = All Rights Reserved.
 footer.university = University of Oviedo
 
-########### Index ###########
+################################# Index #################################
 index.title = Thera
 index.jumbotron.h1 = The Internet Of Things
 index.jumbotron.p = A NOT SO FAR AWAY FUTURE
@@ -33,7 +34,7 @@ index.heading1.text = Thera is an open source platform for building, managing an
 index.heading2.text = Connect your devices fast and easy. Thera uses different technologies to make your messages flow constantly. With its easy interface you can create a network of devices in a few minutes.
 index.heading3.text = Thera uses Cassandra as its Database. It also has a scalable architecture based on message-driven technologies like Akka and Play Framework.
 
-########### Devices ###########
+################################# Devices #################################
 deviceDetail.title = Device Details
 deviceDetail.actions = Actions
 deviceDetail.delete = Delete
@@ -59,14 +60,14 @@ registerDevice.legend = Name your new device
 registerDevice.identifierInput = Identifier
 registerDevice.newDevice = Register Device
 
-########### Messages ###########
+################################# Messages #################################
 showMessages.title = Messages
 showMessages.noMessages = No Messages :(
 showMessages.content = Content
 showMessages.eventTime = Event Time
 showMessages.show = Show
 
-########## Networks ###########
+################################# Networks #################################
 manageNetworks.title = My Networks
 manageNetworks.legend = My Networks
 manageNetworks.noNetworks = No Networks :(
@@ -86,6 +87,8 @@ networkDetail.from = From
 networkDetail.to = To
 networkDetail.follows = Follows
 networkDetail.delete = Delete
+networkDetail.deactivate = Deactivate
+networkDetail.activate = Activate
 networkDetail.deleteNetwork = Delete Network
 
 registerFollower.title = New Follower
@@ -94,7 +97,7 @@ registerFollower.follows = Follows
 registerFollower.deviceB = Device B
 registerFollower.newFolower = Register Follower
 
-########## Accounts ###########
+################################# Accounts #################################
 dashboard.title = Dashboard
 dashboard.devices = Devices
 dashboard.networks = Networks

@@ -4,7 +4,7 @@ import java.util.UUID
 
 import com.datastax.driver.core.ResultSet
 import services.{Followed, Following}
-
+import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.{Future => ScalaFuture}
 
 /**
@@ -22,7 +22,7 @@ case class Follower(
 }
 
 object Follower{
-
+  //TODO Return Boolean
    def insertNewFollower(follower:Follower): ScalaFuture[ResultSet] = {
      Following.insertNewFollowing(follower)
      Followed.insertNewFollowed(follower)
@@ -43,9 +43,16 @@ object Follower{
   def getAllDevicesBeingFollowedBy(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
     Following.getFollowingsOfDevice(accountID,networkID,deviceID)
   }
-  //TODO Which ResultSet should return (or both)
+  //TODO Return Boolean
   def deleteFollower(follower:Follower): ScalaFuture[ResultSet] = {
     Follower.deleteFollower(follower)
     Following.deleteFollowing(follower)
+  }
+
+  def deleteAllFollowers(accountID: String,networkID: String): ScalaFuture[Boolean]={
+    for{
+      result1 <- Following.deleteAllFollowings(accountID,networkID)
+      result2 <- Followed.deleteAllFolloweds(accountID,networkID)
+    }yield result1.wasApplied() && result2.wasApplied()
   }
 }
