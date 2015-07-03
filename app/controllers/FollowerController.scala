@@ -34,7 +34,12 @@ object FollowerController extends AuthConfigImpl with AuthElement {
     val user = loggedIn
     val title = "new follower"
     val f = Device.getDevicesByAccountId(user.username)
-    f.map(devices => Ok(views.html.Network.registerFollower(followerRegisterForm, networkName, devices.toList)))
+    f.map(devices =>
+      if(devices.isEmpty)
+        Redirect("/networks/"+networkName).flashing("Error" -> "No devices yet registered")
+      else
+        Ok(views.html.Network.registerFollower(followerRegisterForm, networkName, devices.toList))
+    )
   }
 
   def addFollower(networkName: String) = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
@@ -64,7 +69,7 @@ object FollowerController extends AuthConfigImpl with AuthElement {
                   devices._1.get.Identifier,
                   devices._2.get.Identifier))
 
-              Redirect("/networks/" + networkName)
+              Redirect("/networks/" + networkName +"/followers")
             } else
               BadRequest("/error/404")
           }
@@ -87,7 +92,7 @@ object FollowerController extends AuthConfigImpl with AuthElement {
 
     Follower.deleteFollower(follower).map { res =>
       if (res.wasApplied())
-        Redirect("/networks/" + networkName).flashing("success" -> "Follower removed correctly")
+        Redirect("/networks/" + networkName + "/followers").flashing("success" -> "Follower removed correctly")
       else
         Redirect("/error/500")
     }

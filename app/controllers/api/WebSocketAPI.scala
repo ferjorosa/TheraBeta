@@ -4,7 +4,6 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 import actors._
-import akka.actor.{ Props}
 import akka.pattern._
 import akka.util.Timeout
 import models.Device
@@ -22,8 +21,8 @@ import scala.concurrent.Future
  */
 object WebSocketAPI extends Controller{
 
-  val testActor = Akka.system.actorOf(Props[TestActor],"testActor")
-  val webSocketsActor = Akka.system.actorOf(Props[WebSocketsActor], "webSocketsActor")
+  val testActor = Akka.system.actorSelection("akka://application/user/testActor")
+  val webSocketsActor = Akka.system.actorSelection("akka://application/user/webSocketsActor")
 
   def socket = WebSocket.acceptWithActor[String, String] { request => out =>
     MyWebSocketActor.props(out)
@@ -40,6 +39,7 @@ object WebSocketAPI extends Controller{
       (inIteratee, outEnumerator)
     }
   }
+
   //just a mock method to send new messages to the actor to see how it reacts
   def test_in(deviceID: Int,message :String) = Action {
     testActor ! newMessage(deviceID,message)
@@ -53,7 +53,7 @@ object WebSocketAPI extends Controller{
       implicit val timeout = Timeout(3,TimeUnit.SECONDS)
       //Generates one enumerator
       for {
-          outEnumerator <- (testActor ? StartSocket(deviceID)) map {enumerator =>
+            outEnumerator <- (testActor ? StartSocket(deviceID)) map {enumerator =>
             enumerator.asInstanceOf[Enumerator[String]]
         }
       //Generates one iteratee that ignores all the messages received (they should be Strings)

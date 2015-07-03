@@ -35,6 +35,7 @@ GET         /devices/:identifier/deactivate                        controllers.D
 
 ##### MessageController
 GET         /messages/:deviceName                                  controllers.MessageController.listAllMessages(deviceName: String)
+GET         /messages/:deviceName/deleteAll                        controllers.MessageController.deleteAll(deviceName: String)
 
 ##### NetworkController
 GET         /networks                                              controllers.NetworkController.manageNetworks
@@ -54,7 +55,7 @@ GET         /networks/:networkName/:deviceX/:deviceY/delete        controllers.F
 ##### UserController
 GET         /dashboard                                             controllers.Application.dashboard
 
-#Just for test-purposes
+#Just for test-purposesc
 GET         /devices/all                                           controllers.DeviceController.listAll
 GET         /messages/insertMock/:deviceID                         controllers.MessageController.insertMockMessage(deviceID: String)
 GET         /prueba/main                                           controllers.PruebaController.main
@@ -77,4 +78,6 @@ GET         /api/wsTime                                            controllers.a
 
 GET         /api/socketMessage/:deviceID/:message                  controllers.api.WebSocketAPI.test_in(deviceID: Int, message:String)
 GET         /api/test_socket/:deviceID                             controllers.api.WebSocketAPI.test_out(deviceID: Int)
+
+GET         /api/connectWS/:deviceID                               controllers.api.WebSocketAPI.connectDevice(deviceID: String)
 

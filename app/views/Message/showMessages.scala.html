@@ -16,7 +16,7 @@
 
         @if(messages.isEmpty) {
 
-            <p>@Messages("showMessages.noMessages")</p>
+            <p class="super-big center">@Messages("showMessages.noMessages")</p>
 
         }else{
                 <table class="table table-hover ">
@@ -55,15 +55,18 @@
                 </table>
             }
 
-    <script type="text/javascript">
-        $(".expandable" ).hide()
-
-        $(".asButton").click(function() {
-        $(this).closest('tr').next('tr.expandable').fadeToggle();
-        })
-    </script>
+        <div class="center">
+            <a href="/messages/@deviceName/deleteAll" class="btn btn-primary btn-lg no-margin-left">@Messages("showMessages.deleteAll")</a>
+        </div>
 
     </div>
 </div>
+
+<script type="text/javascript">
+$(".expandable" ).hide()
+$(".asButton").click(function() {
+$(this).closest('tr').next('tr.expandable').fadeToggle();
+})
+</script>
 }
 

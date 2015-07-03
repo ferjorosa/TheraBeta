@@ -12,13 +12,12 @@
             </ul>
         </div>
 
-        <div class="main-container">
 
             @if(followers.isEmpty) {
                     <p class="super-big center">@Messages("networkDetail.noFollowers")</p>
 
             }else{
-                <div class="followers-container">
+                <div>
                     <table class="table table-striped table-hover ">
                         <thead>
                             <tr>
@@ -42,7 +41,6 @@
 
                 </div>
             }
-        </div>
 
         <div class="center">
             <a href="/networks/@networkName/register" class="btn btn-primary btn-lg">@Messages("networkDetail.newFollower")</a>

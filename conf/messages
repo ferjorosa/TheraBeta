@@ -68,6 +68,7 @@ showMessages.noMessages = No Messages :(
 showMessages.content = Content
 showMessages.eventTime = Event Time
 showMessages.show = Show
+showMessages.deleteAll = Delete All
 
 ################################# Networks #################################
 manageNetworks.title = My Networks

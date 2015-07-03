@@ -30,7 +30,11 @@ class WebSocketsActor extends Actor{
     //This will be the most used method. Every time a device receives a message this method should be called...
     case newMessageWS(deviceID,msg) =>
       webSockets.get(deviceID) match {
-        case Some(element) => element.channel push msg
+        case Some(element) => {
+          Logger.info("webSocketsActor: new message received from "+deviceID+" sending it to open connection")
+          element.channel push msg
+        }
+        case None => Logger.warn("webSocketsActor: "+deviceID+" doesn't have an open connection")
       }
 
     case WebSocketClosed(deviceID)=>

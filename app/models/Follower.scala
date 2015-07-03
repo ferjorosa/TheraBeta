@@ -45,7 +45,7 @@ object Follower{
   }
   //TODO Return Boolean
   def deleteFollower(follower:Follower): ScalaFuture[ResultSet] = {
-    Follower.deleteFollower(follower)
+    Followed.deleteFollowed(follower)
     Following.deleteFollowing(follower)
   }
 
