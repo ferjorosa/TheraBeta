@@ -16,6 +16,8 @@ breadcrumb.devices = Devices
 breadcrumb.new = New
 breadcrumb.messages = Messages
 breadcrumb.networks = Networks
+breadcrumb.profile = Profile
+breadcrumb.connections = Connections
 
 #Layout - Public
 footer.copyright = All Rights Reserved.
@@ -82,7 +84,7 @@ registerNetwork.newNetwork = Register network
 
 networkDetail.title = Network Details
 networkDetail.noFollowers = Empty Network :(
-networkDetail.newFollower = New Follower
+networkDetail.newFollower = New Connection
 networkDetail.from = From
 networkDetail.to = To
 networkDetail.follows = Follows
@@ -90,12 +92,20 @@ networkDetail.delete = Delete
 networkDetail.deactivate = Deactivate
 networkDetail.activate = Activate
 networkDetail.deleteNetwork = Delete Network
+networkDetail.actions = Actions
+networkDetail.networkName = Network Name
+networkDetail.activated= Activated
+networkDetail.accountID = Account ID
+networkDetail.privateNetwork = Private Network
+networkDetail.followers = Connections
+
+manageFollowers.title = Followers
 
 registerFollower.title = New Follower
 registerFollower.deviceA = Device A
 registerFollower.follows = Follows
 registerFollower.deviceB = Device B
-registerFollower.newFolower = Register Follower
+registerFollower.newFolower = Register Connection
 
 ################################# Accounts #################################
 dashboard.title = Dashboard

@@ -15,8 +15,8 @@
 
             @if(networks.isEmpty) {
 
-                <p>@Messages("manageNetworks.noNetworks")</p>
-                <p>@Messages("manageNetworks.availableNetworks")</p>
+                <p class="center super-big no-margin-bot">@Messages("manageNetworks.noNetworks")</p>
+                <p class="center big">@Messages("manageNetworks.availableNetworks")</p>
 
             }else{
                 <ul class="list-group">
@@ -35,7 +35,7 @@
             }
 
             <div class="center">
-                <a href="/networks/register" class="btn btn-primary btn-lg">@Messages("manageNetworks.newNetwork")</a>
+                <a href="/networks/register" class="btn btn-primary btn-lg no-margin-left">@Messages("manageNetworks.newNetwork")</a>
             </div>
 
         </div>

@@ -48,7 +48,7 @@ GET         /networks/:name/deactivate                             controllers.N
 ##### FollowerController
 GET         /networks/:networkName/register                        controllers.FollowerController.register(networkName: String)
 POST        /networks/:networkName/register                        controllers.FollowerController.addFollower(networkName: String)
-
+GET         /networks/:networkName/followers                       controllers.FollowerController.listFollowers(networkName: String)
 GET         /networks/:networkName/:deviceX/:deviceY/delete        controllers.FollowerController.deleteFollower(networkName: String, deviceX: String, deviceY: String)
 
 ##### UserController

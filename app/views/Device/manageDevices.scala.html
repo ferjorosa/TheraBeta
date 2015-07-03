@@ -12,19 +12,18 @@
         </div>
 
 
-        <div class="input-group">
-            <span class="input-group-addon"><i class="fa fa-search"></i></span>
-            <input class="classic-input" type="text" placeholder="@Messages("manageDevices.searchText")">
-        </div>
-
-
 
         @if(devices.isEmpty) {
 
-            <p>@Messages("manageDevices.noDevices")</p>
+            <p class="center super-big">@Messages("manageDevices.noDevices")</p>
 
         }else{
         <div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input class="classic-input" type="text" placeholder="@Messages("manageDevices.searchText")">
+            </div>
+
             <table class="table table-hover ">
                 <thead>
                     <tr>
@@ -48,7 +47,7 @@
     }
 
         <div class="center">
-            <a href="/devices/register" class="btn btn-primary btn-lg">@Messages("manageDevices.newDevice")</a>
+            <a href="/devices/register" class="btn btn-primary btn-lg no-margin-left">@Messages("manageDevices.newDevice")</a>
         </div>
     </div>
 </div>

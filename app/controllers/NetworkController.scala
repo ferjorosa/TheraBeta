@@ -1,7 +1,7 @@
 package controllers
 
 import jp.t2v.lab.play2.auth.AuthElement
-import models.{Follower, Network, NormalUser}
+import models.{Network, NormalUser}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.libs.concurrent.Execution.Implicits._
@@ -47,12 +47,11 @@ object NetworkController extends AuthConfigImpl with AuthElement {
     val user = loggedIn
     val title = "network detail"
 
-    Network.getNetwork(user.username,networkName) flatMap{
+    Network.getNetwork(user.username,networkName) map{
       case Some(network)=>
-        Follower.getAllFollowers(user.username,network.name).map{
-          followers => Ok(views.html.Network.networkDetail(followers.toList,network))
-      }
-      case None => Future.successful(Redirect("/error/404"))
+        Ok(views.html.Network.networkDetail(network))
+
+      case None => Redirect("/error/404")
     }
   }
 

@@ -3,106 +3,120 @@
 @import views.html.helper._
 
 @Layouts.mainPrivate(Messages("profile.title")) {
-    <div id="signin">
-        @if(userForm.hasErrors){
-            <div class="alert alert-dismissable alert-danger">
-                <button type="button" class="close" data-dismiss="alert">×</button>
-                <p>@Messages("signinGlobalError")</p>
+
+    <div class="basicContainer">
+        <div class="general-container">
+
+            <div class="breadcrumb-container">
+                <ul class="breadcrumb">
+                    <li class="big"><a href="/dashboard">@Messages("breadcrumb.home")</a></li>
+                    <li class="active big">@Messages("breadcrumb.profile")</li>
+                </ul>
             </div>
-        }
-        <form class="form-horizontal" action="/user/profile" method="POST">
-            <fieldset>
-                <legend>@Messages("profile.legend")</legend>
-                    <!--Username-->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputText(userForm("Username"),
-                        '_label -> Messages("register.username"),
-                        'placeholder -> account.username,
-                        /*'class -> "input-block",*/
-                        '_help -> "You cannot modify your username",
-                        '_error -> userForm.globalError,
-                        'readonly ->"readonly",
-                        '_showConstraints -> false)
-                    </div>
+
+            @if(userForm.hasErrors){
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <p>@Messages("signinGlobalError")</p>
                 </div>
+            }
+            <legend>@Messages("profile.legend")</legend>
 
-                    <!--Password-->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputPassword(userForm("Password.main"),
-                        '_label -> Messages("profile.password"),
-                        /*'class -> "input-block",*/
-                        '_help -> Messages("register.passwordHelp"),
-                        '_showConstraints -> false)
-                    </div>
-                </div>
+            <div id="signin">
+                <form class="form-horizontal" action="/user/profile" method="POST">
+                    <fieldset>
 
-                    <!--Repeat Password-->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputPassword(userForm("Password.confirm"),
-                        '_label -> Messages("profile.confirmPassword"),
-                        /*'class -> "input-block",*/
-                        '_showConstraints -> false)
-                    </div>
-                </div>
+                            <!--Username-->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputText(userForm("Username"),
+                                '_label -> Messages("register.username"),
+                                'placeholder -> account.username,
+                                /*'class -> "input-block",*/
+                                '_help -> "You cannot modify your username",
+                                '_error -> userForm.globalError,
+                                'readonly ->"readonly",
+                                '_showConstraints -> false)
+                            </div>
+                        </div>
 
-                    <!-- Email -->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputText(userForm("Email"),
-                        '_label -> Messages("register.email"),
-                        'placeholder -> account.email,
-                        /*'class -> "input-block",*/
-                        '_help -> "Please introduce a valid email.",
-                        '_error -> userForm.globalError,
-                        '_showConstraints -> false)
+                            <!--Password-->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputPassword(userForm("Password.main"),
+                                '_label -> Messages("profile.password"),
+                                /*'class -> "input-block",*/
+                                '_help -> Messages("register.passwordHelp"),
+                                '_showConstraints -> false)
+                            </div>
+                        </div>
 
-                    </div>
-                </div>
+                            <!--Repeat Password-->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputPassword(userForm("Password.confirm"),
+                                '_label -> Messages("profile.confirmPassword"),
+                                /*'class -> "input-block",*/
+                                '_showConstraints -> false)
+                            </div>
+                        </div>
 
-                    <!--Real Name-->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputText(userForm("RealName"),
-                        '_label -> Messages("register.realName"),
-                        'placeholder -> account.realName,
-                        /*'class -> "input-block",*/
-                        '_showConstraints -> false)
-                    </div>
-                </div>
+                            <!-- Email -->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputText(userForm("Email"),
+                                '_label -> Messages("register.email"),
+                                'placeholder -> account.email,
+                                /*'class -> "input-block",*/
+                                '_help -> "Please introduce a valid email.",
+                                '_error -> userForm.globalError,
+                                '_showConstraints -> false)
 
-                    <!--Country-->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputText(userForm("Country"),
-                        '_label -> Messages("register.country"),
-                        'placeholder -> account.country,
-                        /*'class -> "input-block",*/
-                        '_showConstraints -> false)
-                    </div>
-                </div>
+                            </div>
+                        </div>
 
-                    <!--Country-->
-                <div class="form-group">
-                    <div class="col-lg-10">
-                    @inputText(userForm("PhoneNumber"),
-                        '_label -> Messages("register.phoneNumber"),
-                        'placeholder -> account.phoneNumber,
-                        /*'class -> "input-block",*/
-                        '_showConstraints -> false)
-                    </div>
-                </div>
+                            <!--Real Name-->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputText(userForm("RealName"),
+                                '_label -> Messages("register.realName"),
+                                'placeholder -> account.realName,
+                                /*'class -> "input-block",*/
+                                '_showConstraints -> false)
+                            </div>
+                        </div>
 
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <button type="submit" class="btn btn-primary">@Messages("profile.applyChanges")</button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+                            <!--Country-->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputText(userForm("Country"),
+                                '_label -> Messages("register.country"),
+                                'placeholder -> account.country,
+                                /*'class -> "input-block",*/
+                                '_showConstraints -> false)
+                            </div>
+                        </div>
 
+                            <!--Country-->
+                        <div class="form-group">
+                            <div class="col-lg-10">
+                            @inputText(userForm("PhoneNumber"),
+                                '_label -> Messages("register.phoneNumber"),
+                                'placeholder -> account.phoneNumber,
+                                /*'class -> "input-block",*/
+                                '_showConstraints -> false)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="submit" class="btn btn-primary">@Messages("profile.applyChanges")</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
     </div>
-
 }
