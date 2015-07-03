@@ -1,15 +1,22 @@
 package models
 
 import java.util.UUID
+import java.util.concurrent.TimeUnit
 
+import actors.newMessageWS
+import akka.util.Timeout
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
+import play.Logger
+import play.api.libs.concurrent.Akka
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsPath, Reads, Writes}
 import services.Messages
-
+import play.api.Play.current
+import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.{Future => ScalaFuture}
+import scala.util.{Failure, Success}
 
 /**
  * Created by Fer on 11/03/2015.
@@ -54,7 +61,17 @@ object Message{
       if network.activated
       followerIDs <- Follower.getAllFollowersIDs(device.get.AccountID, network.name,message.deviceID)
       followerID <- followerIDs
-    } Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+    }{
+      Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+      //Notify the webSocketsActor that a new message has arrived
+      implicit val timeout = Timeout(FiniteDuration(1, TimeUnit.SECONDS))
+      Akka.system.actorSelection("user/" + "webSocketsActor").resolveOne().onComplete {
+        case Success(actorRef) => actorRef ! newMessageWS(device.get.DeviceID,message.content.toString())
+        case Failure(ex) => Logger.warn("Akka: user/" + "webSocketsActor" + " does not exist")
+      }
+    }
+    //TODO: map the result insertions, if all good => true; else => false
+    ScalaFuture.successful(true)
 
     /*Device.getDeviceById(message.deviceID) flatMap{
       case Some(device:Device) =>
@@ -78,9 +95,6 @@ object Message{
       case None => ScalaFuture.successful(false)
     }
     */
-    //TODO: map the result insertions, if all good => true; else => false
-    ScalaFuture.successful(true)
-
   }
 
   def insertMessage(message: Message): ScalaFuture[Boolean] ={
