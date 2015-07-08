@@ -41,7 +41,7 @@ sealed class Accounts extends CassandraTable[Accounts,Account]{
 }
 
 /**
- * Singleton class containing the DataBase methods
+ * Companion object (Singleton class) containing the DataBase methods
  */
 object Accounts extends Accounts with PhantomCassandraConnector{
 

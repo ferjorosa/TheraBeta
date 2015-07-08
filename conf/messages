@@ -87,6 +87,8 @@ registerNetwork.title = New Network
 registerNetwork.legend = Name your new network
 registerNetwork.nameInput = Name
 registerNetwork.newNetwork = Register network
+registerNetwork.networkAlreadyExists = Network already exists
+registerNetwork.successful = Network successfully registered
 
 networkDetail.title = Network Details
 networkDetail.noFollowers = Empty Network :(
@@ -104,6 +106,9 @@ networkDetail.activated= Activated
 networkDetail.accountID = Account ID
 networkDetail.privateNetwork = Private Network
 networkDetail.followers = Connections
+networkDetail.successfulDelete = Network removed correctly
+networkDetail.successfulActivation = Network activated correctly
+networkDetail.successfulDeactivation = Network deactivated correctly
 
 manageFollowers.title = Followers
 

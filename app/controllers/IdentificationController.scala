@@ -87,7 +87,7 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     */
   def authenticate = Action.async { implicit request =>
     userLoginForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(BadRequest(views.html.User.signin(formWithErrors))),
+      formWithErrors => Future(BadRequest(views.html.User.signin(formWithErrors))),
       user => Account.authenticate(user) flatMap {res =>
         if(res == true)
           gotoLoginSucceeded(user.Identifier)
@@ -102,7 +102,7 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     */
   def create = Action.async { implicit request =>
     userRegisterForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(BadRequest(views.html.User.register(formWithErrors))),
+      formWithErrors => Future(BadRequest(views.html.User.register(formWithErrors))),
       user =>
         Account.findAccountByUsername(user.username)flatMap {
           case Some(user)=> Future.successful(Redirect("/user/register").flashing("failure" -> Messages("register.userAlreadyExists")))
@@ -134,7 +134,7 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     val title = "update Profile"
 
     updateProfileForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(BadRequest(views.html.User.profile(formWithErrors,user))),
+      formWithErrors => Future(BadRequest(views.html.User.profile(formWithErrors,user))),
       updatedUser => {
         val updatedAccount = Account(user.username,updatedUser.email,updatedUser.password,updatedUser.realName,updatedUser.country,updatedUser.phoneNumber,user.Role)
 

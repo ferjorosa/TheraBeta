@@ -20,8 +20,12 @@ case class Network(
 
 object Network{
 
-  def insertNewNetwork(network: Network): ScalaFuture[ResultSet] ={
-    Networks.insertNewNetwork(network)
+  //TODO: Should check if the network exists here too? (Model AND Controller)
+  def save(account: String, network: Network): ScalaFuture[Boolean] ={
+    Network.getNetwork(account,network.name) flatMap {
+      case Some(networkRetrieved) => ScalaFuture.successful(false)
+      case None => Networks.insertNewNetwork(network) map (res => res.wasApplied())
+    }
   }
   //Small adjustment, instead of having multiple networks per Account, there is only 1 (to make things easier)
   def getNetworks(accountID: String): ScalaFuture[Seq[Network]] ={
@@ -31,7 +35,7 @@ object Network{
   def getNetwork(accountID: String,name: String): ScalaFuture[Option[Network]] ={
     Networks.getNetwork(accountID,name)
   }
-
+  //TODO: Should check if the network exists here too? (Model AND Controller)
   def deleteNetwork(accountID: String,name: String): ScalaFuture[Boolean] ={
 
     Network.getNetwork(accountID,name) flatMap{
@@ -44,6 +48,7 @@ object Network{
       case None => ScalaFuture.successful(false)
     }
   }
+  //TODO: Should check if the network exists here too? (Model AND Controller)
   //Only one network active at a time, so when a network is activated, the rest are deactivated
   def activateNetwork(accountID: String,name: String): ScalaFuture[Boolean] ={
     // Generate a Combined future: when the first list of futures is finished the second one will take place
@@ -61,7 +66,7 @@ object Network{
       Networks.activateNetwork(accountID: String,name: String) map(result => result.wasApplied())
     }
   }
-
+  //TODO: Should check if the network exists here too? (Model AND Controller)
   def deactivateNetwork(accountID: String,name: String): ScalaFuture[Boolean] ={
     Networks.deactivateNetwork(accountID: String,name: String) map(res => res.wasApplied())
   }

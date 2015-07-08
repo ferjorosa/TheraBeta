@@ -16,6 +16,7 @@ case class Device(
 object Device{
 
   //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
+  //TODO: Should check if the device exists here too? (Model AND Controller)
   def save(account: String,device:Device): ScalaFuture[Boolean] ={
 
     Device.getDeviceByIdentifier(account,device.Identifier) flatMap{
@@ -42,6 +43,7 @@ object Device{
   def getAllDevices: ScalaFuture[Seq[Device]] = Devices.getEntireTable
 
   //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
+  //TODO: Should check if the device exists here too? (Model AND Controller)
   def activateDevice(account:String,device:String): ScalaFuture[Boolean] = {
 
     Device.getDeviceByIdentifier(account,device) flatMap{
@@ -55,6 +57,7 @@ object Device{
     }
   }
   //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
+  //TODO: Should check if the device exists here too? (Model AND Controller)
   def deactivateDevice(account:String,device:String): ScalaFuture[Boolean] = {
 
     Device.getDeviceByIdentifier(account,device) flatMap{
@@ -69,6 +72,7 @@ object Device{
   }
 
   //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
+  //TODO: Should check if the device exists here too? (Model AND Controller)
   def deleteDevice(account:String,device:String):ScalaFuture[Boolean] = {
 
     Device.getDeviceByIdentifier(account,device) flatMap{
