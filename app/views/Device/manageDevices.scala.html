@@ -1,8 +1,15 @@
-@(devices: List[Device])
+@(devices: List[Device])(implicit flash: Flash)
 
 @Layouts.mainPrivate(Messages("manageDevices.title")) {
 <div class="basicContainer">
     <div class="general-container">
+
+        @if(flash.get("success") isDefined){
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@flash.get("success")</p>
+            </div>
+        }
 
         <div class="breadcrumb-container">
             <ul class="breadcrumb">

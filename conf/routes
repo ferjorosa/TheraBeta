@@ -56,10 +56,8 @@ GET         /networks/:networkName/:deviceX/:deviceY/delete        controllers.F
 GET         /dashboard                                             controllers.Application.dashboard
 
 #Just for test-purposesc
-GET         /devices/all                                           controllers.DeviceController.listAll
 GET         /messages/insertMock/:deviceID                         controllers.MessageController.insertMockMessage(deviceID: String)
 GET         /prueba/main                                           controllers.PruebaController.main
-GET         /prueba/devices                                        controllers.PruebaController.devicesTest
 
 ###############################################################################
 ##################################  API  ######################################

@@ -48,7 +48,9 @@ deviceDetail.identifier= Identifier
 deviceDetail.accountID = Account ID
 deviceDetail.activated = Activated
 deviceDetail.deviceID = Device ID
-
+deviceDetail.successfulDelete = Device removed correctly
+deviceDetail.successfulActivation = Device activated correctly
+deviceDetail.successfulDeactivation = Device deactivated correctly
 
 manageDevices.title = My Devices
 manageDevices.searchText = Enter your device name
@@ -62,6 +64,8 @@ registerDevice.title = New Device
 registerDevice.legend = Name your new device
 registerDevice.identifierInput = Identifier
 registerDevice.newDevice = Register Device
+registerDevice.successful = Device successfully registered
+registerDevice.deviceAlreadyExists = Device already exists
 
 ################################# Messages #################################
 showMessages.title = Messages

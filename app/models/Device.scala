@@ -2,24 +2,29 @@
 package models
 
 import java.util.UUID
-import services.{DevicesByAccount, Devices}
-import scala.concurrent.{Future => ScalaFuture}
-import com.datastax.driver.core.{ResultSet}
+
 import play.api.libs.concurrent.Execution.Implicits._
+import services.{Devices, DevicesByAccount}
+
+import scala.concurrent.{Future => ScalaFuture}
 
 case class Device(
                    DeviceID:UUID,
                    AccountID:String,
                    Identifier:String,
-                   Activated:Boolean,
-                   Subscriptions:Set[UUID])
+                   Activated:Boolean)
 object Device{
-  //TODO implement service layer / similar if there is more logic
-  //TODO: which one should return? (or BOTH)
-  def save(device:Device): ScalaFuture[ResultSet] ={
 
-    Devices.insertNewDevice(device)
-    DevicesByAccount.insertNewDevice(device)
+  //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
+  def save(account: String,device:Device): ScalaFuture[Boolean] ={
+
+    Device.getDeviceByIdentifier(account,device.Identifier) flatMap{
+      case Some(deviceRetrieved:Device) => ScalaFuture.successful(false)
+      case None => for{
+        result1 <- Devices.insertNewDevice(device)
+        result2 <- DevicesByAccount.insertNewDevice(device)
+      }yield result1.wasApplied() && result2.wasApplied()
+    }
   }
 
   def getDeviceById(id:UUID): ScalaFuture[Option[Device]] = {
@@ -36,11 +41,6 @@ object Device{
 
   def getAllDevices: ScalaFuture[Seq[Device]] = Devices.getEntireTable
 
-  //TODO we'll see if its necessary to discriminate on Model Level between Devices/DevicesByAccount
-  def subscribeDevice(subscriber:Device,subscription:Device):ScalaFuture[ResultSet] = {
-    Devices.subscribeDevice(subscriber.DeviceID,subscription.DeviceID)
-    DevicesByAccount.subscribeDevice(subscriber.AccountID,subscriber.Identifier,subscription.DeviceID)
-  }
   //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
   def activateDevice(account:String,device:String): ScalaFuture[Boolean] = {
 
@@ -67,7 +67,7 @@ object Device{
       case None => ScalaFuture.successful(false)
     }
   }
-  //TODO: It needs a way to distinguish between "the device doesnt exist" (404) and "couldn't delete everything" (500)
+
   //TODO: Persistence should return booleans so there is no possibility of throwing NullPointerExceptions in the for (result2.wasApplied -> result2 == true)
   def deleteDevice(account:String,device:String):ScalaFuture[Boolean] = {
 

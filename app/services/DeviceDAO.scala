@@ -17,7 +17,6 @@ sealed class Devices extends CassandraTable[Devices,Device]{
   object OwnerID extends StringColumn(this)
   object Identifier extends StringColumn(this)
   object Activated extends BooleanColumn(this)
-  object Subscriptions extends SetColumn[Devices,Device,UUID](this)
 
   //Mapping function
   def fromRow(row: Row): Device={
@@ -25,8 +24,7 @@ sealed class Devices extends CassandraTable[Devices,Device]{
       DeviceID(row),
       OwnerID(row),
       Identifier(row),
-      Activated(row),
-      Subscriptions(row))
+      Activated(row))
   }
 }
 
@@ -40,7 +38,6 @@ object Devices  extends Devices with PhantomCassandraConnector{
       .value(_.OwnerID, device.AccountID)
       .value(_.Identifier,device.Identifier)
       .value(_.Activated,device.Activated)
-      .value(_.Subscriptions,device.Subscriptions)
       .future()
   }
   //Find by DeviceID
@@ -73,14 +70,6 @@ object Devices  extends Devices with PhantomCassandraConnector{
       .modify(_.Activated setTo false)
       .future()
   }
-
-  //Subscribe
-  def subscribeDevice(subscriber:UUID, subscription:UUID):ScalaFuture[ResultSet] = {
-    update
-      .where(_.DeviceID eqs subscriber)
-      .modify(_.Subscriptions add subscription)
-      .future()
-  }
 }
 
 //"Compound Key" Table (One To Many Relation)
@@ -89,7 +78,6 @@ sealed class DevicesByAccount extends CassandraTable[DevicesByAccount,Device]{
   object AccountID extends StringColumn(this) with PartitionKey[String] //multiple rows can belong to the same PARTITION KEY
   object Identifier extends StringColumn(this) with PrimaryKey[String] //but only one row can belong to the rest of primary
   object Activated extends BooleanColumn(this)
-  object Subscriptions extends SetColumn[DevicesByAccount,Device,UUID](this)
 
   //Mapping function. Order matters.
   def fromRow(row:Row):Device={
@@ -97,8 +85,7 @@ sealed class DevicesByAccount extends CassandraTable[DevicesByAccount,Device]{
       DeviceID(row),
       AccountID(row),
       Identifier(row),
-      Activated(row),
-      Subscriptions(row)
+      Activated(row)
 
     )
   }
@@ -114,7 +101,6 @@ object DevicesByAccount extends DevicesByAccount with PhantomCassandraConnector{
       .value(_.AccountID, device.AccountID)
       .value(_.Identifier,device.Identifier)
       .value(_.Activated,device.Activated)
-      .value(_.Subscriptions,device.Subscriptions)
       .future()
   }
   //Find all devices by AccountId
@@ -150,12 +136,5 @@ object DevicesByAccount extends DevicesByAccount with PhantomCassandraConnector{
       .and(_.Identifier eqs identifier)
       .future()
   }
-  //Subscribe
-  def subscribeDevice(subscriberAccount:String, subscriberDevice:String,subscription:UUID):ScalaFuture[ResultSet] = {
-    update
-      .where(_.AccountID eqs subscriberAccount)
-      .and(_.Identifier eqs subscriberDevice)
-      .modify(_.Subscriptions add subscription)
-      .future()
-  }
+
 }
