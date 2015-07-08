@@ -1,4 +1,4 @@
-@(deviceRegisterForm: Form[Follower], networkName: String, devices: List[Device])
+@(deviceRegisterForm: Form[Follower], networkName: String, devices: List[Device])(implicit flash: Flash)
 
 @Layouts.mainPrivate(Messages("registerFollower.title")) {
 <div class="basicContainer">
@@ -6,7 +6,13 @@
         @if(deviceRegisterForm.hasErrors){
             <div class="alert alert-dismissable alert-danger">
                 <button type="button" class="close" data-dismiss="alert">×</button>
-                <p>@Messages("signinGlobalError")</p>
+                <p>@Messages("formGlobalError")</p>
+            </div>
+        }
+        @if(flash.get("failure") isDefined){
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@flash.get("failure")</p>
             </div>
         }
 

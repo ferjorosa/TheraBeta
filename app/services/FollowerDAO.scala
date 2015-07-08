@@ -8,17 +8,26 @@ import models.Follower
 import scala.concurrent.{Future => ScalaFuture}
 
 /**
- * Created by Fer on 31/05/2015.
+ * Data Mapper class for the Follower model class. Maps the Follower attributes to the associated Cassandra table.
  */
 sealed class Following extends CassandraTable[Following,Follower]{
 
-  object AccountID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object NetworkID extends StringColumn(this) with PrimaryKey[String] //Composite Partition Key
+  /** Composite Partition Key */
+  object AccountID extends StringColumn(this) with PartitionKey[String]
+  /** Composite Partition Key */
+  object NetworkID extends StringColumn(this) with PrimaryKey[String]
+  /** Device X */
   object DeviceA extends  UUIDColumn(this) with PrimaryKey[UUID]
+  /** Device Y */
   object DeviceB extends  UUIDColumn(this) with PrimaryKey[UUID]
   object DeviceA_Name extends StringColumn(this)
   object DeviceB_Name extends StringColumn(this)
 
+  /**
+   * Mapping function
+   * @param row
+   * @return
+   */
   def fromRow(row: Row): Follower = {
     Follower(
       AccountID(row),
@@ -31,6 +40,9 @@ sealed class Following extends CassandraTable[Following,Follower]{
   }
 }
 
+/**
+ * Companion object (Singleton class) containing the DataBase methods
+ */
 object Following extends Following with PhantomCassandraConnector{
   override def tableName = "following"
 
@@ -45,7 +57,31 @@ object Following extends Following with PhantomCassandraConnector{
       .value(_.DeviceB_Name,follower.deviceY_Name)
       .future()
   }
-  //Get all the devices the device is following (A -> B ; A -> C)
+
+  /**
+   * Get a specific follower
+   * @param accountID
+   * @param networkID
+   * @param deviceX
+   * @param deviceY
+   * @return
+   */
+  def getFollower(accountID: String,networkID: String,deviceX: UUID, deviceY: UUID): ScalaFuture[Option[Follower]]={
+    select
+      .where(_.AccountID eqs accountID)
+      .and(_.NetworkID eqs networkID)
+      .and(_.DeviceA eqs deviceX)
+      .and(_.DeviceB eqs deviceY)
+      .one()
+  }
+
+  /**
+   * Get all the devices the device is following (A -> B ; A -> C)
+   * @param accountID
+   * @param networkID
+   * @param deviceID
+   * @return
+   */
   def getFollowingsOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
     select(_.DeviceB_Name)
       .where(_.AccountID eqs accountID)
@@ -53,7 +89,13 @@ object Following extends Following with PhantomCassandraConnector{
       .and(_.DeviceA eqs deviceID)
       .fetch()
   }
-  //Get all the 'followings' of a specific network
+
+  /**
+   * Get all the 'followings' of a specific network
+   * @param accountID
+   * @param networkID
+   * @return
+   */
   def getFollowings(accountID: String,networkID: String): ScalaFuture[Seq[Follower]] = {
     select
       .where(_.AccountID eqs accountID)
@@ -61,7 +103,11 @@ object Following extends Following with PhantomCassandraConnector{
       .fetch()
   }
 
-  //Delete
+  /**
+   * Delete follower
+   * @param follower
+   * @return
+   */
   def deleteFollowing(follower: Follower): ScalaFuture[ResultSet] ={
     delete
       .where(_.AccountID eqs follower.accountID)
@@ -71,7 +117,12 @@ object Following extends Following with PhantomCassandraConnector{
       .future()
   }
 
-  //Delete All
+  /**
+   * Delete all followers
+   * @param accountID
+   * @param networkID
+   * @return
+   */
   def deleteAllFollowings(accountID: String,networkID: String): ScalaFuture[ResultSet] ={
     delete
       .where(_.AccountID eqs accountID)
@@ -82,14 +133,22 @@ object Following extends Following with PhantomCassandraConnector{
 
 //Inverse to 'Following'
 sealed class Followed extends CassandraTable[Followed,Follower]{
-
-  object AccountID extends StringColumn(this) with PartitionKey[String] //Composite Partition Key
-  object NetworkID extends StringColumn(this) with PrimaryKey[String] //Composite Partition Key
+  /** Composite Partition Key */
+  object AccountID extends StringColumn(this) with PartitionKey[String]
+  /** Composite Partition Key */
+  object NetworkID extends StringColumn(this) with PrimaryKey[String]
+  /** Device Y */
   object DeviceA extends  UUIDColumn(this) with PrimaryKey[UUID]
+  /** Device X */
   object DeviceB extends  UUIDColumn(this) with PrimaryKey[UUID]
   object DeviceA_Name extends StringColumn(this)
   object DeviceB_Name extends StringColumn(this)
 
+  /**
+   * Mapping function
+   * @param row
+   * @return
+   */
   def fromRow(row: Row): Follower = {
     Follower(
       AccountID(row),
@@ -102,10 +161,17 @@ sealed class Followed extends CassandraTable[Followed,Follower]{
   }
 }
 
+/**
+ * Companion object (Singleton class) containing the DataBase methods
+ */
 object Followed extends Followed with PhantomCassandraConnector{
   override def tableName = "followed"
 
-  //Insert new followed (B <- A)
+  /**
+   * Insert new followed (B <- A)
+   * @param follower
+   * @return
+   */
   def insertNewFollowed(follower: Follower): ScalaFuture[ResultSet] ={
     insert
       .value(_.AccountID, follower.accountID)
@@ -116,7 +182,14 @@ object Followed extends Followed with PhantomCassandraConnector{
       .value(_.DeviceB_Name,follower.deviceX_Name)
       .future()
   }
-  //Get all the followers of a device (B <- A ; B <- C)
+
+  /**
+   * Get all the followers of a device (B <- A ; B <- C)
+   * @param accountID
+   * @param networkID
+   * @param deviceID
+   * @return
+   */
   def getFollowersOfDevice(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[String]] = {
     select(_.DeviceB_Name)
       .where(_.AccountID eqs accountID)
@@ -125,7 +198,13 @@ object Followed extends Followed with PhantomCassandraConnector{
       .fetch()
   }
 
-  //Get all the followers IDs of a device (B <- A ; B <- C)
+  /**
+   * Get all the followers IDs of a device (B <- A ; B <- C)
+   * @param accountID
+   * @param networkID
+   * @param deviceID
+   * @return
+   */
   def getFollowersIDs(accountID: String,networkID: String,deviceID: UUID): ScalaFuture[Seq[UUID]] = {
     select(_.DeviceB)
       .where(_.AccountID eqs accountID)
@@ -133,7 +212,12 @@ object Followed extends Followed with PhantomCassandraConnector{
       .and(_.DeviceA eqs deviceID)
       .fetch()
   }
-  //Delete
+
+  /**
+   * Delete Follower
+   * @param follower
+   * @return
+   */
   def deleteFollowed(follower: Follower): ScalaFuture[ResultSet] ={
     delete
     .where(_.AccountID eqs follower.accountID)
@@ -143,7 +227,12 @@ object Followed extends Followed with PhantomCassandraConnector{
     .future()
   }
 
-  //Delete All
+  /**
+   * Delete all followers
+   * @param accountID
+   * @param networkID
+   * @return
+   */
   def deleteAllFolloweds(accountID: String,networkID: String): ScalaFuture[ResultSet] ={
     delete
       .where(_.AccountID eqs accountID)

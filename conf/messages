@@ -110,13 +110,18 @@ networkDetail.successfulDelete = Network removed correctly
 networkDetail.successfulActivation = Network activated correctly
 networkDetail.successfulDeactivation = Network deactivated correctly
 
+
 manageFollowers.title = Followers
+manageFollowers.successfulDelete = Connection removed correctly
 
 registerFollower.title = New Follower
 registerFollower.deviceA = Device A
 registerFollower.follows = Follows
 registerFollower.deviceB = Device B
 registerFollower.newFolower = Register Connection
+registerFollower.noDevices = No devices yet registered
+registerFollower.successful = Connection successfully registered
+registerFollower.failure = Both devices have to be different
 
 ################################# Accounts #################################
 dashboard.title = Dashboard

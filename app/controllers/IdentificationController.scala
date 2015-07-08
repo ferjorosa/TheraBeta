@@ -14,13 +14,17 @@ import scala.concurrent.Future
 
 object IdentificationController extends AuthConfigImpl with LoginLogout {
 
-  //Form-mapping used in the login action(only needs identifier (username/email) and password)
+  /**
+   * Form-mapper used in the login action(only needs identifier (username) and password)
+   */
   val userLoginForm: Form[UserLogin] = Form(mapping(
     "Identifier" -> text(minLength = 3, maxLength = 20),
     "Password" -> text(minLength = 3, maxLength = 20)
   )(UserLogin.apply)(UserLogin.unapply))
 
-  //Form-mapping used in the register action (needs all values)
+  /**
+   * Form-mapperused in the register action (needs all values)
+   */
   val userRegisterForm: Form[Account] = Form(mapping(
     "Username" -> text(minLength = 3, maxLength = 20),
     "Email" -> email,
@@ -40,7 +44,9 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     "Role" -> ignored(NormalUser.value)
   )(Account.apply)(Account.unapply))
 
-  //Form-mapping used in the update profile action
+  /**
+   * Form-mapper used in the update profile action
+   */
   val updateProfileForm: Form[Account] = Form(mapping(
     "Username" -> ignored("profile_update"),
     "Email" -> email,

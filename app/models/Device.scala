@@ -20,7 +20,7 @@ object Device{
   def save(account: String,device:Device): ScalaFuture[Boolean] ={
 
     Device.getDeviceByIdentifier(account,device.Identifier) flatMap{
-      case Some(deviceRetrieved:Device) => ScalaFuture.successful(false)
+      case Some(deviceRetrieved: Device) => ScalaFuture.successful(false)
       case None => for{
         result1 <- Devices.insertNewDevice(device)
         result2 <- DevicesByAccount.insertNewDevice(device)

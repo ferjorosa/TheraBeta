@@ -9,8 +9,12 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
 
+
 object NetworkController extends AuthConfigImpl with AuthElement {
 
+  /**
+   * Form-mapper used in the registration of a new network
+   */
   val networkRegisterForm:Form[Network]= Form(mapping(
     "accountID"-> ignored("default"),
     "name" -> text(minLength = 2, maxLength = 32),
@@ -24,6 +28,7 @@ object NetworkController extends AuthConfigImpl with AuthElement {
   def manageNetworks = AsyncStack(AuthorityKey -> NormalUser){implicit request =>
     val user = loggedIn
     val title = "my networks"
+
     Network.getNetworks(user.username)map(networks =>
       Ok(views.html.Network.manageNetworks(networks.toList)))
   }
@@ -35,6 +40,7 @@ object NetworkController extends AuthConfigImpl with AuthElement {
   def register = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
     val user = loggedIn
     val title = "new network"
+
     Future(Ok(views.html.Network.registerNetwork(networkRegisterForm)))
   }
 

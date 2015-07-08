@@ -13,7 +13,9 @@ import scala.concurrent.Future
 
 object DeviceController extends AuthConfigImpl with AuthElement {
 
-  //Form-mapping used in the registration of a new user's device
+  /**
+   * Form-mapper used in the registration of a new user's device
+   */
   val deviceRegisterForm: Form[Device] = Form(mapping(
     "DeviceID"-> ignored(UUID.randomUUID()),  //static UUID, its defined at the creation of the class
     "OwnerID" -> ignored("default"),

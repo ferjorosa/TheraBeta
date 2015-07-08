@@ -1,7 +1,15 @@
-@(followers: List[Follower],networkName: String)
+@(followers: List[Follower],networkName: String)(implicit flash: Flash)
+
 @Layouts.mainPrivate(Messages("manageFollowers.title")) {
 <div class="basicContainer">
     <div class="general-container">
+
+        @if(flash.get("success") isDefined){
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@flash.get("success")</p>
+            </div>
+        }
 
         <div class="breadcrumb-container">
             <ul class="breadcrumb">
@@ -13,34 +21,34 @@
         </div>
 
 
-            @if(followers.isEmpty) {
-                    <p class="super-big center">@Messages("networkDetail.noFollowers")</p>
+        @if(followers.isEmpty) {
+                <p class="super-big center">@Messages("networkDetail.noFollowers")</p>
 
-            }else{
-                <div>
-                    <table class="table table-striped table-hover ">
-                        <thead>
-                            <tr>
-                                <th class="center">@Messages("networkDetail.from")</th>
-                                <th class="center">-></th>
-                                <th class="center">@Messages("networkDetail.to")</th>
-                                <th class="center">@Messages("networkDetail.delete")</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        @for(follower <- followers){
-                            <tr>
-                                <td class="center"><a href="/devices/@follower.deviceX_Name">@follower.deviceX_Name</a></td>
-                                <td class="center">@Messages("networkDetail.follows")</td>
-                                <td class="center"><a href="/devices/@follower.deviceY_Name">@follower.deviceY_Name</a></td>
-                                <td class="center"><a href="/networks/@follower.networkID/@follower.deviceX/@follower.deviceY/delete">@Messages("networkDetail.delete")</a></td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
+        }else{
+            <div>
+                <table class="table table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th class="center">@Messages("networkDetail.from")</th>
+                            <th class="center">-></th>
+                            <th class="center">@Messages("networkDetail.to")</th>
+                            <th class="center">@Messages("networkDetail.delete")</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @for(follower <- followers){
+                        <tr>
+                            <td class="center"><a href="/devices/@follower.deviceX_Name">@follower.deviceX_Name</a></td>
+                            <td class="center">@Messages("networkDetail.follows")</td>
+                            <td class="center"><a href="/devices/@follower.deviceY_Name">@follower.deviceY_Name</a></td>
+                            <td class="center"><a href="/networks/@follower.networkID/@follower.deviceX/@follower.deviceY/delete">@Messages("networkDetail.delete")</a></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
 
-                </div>
-            }
+            </div>
+        }
 
         <div class="center">
             <a href="/networks/@networkName/register" class="btn btn-primary btn-lg">@Messages("networkDetail.newFollower")</a>

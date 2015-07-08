@@ -9,9 +9,6 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 import scala.concurrent.Future
 
-/**
- * Created by Fer on 05/06/2015.
- */
 object MessageController extends AuthConfigImpl with AuthElement{
   //TODO: Not the best approach but it works
   def listAllMessages(deviceName: String) = AsyncStack(AuthorityKey -> NormalUser){implicit request =>
@@ -38,9 +35,9 @@ object MessageController extends AuthConfigImpl with AuthElement{
         if(res == true)
           Redirect("/messages/"+device.Identifier).flashing("Success"->"Messages removed correctly")
         else
-          BadRequest("/error/404")
+          BadRequest("/error/500")
       )
-      case None => Future.successful(Ok(""))
+      case None => Future.successful(BadRequest("/error/404"))
     }
 
   }
