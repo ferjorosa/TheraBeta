@@ -1,11 +1,23 @@
-@(userForm: Form[Account], account: Account)
+@(userForm: Form[Account], account: Account)(implicit flash: Flash)
 
 @import views.html.helper._
 
 @Layouts.mainPrivate(Messages("profile.title")) {
-
     <div class="basicContainer">
         <div class="general-container">
+
+            @if(userForm.hasErrors){
+                <div class="alert alert-dismissable alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <p>@Messages("formGlobalError")</p>
+                </div>
+            }
+            @if(flash.get("success") isDefined){
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <p>@flash.get("success")</p>
+                </div>
+            }
 
             <div class="breadcrumb-container">
                 <ul class="breadcrumb">
@@ -31,6 +43,7 @@
                             <div class="col-lg-10">
                             @inputText(userForm("Username"),
                                 '_label -> Messages("register.username"),
+                                'value -> account.username,
                                 'placeholder -> account.username,
                                 /*'class -> "input-block",*/
                                 '_help -> "You cannot modify your username",

@@ -11,7 +11,6 @@ import play.api.libs.concurrent.Execution.Implicits._
 import play.api.mvc._
 
 import scala.concurrent.Future
-import scala.util.{Success, Failure}
 
 object IdentificationController extends AuthConfigImpl with LoginLogout {
 
@@ -65,8 +64,8 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     * Renders the HTML page for user/signin
     * @return 'views.html.User.signin'
     */
-  def signin = Action {
-    Ok(views.html.User.signin(userLoginForm))
+  def signin = Action.async { implicit request =>
+    Future{Ok(views.html.User.signin(userLoginForm))}
   }
 
   def logout = Action.async { implicit request =>
@@ -78,26 +77,22 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     * Renders the HTML page for registering into the Application
     * @return 'views.html.User.register'
     */
-  def register = Action {
-    Ok(views.html.User.register(userRegisterForm))
+  def register = Action.async {implicit request =>
+    Future{Ok(views.html.User.register(userRegisterForm))}
   }
 
   /** *
     * Logins into the Application
-    * @return TODO
+    * @return
     */
   def authenticate = Action.async { implicit request =>
     userLoginForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.User.signin(formWithErrors))),
-      user => {
-
-        //TODO investigate why flatMap works and map doesn't. Possible alternatives?
-        Account.authenticate(user) flatMap {
-          bool => bool match {
-            case true => gotoLoginSucceeded(user.Identifier)
-            case _ => Future.successful(Redirect("/user/signin").flashing("error" -> "Fallo"))
-          }
-        }
+      user => Account.authenticate(user) flatMap {res =>
+        if(res == true)
+          gotoLoginSucceeded(user.Identifier)
+        else
+          Future.successful(Redirect("/user/signin").flashing("failure" -> Messages("signin.failure")))
       })
   }
 
@@ -105,45 +100,49 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
     * Submits a new registration into the Application
     * @return 'views.html.User.RegistrationSuccesful' | 'views.html.User.Register' with errors
     */
-  //TODO: Its not working properly, doesn't redirect correctly onComplete
   def create = Action.async { implicit request =>
     userRegisterForm.bindFromRequest.fold(
       formWithErrors => Future.successful(BadRequest(views.html.User.register(formWithErrors))),
-      user => {
-        Account.registerNewAccount(user) onComplete {
-          case Success(d) => Future.successful(Redirect("/user/signin").flashing("success" -> "Te has registrado correctamente"))
-          case Failure(t) => Future.successful(Ok("Error 500"))
-        }
-        Future.successful(Ok("Error 500"))
-
-        /*Account.registerNewAccount(user) map{
-            result =>{
-              Ok("Error 500")
-            }
-          }*/
-      })
+      user =>
+        Account.findAccountByUsername(user.username)flatMap {
+          case Some(user)=> Future.successful(Redirect("/user/register").flashing("failure" -> Messages("register.userAlreadyExists")))
+          case None=> Account.registerNewAccount(user) map{res=>
+            if(res == true)
+              Redirect("/user/signin").flashing("success" -> Messages("register.successful"))
+            else
+              Redirect("/error/500")
+          }
+        })
   }
 
+  /**
+   * Redirects to the profile page after authorization
+   * @return
+   */
   def myProfile = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
     val user = loggedIn
-    val title = "update Profile"
+    val title = "my Profile"
     Future.successful(Ok(views.html.User.profile(updateProfileForm, user)))
   }
 
+  /**
+   * Updates the user's profile
+   * @return
+   */
   def updateProfile = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
     val user = loggedIn
     val title = "update Profile"
 
     updateProfileForm.bindFromRequest.fold(
-      formWithErrors => Future.successful(BadRequest(views.html.User.register(formWithErrors))),
+      formWithErrors => Future.successful(BadRequest(views.html.User.profile(formWithErrors,user))),
       updatedUser => {
         val updatedAccount = Account(user.username,updatedUser.email,updatedUser.password,updatedUser.realName,updatedUser.country,updatedUser.phoneNumber,user.Role)
 
         Account.updateAccount(user.username, updatedAccount).map { res =>
-            if (res.wasApplied())
-              Redirect("/user/profile").flashing("success" -> "Te has registrado correctamente")
+            if (res == true)
+              Redirect("/user/profile").flashing("success" -> Messages("profile.successful"))
             else
-              Ok("Error 500")
+              Redirect("/error/500")
         }
       }
     )

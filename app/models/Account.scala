@@ -5,6 +5,16 @@ import services.Accounts
 
 import scala.concurrent.Future
 
+/**
+ * Model class that represents an Account
+ * @param username
+ * @param email
+ * @param password
+ * @param realName
+ * @param country
+ * @param phoneNumber
+ * @param Role
+ */
 case class Account(
                  username:String,
                  email:String,
@@ -17,11 +27,28 @@ case class Account(
 
 object Account{
 
+  /**
+   *
+   * @param account
+   * @return
+   */
   //TODO check return type (Success / Failure) or do it on the presentation layer
-  def registerNewAccount(account:Account):Future[ResultSet] = Accounts.insertNewAccount(account)
+  def registerNewAccount(account:Account):Future[Boolean] = {
+    Accounts.insertNewAccount(account) map(res=>res.wasApplied())
+  }
 
+  /**
+   *
+   * @param username
+   * @return
+   */
   def findAccountByUsername(username:String): Future[Option[Account]] = Accounts.getAccountByUsername(username)
 
+  /**
+   *
+   * @param user
+   * @return
+   */
   def authenticate(user:UserLogin): Future[Boolean] ={
     val userRetrieved = Account.findAccountByUsername(user.Identifier)
 
@@ -34,11 +61,24 @@ object Account{
 
   }
 
+  /**
+   *
+   * @param username
+   * @param newAccount
+   * @return
+   */
   //TODO check return type (Success / Failure) or do it on the presentation layer
-  def updateAccount(username:String,newAccount:Account):Future[ResultSet] =  Accounts.updateAccount(username,newAccount)
+  def updateAccount(username:String,newAccount:Account):Future[Boolean] =  {
+    Accounts.updateAccount(username,newAccount) map(res=>res.wasApplied())
+  }
 
 }
 
+/**
+ *
+ * @param Identifier
+ * @param Password
+ */
 case class UserLogin(Identifier:String,
                      Password:String) {
 

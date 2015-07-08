@@ -9,6 +9,7 @@ inactive = Inactive
 #Errors
 error.title = Error
 error.description = An error has occurred.
+formGlobalError = There was an error in you form
 
 #Layout - Private
 breadcrumb.home = Home
@@ -119,11 +120,13 @@ profile.legend = My Profile
 profile.password = New Password
 profile.confirmPassword = Confirm Password
 profile.applyChanges = Apply changes
+profile.successful = Successfully updated your profile
 
 signin.title = Sign In
 signin.username = Username
 signin.password = Password
 signin.button = Sign in
+signin.failure = Bad combination of username & password
 
 register.title = Register
 register.legend = Join Thera
@@ -137,3 +140,5 @@ register.country = Country
 register.phoneError = The introduced Phone Number is invalid
 register.passwordHelp =  Password must have between 6-20 characters
 register.join = Join
+register.successful = You have been successfully registered. Welcome.
+register.userAlreadyExists = User already exists.

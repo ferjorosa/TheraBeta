@@ -1,38 +1,52 @@
-@(userForm: Form[UserLogin])
+@(userForm: Form[UserLogin])(implicit flash: Flash)
 
 @import play.api.i18n
 @import views.html.helper._
 
 @Layouts.main(Messages("signin.title")) {
-        <div id="signin">
-            @if(userForm.hasErrors){
-                <div class="alert alert-dismissable alert-danger">
-                    <button type="button" class="close" data-dismiss="alert">×</button>
-                    <p>@Messages("signinGlobalError")</p>
+
+    <div id="signin">
+        @if(userForm.hasErrors){
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@Messages("signinGlobalError")</p>
+            </div>
+        }
+        @if(flash.get("success") isDefined){
+            <div class="alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@flash.get("success")</p>
+            </div>
+        }
+        @if(flash.get("failure") isDefined){
+            <div class="alert alert-dismissable alert-danger">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <p>@flash.get("failure")</p>
+            </div>
+        }
+
+        <form id="authentication" action="/user/signin" method="POST">
+            <fieldset>
+                <div class="authheader">
+                    <h1 id="headertitle">@Messages("signin.title")</h1>
                 </div>
-            }
-                <form id="authentication" action="/user/signin" method="POST">
-                    <fieldset>
-                        <div class="authheader">
-                            <h1 id="headertitle">@Messages("signin.title")</h1>
-                        </div>
 
-                        <!--Username-->
-                            @inputText(userForm("Identifier"),
-                            '_label -> Messages("signin.username"),
-                            '_class -> "input-block",
-                            '_showConstraints -> false)
+                <!--Username-->
+                    @inputText(userForm("Identifier"),
+                    '_label -> Messages("signin.username"),
+                    '_class -> "input-block",
+                    '_showConstraints -> false)
 
-                        <!--Password-->
-                            @inputPassword(userForm("Password"),
-                                '_label -> Messages("signin.password"),
-                                '_class -> "input-block",
-                                '_showConstraints -> false)
+                <!--Password-->
+                    @inputPassword(userForm("Password"),
+                        '_label -> Messages("signin.password"),
+                        '_class -> "input-block",
+                        '_showConstraints -> false)
 
-                        <button type="submit" class="basicFormButton btn btn-primary">Sign in</button>
-                    </fieldset>
-                </form>
+                <button type="submit" class="basicFormButton btn btn-primary">Sign in</button>
+            </fieldset>
+        </form>
 
-        </div>
+    </div>
 
 }

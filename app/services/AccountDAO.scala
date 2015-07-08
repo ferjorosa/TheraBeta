@@ -9,6 +9,9 @@ import models.Account
 
 import scala.concurrent.{Future => ScalaFuture}
 
+/**
+ * Data Mapper class for the Account model class. Maps the Account attributes to the associated Cassandra table.
+ */
 sealed class Accounts extends CassandraTable[Accounts,Account]{
 
   //One object per Column
@@ -20,7 +23,11 @@ sealed class Accounts extends CassandraTable[Accounts,Account]{
   object PhoneNumber extends StringColumn(this)
   object Role extends StringColumn(this)
 
-  //Mapping function
+  /**
+   * Mapping function
+   * @param row
+   * @return
+   */
   def fromRow(row: Row): Account={
     Account(
       Username(row),
@@ -33,11 +40,18 @@ sealed class Accounts extends CassandraTable[Accounts,Account]{
   }
 }
 
+/**
+ * Singleton class containing the DataBase methods
+ */
 object Accounts extends Accounts with PhantomCassandraConnector{
 
   override def tableName="accounts"
 
-  //Register a new account
+  /**
+   * Register a new account
+   * @param account the new account that is going to be inserted in the DB
+   * @return a Future containing a Datastax ResultSet
+   */
   def insertNewAccount(account:Account): ScalaFuture[ResultSet] ={
     insert.value(_.Username,account.username)
       .value(_.Email, account.email)
@@ -49,12 +63,21 @@ object Accounts extends Accounts with PhantomCassandraConnector{
       .future()
   }
 
-  //Find by Username(PK)
+  /**
+   * Finds an account by its username
+   * @param username the account´s username (Partition Key)
+   * @return the account if it exists or None if it doesn't.
+   */
   def getAccountByUsername(username: String): ScalaFuture[Option[Account]] = {
     select.where(_.Username eqs username).one()
   }
 
-  //Update Account's data
+  /**
+   * Updates the data stored in teh Database
+   * @param oldAccount
+   * @param newAccount
+   * @return a Future containing a Datastax ResultSet
+   */
   def updateAccount(oldAccount:String,newAccount:Account): ScalaFuture[ResultSet] = {
     update
       .where(_.Username eqs oldAccount)
@@ -67,7 +90,10 @@ object Accounts extends Accounts with PhantomCassandraConnector{
       .future()
   }
 
-  //FindAll
+  /**
+   * Only for test
+   * @return A Sequence of all the accounts registered in the Database
+   */
   def getEntireTable: ScalaFuture[Seq[Account]] = {
     select.fetchEnumerator() run Iteratee.collect()
   }
