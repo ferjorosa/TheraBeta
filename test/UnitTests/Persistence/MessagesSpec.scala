@@ -22,13 +22,13 @@ class MessagesSpec extends CustomSpec{
     for(x <- 1 to 4){
       //Synchronous (only for unit testing))
       Await.ready(Messages.insertNewMessage(
-        Message(testUUID,DateTime.now(),Map.empty[String,String])//TODO inserta las DateTimes con "Hora estandar romance"
+        Message(testUUID,DateTime.now(),Map.empty[String,String])
       ),5 seconds)
     }
 
     val NotEmptyMap = Map("temperature" -> "30", "Unit of measurement" -> "Celsius")
     Await.ready(Messages.insertNewMessage(
-      Message(testUUID,DateTime.now(),NotEmptyMap)//TODO inserta las DateTimes con "Hora estandar romance"
+      Message(testUUID,DateTime.now(),NotEmptyMap)
     ),5 seconds)
 
   }

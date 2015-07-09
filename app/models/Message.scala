@@ -90,10 +90,11 @@ object Message{
     }
     */
   }
-  //TODO: Dirty code (Option [Device])
+
   private def propagateMessage(followerID:UUID,message:Message):Unit = {
 
-    Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+    //Messages.insertNewMessage(Message(followerID,message.eventTime,message.content))
+    Message.save(Message(followerID,message.eventTime,message.content))
     //Notify the webSocketsActor that a new message has arrived
     implicit val timeout = Timeout(FiniteDuration(1, TimeUnit.SECONDS))
     Logger.info("Akka: About to send a new message to webSocketsActor")

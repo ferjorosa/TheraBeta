@@ -11,13 +11,18 @@ import scala.concurrent.{Future => ScalaFuture}
 import org.joda.time.DateTime
 
 /**
- * Created by Fer on 11/03/2015.
+ * Data Mapper class for the Message model class. Maps the Message attributes to the associated Cassandra table.
  */
 sealed class Messages extends CassandraTable[Messages, Message]{
   object DeviceID extends  UUIDColumn(this) with PartitionKey[UUID]
   object EventTime extends DateTimeColumn(this) with PrimaryKey[DateTime]
   object Content extends MapColumn[Messages,Message,String,String](this)
 
+  /**
+   * Mapping function
+   * @param row
+   * @return
+   */
   def fromRow(row: Row): Message = {
     Message(
     DeviceID(row),
@@ -27,26 +32,48 @@ sealed class Messages extends CassandraTable[Messages, Message]{
   }
 }
 
+/**
+ * Companion object (Singleton class) containing the DataBase methods
+ */
 object Messages extends Messages with PhantomCassandraConnector{
 
   override def tableName = "messages"
 
-  //Insert a new Message
+  /**
+   * Insert a new Message
+   * @param message
+   * @return
+   */
   def insertNewMessage(message:Message): ScalaFuture[ResultSet] = {
     insert.value(_.DeviceID,message.deviceID)
       .value(_.EventTime,message.eventTime)
       .value(_.Content,message.content)
       .future()
   }
-  //Get All Messages by DeviceID
+
+  /**
+   * Get All Messages by DeviceID
+   * @param deviceID
+   * @return
+   */
   def getMessagesByDevice(deviceID:UUID):ScalaFuture[Seq[Message]] = {
     select.where(_.DeviceID eqs deviceID).fetch()
   }
-  //Get All Messages inserted after a requested date for a specific deviceID
+
+  /**
+   * Get All Messages inserted after a requested date for a specific deviceID
+   * @param request
+   * @return
+   */
   def getMessagesByRequest(request:MessagesRequest):ScalaFuture[Seq[Message]] = {
     select.where(_.DeviceID eqs request.DeviceID).and(_.EventTime gt request.EventTime).fetch()
   }
-  //Delete All Messages by DeviceID
+
+  /**
+   * Delete All Messages by DeviceID
+   * @param deviceID
+   * @return
+   */
   def deleteAllMessagesByDevice(deviceID: UUID):ScalaFuture[ResultSet]={
     delete.where(_.DeviceID eqs deviceID).future()
   }

@@ -83,7 +83,7 @@ object DeviceController extends AuthConfigImpl with AuthElement {
     val title = "device detail"
 
     Device.getDeviceByIdentifier(user.username,identifer)map{
-      case Some(device) => Ok(views.html.Device.deviceDetail(device))
+      case Some(device: Device) => Ok(views.html.Device.deviceDetail(device))
       case None => Redirect("/error/404")
     }
   }

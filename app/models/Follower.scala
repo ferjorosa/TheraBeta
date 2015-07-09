@@ -66,8 +66,6 @@ object Follower{
 
       case None => ScalaFuture.successful(false)
     }
-
-
   }
 
   def deleteAllFollowers(accountID: String,networkID: String): ScalaFuture[Boolean]={

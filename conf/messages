@@ -5,6 +5,9 @@
 empty = Empty
 active = Active
 inactive = Inactive
+signinLink = Sign in
+registerLink = Register
+signoutLink = Sign Out
 
 #Errors
 error.title = Error
@@ -74,6 +77,7 @@ showMessages.content = Content
 showMessages.eventTime = Event Time
 showMessages.show = Show
 showMessages.deleteAll = Delete All
+showMessages.successfulDeleteAll = Messages removed correctly
 
 ################################# Networks #################################
 manageNetworks.title = My Networks
