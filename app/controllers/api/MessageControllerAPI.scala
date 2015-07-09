@@ -9,11 +9,13 @@ import play.api.mvc.{BodyParsers, Action, Controller}
 import services.Messages
 import scala.concurrent.{Future => ScalaFuture}
 
-/**
- * Created by Fer on 27/03/2015.
- */
 object MessageControllerAPI extends Controller{
 
+  /**
+   * Test method (not finished) - Returns the messages associated wih a device, in JSON.
+   * @param deviceID
+   * @return
+   */
   def getMessagesByDeviceID(deviceID:String) = Action.async{
 
     val result = Messages.getMessagesByDevice(UUID.fromString(deviceID))
@@ -22,7 +24,10 @@ object MessageControllerAPI extends Controller{
     //TODO: How to address errors producing Err 500 on bad request
   }
 
-  //Get All Messages inserted after a requested date for a specific deviceID
+  /**
+   * Get All Messages inserted after a requested date for a specific deviceID
+   * @return
+   */
   def getMessagesByRequest =  Action.async(BodyParsers.parse.json){ request =>
     val placeResult = request.body.validate[MessagesRequest]
     placeResult.fold(
@@ -36,6 +41,10 @@ object MessageControllerAPI extends Controller{
     )
   }
 
+  /**
+   * Save a new message inserted using the REST API
+   * @return
+   */
   def saveMessage = Action.async(BodyParsers.parse.json){ request =>
     val placeResult = request.body.validate[Message]
     placeResult.fold(

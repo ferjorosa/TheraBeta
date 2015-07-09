@@ -16,19 +16,23 @@ import play.api.mvc.{Action, Controller, WebSocket}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-/**
- * Created by Fer on 26/06/2015.
- */
 object WebSocketAPI extends Controller{
 
   val testActor = Akka.system.actorSelection("akka://application/user/testActor")
   val webSocketsActor = Akka.system.actorSelection("akka://application/user/webSocketsActor")
 
+  /**
+   * Test method - echo method
+   * @return
+   */
   def socket = WebSocket.acceptWithActor[String, String] { request => out =>
     MyWebSocketActor.props(out)
   }
 
-  // sends the time every second, ignores any input
+  /**
+   * Test method - sends the time every second, ignores any input
+   * @return
+   */
   def wsTime = WebSocket.async[String] {
     request => Future {
       Logger.info(s"wsTime, client connected.")
@@ -40,13 +44,22 @@ object WebSocketAPI extends Controller{
     }
   }
 
-  //just a mock method to send new messages to the actor to see how it reacts
+  /**
+   * Just a mock method to send new messages to the actor to see how it reacts
+   * @param deviceID
+   * @param message
+   * @return
+   */
   def test_in(deviceID: Int,message :String) = Action {
     testActor ! newMessage(deviceID,message)
     Ok("Mensaje recibido")
   }
 
-  //The real WebSocket connection
+  /**
+   * Just a webSocket test connection
+   * @param deviceID
+   * @return
+   */
   def test_out(deviceID: Int) = WebSocket.async[String] {
     request => {
       Logger.info(s"test_out, client connected.")
@@ -65,6 +78,11 @@ object WebSocketAPI extends Controller{
     }
   }
 
+  /**
+   * The real webSocket connection. Associates a websocket with a UUID (DeviceID)
+   * @param stringDeviceID
+   * @return
+   */
   def connectDevice(stringDeviceID: String) = WebSocket.tryAccept[String]{ request =>
     implicit val timeout = Timeout(3,TimeUnit.SECONDS)
     val deviceID:UUID = UUID.fromString(stringDeviceID)
