@@ -6,10 +6,10 @@ import akka.actor.Actor
 import play.Logger
 import play.api.libs.iteratee.Concurrent.Channel
 import play.api.libs.iteratee.{Concurrent, Enumerator}
+
 /**
- * Created by Fer on 26/06/2015.
+ * Super easy actor-system implementation, it would not scale well in real life (only one actor for thousands of connected devices)...
  */
-//Super easy actor-system implementation, i would not scale well in real life (only one actor for thousands of connected messages)...
 class WebSocketsActor extends Actor{
   // this map relates every device with his DeviceChannel
   // var...
