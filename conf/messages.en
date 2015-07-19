@@ -1,0 +1,162 @@
+##	all entries must start with lowercase
+# If you modify this file from Intellij or other IDE, check its default encoding for properties files
+
+#General
+empty = Empty
+active = Active
+inactive = Inactive
+signinLink = Sign in
+registerLink = Register
+signoutLink = Sign Out
+
+#Errors
+error.title = Error
+error.description = An error has occurred.
+formGlobalError = There was an error in you form
+
+#Layout - Private
+breadcrumb.home = Home
+breadcrumb.devices = Devices
+breadcrumb.new = New
+breadcrumb.messages = Messages
+breadcrumb.networks = Networks
+breadcrumb.profile = Profile
+breadcrumb.connections = Connections
+
+#Layout - Public
+footer.copyright = All Rights Reserved.
+footer.university = University of Oviedo
+
+################################# Index #################################
+index.title = Thera
+index.jumbotron.h1 = The Internet Of Things
+index.jumbotron.p = A NOT SO FAR AWAY FUTURE
+index.jumbotron.button = Learn Why
+index.container.button = Know more
+index.heading1.title = Open Source
+index.heading2.title = Fast & Easy
+index.heading3.title = Scalable
+index.heading1.text = Thera is an open source platform for building, managing and integrating connected devices in the space of Internet of Things.Thera is licensed under Apache 2.0 license, the world’s most business-friendly open source license.
+index.heading2.text = Connect your devices fast and easy. Thera uses different technologies to make your messages flow constantly. With its easy interface you can create a network of devices in a few minutes.
+index.heading3.text = Thera uses Cassandra as its Database. It also has a scalable architecture based on message-driven technologies like Akka and Play Framework.
+
+################################# Devices #################################
+deviceDetail.title = Device Details
+deviceDetail.actions = Actions
+deviceDetail.delete = Delete
+deviceDetail.messages = Messages
+deviceDetail.activate = Activate
+deviceDetail.deactivate = Deactivate
+deviceDetail.identifier= Identifier
+deviceDetail.accountID = Account ID
+deviceDetail.activated = Activated
+deviceDetail.deviceID = Device ID
+deviceDetail.successfulDelete = Device removed correctly
+deviceDetail.successfulActivation = Device activated correctly
+deviceDetail.successfulDeactivation = Device deactivated correctly
+
+manageDevices.title = My Devices
+manageDevices.searchText = Enter your device name
+manageDevices.noDevices = No Devices :(
+manageDevices.identifier = Identifier
+manageDevices.deviceID = Unique ID
+manageDevices.activated = Activated
+manageDevices.newDevice = New Device
+
+registerDevice.title = New Device
+registerDevice.legend = Name your new device
+registerDevice.identifierInput = Identifier
+registerDevice.newDevice = Register Device
+registerDevice.successful = Device successfully registered
+registerDevice.deviceAlreadyExists = Device already exists
+
+################################# Messages #################################
+showMessages.title = Messages
+showMessages.noMessages = No Messages :(
+showMessages.content = Content
+showMessages.eventTime = Event Time
+showMessages.show = Show
+showMessages.deleteAll = Delete All
+showMessages.successfulDeleteAll = Messages removed correctly
+
+################################# Networks #################################
+manageNetworks.title = My Networks
+manageNetworks.legend = My Networks
+manageNetworks.noNetworks = No Networks :(
+manageNetworks.availableNetworks = 0/1 available networks
+manageNetworks.privateNetwork = Private Network
+manageNetworks.newNetwork = New Network
+
+registerNetwork.title = New Network
+registerNetwork.legend = Name your new network
+registerNetwork.nameInput = Name
+registerNetwork.newNetwork = Register network
+registerNetwork.networkAlreadyExists = Network already exists
+registerNetwork.successful = Network successfully registered
+
+networkDetail.title = Network Details
+networkDetail.noFollowers = Empty Network :(
+networkDetail.newFollower = New Connection
+networkDetail.from = From
+networkDetail.to = To
+networkDetail.follows = Follows
+networkDetail.delete = Delete
+networkDetail.deactivate = Deactivate
+networkDetail.activate = Activate
+networkDetail.deleteNetwork = Delete Network
+networkDetail.actions = Actions
+networkDetail.networkName = Network Name
+networkDetail.activated= Activated
+networkDetail.accountID = Account ID
+networkDetail.privateNetwork = Private Network
+networkDetail.followers = Connections
+networkDetail.successfulDelete = Network removed correctly
+networkDetail.successfulActivation = Network activated correctly
+networkDetail.successfulDeactivation = Network deactivated correctly
+
+
+manageFollowers.title = Followers
+manageFollowers.successfulDelete = Connection removed correctly
+
+registerFollower.title = New Follower
+registerFollower.deviceA = Device A
+registerFollower.follows = Follows
+registerFollower.deviceB = Device B
+registerFollower.newFolower = Register Connection
+registerFollower.noDevices = No devices yet registered
+registerFollower.successful = Connection successfully registered
+registerFollower.failure = Both devices have to be different
+
+################################# Accounts #################################
+dashboard.title = Dashboard
+dashboard.devices = Devices
+dashboard.networks = Networks
+dashboard.profile = Profile
+
+profile.title = My Profile
+profile.legend = My Profile
+profile.password = New Password
+profile.confirmPassword = Confirm Password
+profile.applyChanges = Apply changes
+profile.successful = Successfully updated your profile
+
+signin.title = Sign In
+signin.username = Username
+signin.password = Password
+signin.button = Sign in
+signin.failure = Bad combination of username & password
+
+register.title = Register
+register.legend = Join Thera
+register.username = Username
+register.password = Password
+register.repeatPassword = Repeat Password
+register.email = Email
+register.realName = Real Name
+register.phoneNumber = Phone Number
+register.country = Country
+register.phoneError = The introduced Phone Number is invalid
+register.passwordHelp =  Password must have between 6-20 characters
+register.join = Join
+register.successful = You have been successfully registered. Welcome.
+register.userAlreadyExists = User already exists.

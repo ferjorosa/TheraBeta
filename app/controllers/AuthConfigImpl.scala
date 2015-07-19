@@ -93,7 +93,7 @@ trait AuthConfigImpl extends AuthConfig with Controller{
    * Whether use the secure option or not use it in the cookie.
    * However default is false, I strongly recommend using true in a production.
    */
-  override lazy val cookieSecureOption: Boolean = play.api.Play.isProd(play.api.Play.current)
+  override lazy val cookieSecureOption: Boolean = false // play.api.Play.isProd(play.api.Play.current)
 
   /**
    * Whether a login session is closed when the brower is terminated.

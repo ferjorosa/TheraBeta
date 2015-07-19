@@ -128,7 +128,7 @@ object IdentificationController extends AuthConfigImpl with LoginLogout {
   def myProfile = AsyncStack(AuthorityKey -> NormalUser) { implicit request =>
     val user = loggedIn
     val title = "my Profile"
-    Future.successful(Ok(views.html.User.profile(updateProfileForm, user)))
+    Future(Ok(views.html.User.profile(updateProfileForm, user)))
   }
 
   /**
