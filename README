@@ -1,16 +1,6 @@
-This is your new Play application
-=================================
+This project aims to develop a web system that allows to interconnect both heterogeneous and ubiquitous devices from different technologies, using the Internet. This project is located in the area of Internet of Things (IoT). The developed application is structured in two different sections:
 
-This file will be packaged with your application, when using `activator dist`.
+* First there is a web application that allows users to manage their registered devices, access its data and create networks with them.
+* Second there is an API that is in charge of the communication between devices.
 
-Plugins necesarios para trabajar con el proyecto:
-
--Scala
--Play 2.0
-
-Para poder trabajar con el proyecto es necesario:
-
- - Tener abierto Intellij
- - Tener ejecutando la plaicación en modo development, ejecutar los siguientes comandos:
- 	* `activator`
-	* $ `run`
+As we can see there is a section orientated to the Person-Machine interaction, and there is a second one that focuses on the Machine-Machine interaction. However, they complement each other. In addition to the system, two prototypes will be developed. Both will be using different technologies and will interact with the system's API. They will serve as examples for the system.
